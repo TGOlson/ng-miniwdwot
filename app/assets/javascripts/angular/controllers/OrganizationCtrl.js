@@ -1,12 +1,14 @@
 'use strict';
 
-app.controller('OrganizationCtrl', ['$scope', 'Organization', '$routeParams', '$rootScope', function ($scope, Organization, $routeParams, $rootScope) {
+app.controller('OrganizationCtrl', ['$scope', 'Organization', '$location', '$rootScope', function ($scope, Organization, $location, $rootScope) {
 
-    var orgId = ($routeParams.id)
+
+    // need to backtrack to get params that are set before angular route
+    var orgId = $location.$$absUrl.split('/organizations/')[1].split('#')[0]
 
     Organization.get({ id: orgId}, function (obj) {
 
-      $rootScope.organization = obj;
+      $scope.organization = obj;
 
     }, function (response) {
 

@@ -1,28 +1,28 @@
-'use strict';
+// 'use strict';
 
 
-// angular.module('miniwdwot')
-//   .controller('OrgsCtrl', ['$scope', function ($scope) {
+// // angular.module('miniwdwot')
+// //   .controller('OrgsCtrl', ['$scope', function ($scope) {
 
-//     $scope.awesomeThings = [
-//       'HTML5 Boilerplate',
-//       'AngularJS',
-//       'Karma'
-//     ];
+// //     $scope.awesomeThings = [
+// //       'HTML5 Boilerplate',
+// //       'AngularJS',
+// //       'Karma'
+// //     ];
 
 
-//     $scope.cool = 'Hey'
+// //     $scope.cool = 'Hey'
 
-//   }]);
+// //   }]);
 
-// console.log('hi')
+// // console.log('hi')
 
-app.controller('OrganizationsCtrl', ['$scope', 'Organization', '$rootScope', function($scope, Organization, $rootScope) {
+// app.controller('OrganizationsCtrl', ['$scope', 'Organization', '$rootScope', function($scope, Organization, $rootScope) {
 
-  $scope.orgs = Organization.query();
+//   $scope.orgs = Organization.query();
 
-  $rootScope.organization = null;
+//   $rootScope.organization = null;
 
-  // $scope.org  = Orgs.show()
+//   // $scope.org  = Orgs.show()
 
-}]);
+// }]);
