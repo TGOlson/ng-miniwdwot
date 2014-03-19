@@ -12,6 +12,8 @@ Miniwdwot::Application.routes.draw do
 
   root :to => "organizations#index"
 
+  # root :to => "main#index"
+
 end
 
 # organization_properties GET    /organizations/:organization_id/properties(.:format) organizations#properties

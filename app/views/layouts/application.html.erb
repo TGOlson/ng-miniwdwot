@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html ng-app='miniwdwot'>
 <head>
   <title>Miniwdwot</title>
-  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
-  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+  <%= stylesheet_link_tag    "application", media: "all" %>
+  <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 </head>
 <body>
@@ -17,32 +17,36 @@
     %>
   -->
 
+
+
     <%= render partial: 'layouts/admin_navbar' %>
 
-  <% if alert %>
-    <div class="alert alert-danger alert-dismissable">
-      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-      <p><%= alert %></p>
-    </div>
-  <% end %>
+    <% if alert %>
+      <div class="alert alert-danger alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <p><%= alert %></p>
+      </div>
+    <% end %>
 
-  <% if notice %>
-    <div class="alert alert-info alert-dismissable">
-      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-      <p><%= notice %></p>
-    </div>
-  <% end %>
+    <% if notice %>
+      <div class="alert alert-info alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <p><%= notice %></p>
+      </div>
+    <% end %>
+  <div ng-view>
 
-  <div class='container'>
-    <div class="row">
-      <div class="col-sm-12">
+    <div class='container'>
+      <div class="row">
+        <div class="col-sm-12">
 
-        <%= yield %>
+          <%= yield %>
 
+        </div>
       </div>
     </div>
-  </div>
 
+  </div>
 
 </body>
 </html>

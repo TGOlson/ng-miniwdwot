@@ -1,13 +1,26 @@
 class OrganizationsController < ApplicationController
+  respond_to :json
 
   before_filter :authenticate_organization!, only: [:edit, :update, :destroy]
 
   def index
     @organizations = Organization.all
+
+    respond_to do |format|
+      format.html
+      format.json { render json: @organizations }
+    end
+
   end
 
   def show
     @organization = Organization.find_by_id params[:id]
+
+    respond_to do |format|
+      format.html
+      format.json { render json: @organization }
+    end
+
   end
 
   def properties
