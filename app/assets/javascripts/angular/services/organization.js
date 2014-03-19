@@ -1,6 +1,6 @@
 app.service('Organization', ['$resource', function($resource) {
 
-  var Organization = $resource('http://localhost:3000/organizations/:id.json');
+  var Organization = $resource('/organizations/:id.json');
 
   return Organization;
 }]);

@@ -17,9 +17,11 @@
 
 // console.log('hi')
 
-app.controller('OrgsCtrl', ['$scope', 'Organization', function($scope, Organization) {
+app.controller('OrganizationsCtrl', ['$scope', 'Organization', '$rootScope', function($scope, Organization, $rootScope) {
 
   $scope.orgs = Organization.query();
+
+  $rootScope.organization = null;
 
   // $scope.org  = Orgs.show()
 

@@ -1,3 +1,12 @@
+<div class="text-center">
+
+  <img src="{{ organization.logo_url }}" class="org-logo" width='360px' height='200px'>
+
+  <h1>{{ organization.name }}</h1>
+</div>
+
+<br>
+
 <nav class="navbar navbar-default" role="navigation">
 
   <div class="container-fluid">
@@ -12,7 +21,7 @@
         <span class="icon-bar"></span>
       </button>
 
-      <%= link_to organization.name, organization_path(organization), class: 'navbar-brand' %>
+      <a href="/#/organizations/{{ organization.id }}" class='navbar-brand'>{{ organization.name }}</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -21,9 +30,9 @@
       <div class='navbar-left'>
 
         <ul class="nav navbar-nav">
-          <li><%= link_to 'Properties', organization_properties_path(organization) %></li>
-          <li><%= link_to 'Featured Properties', organization_featured_properties_path(organization) %></li>
-          <li><%= link_to 'About', organization_about_path(organization) %></li>
+          <li><a href="/#/organizations/{{ organization.id }}/properties">Properties</a></li>
+          <li><a href="/#/organizations/{{ organization.id }}/featured_properties">Featured Properties</a></li>
+          <li><a href="/#/organizations/{{ organization.id }}/about">About</a></li>
         </ul>
 
       </div>

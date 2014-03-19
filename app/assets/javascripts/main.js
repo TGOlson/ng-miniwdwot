@@ -13,20 +13,28 @@ var app = angular.module('miniwdwot', [
   .config(['$routeProvider', function ($routeProvider) {
     $routeProvider
       .when('/organizations', {
-        templateUrl: '../assets/organizations.html',
-        controller: 'OrgsCtrl'
+        templateUrl: '/assets/organizations/index.html',
+        controller: 'OrganizationsCtrl'
       })
       .when('/organizations/:id', {
-        templateUrl: '../assets/organization.html',
-        controller: 'OrgCtrl'
+        templateUrl: '/assets/organizations/show.html',
+        controller: 'OrganizationCtrl'
+      })
+      .when('/organizations/:id/properties', {
+        templateUrl: '/assets/organizations/properties.html',
+        controller: 'OrganizationCtrl'
+      })
+      .when('/organizations/:id/featured_properties', {
+        templateUrl: '/assets/organizations/featured_properties.html',
+        controller: 'OrganizationCtrl'
+      })
+      .when('/organizations/:id/about', {
+        templateUrl: '/assets/organizations/about.html',
+        controller: 'OrganizationCtrl'
       })
       .otherwise({
-        templateUrl: '../assets/orgs.html',
-        controller: 'OrgsCtrl'
+        redirectTo: '/organizations'
       });
-      // .otherwise({
-      //   redirectTo: '/'
-      // });
   }]);
 
 
