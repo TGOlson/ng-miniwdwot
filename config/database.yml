@@ -1,0 +1,11 @@
+development:
+  adapter: postgresql
+  database: miniwdwot_dev
+  pool: 5
+  timeout: 5000
+
+test:
+  adapter: postgresql
+  database: miniwdwot_test
+  pool: 5
+  timeout: 5000

@@ -1,0 +1,44 @@
+<nav class="navbar navbar-default navbar-main" role="navigation">
+
+  <div class="container-fluid">
+
+    <div class="navbar-header">
+
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+
+      <%= link_to 'Mini WDWOT', root_path, class: 'navbar-brand' %>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+
+  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+    <div class='navbar-right'>
+
+      <ul class="nav navbar-nav">
+        <li><%= link_to 'About', 'about_path' %></li>
+
+        <% if current_organization %>
+
+            <li><%= link_to 'Organization Settings', edit_organization_path(current_organization) %></li>
+
+            <li><%= link_to 'Sign out', sign_out_path, method: :delete %></li>
+
+          <% else %>
+
+            <li><%= link_to 'Sign in', sign_in_path %></li>
+
+        <% end %>
+
+      </ul>
+    </div>
+  </div>
+
+  </div><!-- /.container-fluid -->
+</nav>

@@ -1,0 +1,12 @@
+<%= render partial: 'organizations/header', locals: { organization: @organization } %>
+
+<br>
+
+<div>
+
+  <% if @organization.display_group_id.nil? || @organization.display_map_id.nil? %>
+    <p>This organization has not configured their groups or maps.</p>
+    <p>If you are the owner, please <%= link_to 'sign in', sign_in_path %> and navigate to the Organization Settings page.</p>
+  <% end %>
+
+</div>

@@ -1,0 +1,13 @@
+<div id='admin-nav'>
+  <% if current_organization %>
+
+      <li>Signed in as <%= link_to current_organization.name, organization_path(current_organization) %></li>
+      <li><%= link_to 'Organization Settings', edit_organization_path(current_organization) %></li>
+      <li><%= link_to 'Sign out', sign_out_path, method: :delete %></li>
+
+    <% else %>
+
+      <li><%= link_to 'Sign in', sign_in_path %></li>
+
+  <% end %>
+</div>
