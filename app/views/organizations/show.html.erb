@@ -1,9 +1,14 @@
 <div ng-controller='OrganizationCtrl'>
 
-  <div ng-include="'/assets/layout/navigation.html'"></div>
+  <div ng-if="!badOrg">
+    <div ng-include="'/assets/layout/navigation.html'"></div>
+    <br>
+    <div ng-view></div>
+  </div>
 
-  <br>
-
-  <div ng-view></div>
+  <div ng-if="badOrg">
+    <h1>Looks like that organization no longer exists.</h1>
+    <p>Sorry.</p>
+  </div>
 
 </div>

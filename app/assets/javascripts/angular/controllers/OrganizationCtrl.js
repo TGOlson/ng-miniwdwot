@@ -1,23 +1,47 @@
 'use strict';
 
-app.controller('OrganizationCtrl', ['$scope', 'Organization', '$location', '$rootScope', function ($scope, Organization, $location, $rootScope) {
-
+app.controller('OrganizationCtrl', ['$scope', 'Organization', '$location', function ($scope, Organization, $location) {
 
     // need to backtrack to get params that are set before angular route
     var orgId = $location.$$absUrl.split('/organizations/')[1].split('#')[0]
 
-    Organization.get({ id: orgId}, function (obj) {
+    // var orgId = 1;
+
+    // console.log($routeParams)
+
+    Organization.get({ id: orgId}, function ( obj ) {
 
       $scope.organization = obj;
 
-    }, function (response) {
+      if(!obj.id){
 
-      $scope.organization = {
-        name: 'Error: Looks like this organization is not around anymore.',
+        $scope.badOrg = true;
+
       }
 
-    });
+    })
 
-    $scope.heading = 'Organization ' + orgId;
+
+    $scope.update = function() {
+
+      // $scope.newOrg.id = orgId;
+
+      Organization.update($scope.organization)
+
+      $location.path('/');
+
+
+    //   , function(resource) {
+
+    //     console.log(resource)
+
+    //     // $scope.newOrg = {};
+
+    //   }, function(response) {
+
+    //     console.log('failed', response)
+    //   });
+    }
+
 
   }]);

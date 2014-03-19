@@ -1,0 +1,93 @@
+<div class="row">
+  <div class="col-sm-8 col-sm-offset-2">
+
+    <p class='text-right'><a href="#/">View Organization Page</a></p>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">Organization Settings</div>
+
+      <div class="panel-body">
+
+
+
+        <form ng-submit='update()'>
+          <div>
+            <label for='name'>Name</label>
+            <input type='text' name='name' id='name' ng-model='organization.name'/>
+          </div>
+          <p>{{ organization.name }}</p>
+          <div>
+            <label for='email'>Email</label>
+            <textarea name='email' id='email' ng-model='organization.contact_email'></textarea>
+          </div>
+          <input type='submit' class='btn'/>
+        </form>
+
+
+
+
+<!--
+        <%= form_for @organization do |f| %>
+
+          <div class="form-group">
+            <%= f.label :name, 'Organization Name' %>
+            <%= f.text_field :name, :class => 'form-control' %>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :logo_url, 'Logo Url' %>
+            <p class='text-muted'>Link to a logo for the organization. Note: image will be scaled to 360px by 200px.</p>
+            <%= f.text_field :logo_url, :class => 'form-control' %>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :about, 'About Section' %>
+            <%= f.text_area :about, :class => 'form-control' %>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :contact_email, 'Contact Email' %>
+            <p class='text-muted'>Where would you like property questions sent to? Note: this will not affect your Site Control login.</p>
+            <%= f.text_field :contact_email, :class => 'form-control' %>
+          </div>
+
+          <div class='form-group'>
+            <%= f.label :display_group_id, 'Group to Display' %>
+            <p class='text-muted'>This is the Site Control group your site will be generated from.</p>
+            <%= select_tag 'group', options_for_select(@organization.groups.collect{|n| [n.name, n.id]}), { :class => 'form-control' } %>
+          </div>
+
+          <div class='form-group'>
+            <%= label_tag 'Map to Display' %>
+            <% if @organization.display_group_id.nil? %>
+              <p>Please select a group to enable selection of maps.</p>
+            <% else %>
+              <%= select_tag 'map_id', options_for_select(@organization.group.maps.collect{|n| [n.name, n.id]}), { :class => 'form-control' } %>
+            <% end %>
+          </div>
+
+          <br>
+
+          <%= f.submit "Update Organization", :class => 'btn btn-primary'%>
+        <% end %>
+ -->
+      </div> <!-- panel body -->
+    </div> <!-- panel -->
+  </div> <!-- col-sm-12 -->
+</div>  <!-- row -->
+
+<div class="row">
+  <div class="col-sm-8 col-sm-offset-2">
+
+    <div class="panel panel-default">
+      <div class="panel-heading">Delete Organization</div>
+
+      <div class="panel-body">
+      <p class='text-muted'>Note: this action will only delete the organization from Mini WDOWT.</p>
+      <%= button_to 'Delete Organization', organization_path(@organization),
+        method: :delete, :class => 'btn btn-primary', data: { confirm: "Are you sure?" } %>
+      </div>
+    </div>
+
+  </div>
+</div>

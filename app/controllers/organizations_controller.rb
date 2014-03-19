@@ -23,18 +23,6 @@ class OrganizationsController < ApplicationController
 
   end
 
-  def properties
-    @organization = Organization.find_by_id params[:organization_id]
-  end
-
-  def featured_properties
-    @organization = Organization.find_by_id params[:organization_id]
-  end
-
-  def about
-    @organization = Organization.find_by_id params[:organization_id]
-  end
-
   def edit
     @organization = Organization.find_by_id params[:id]
   end
@@ -44,8 +32,13 @@ class OrganizationsController < ApplicationController
 
     @organization.update_attributes organization_params
 
-    flash[:notice] = 'Organization successfully updated.'
-    redirect_to organization_path @organization
+    # flash[:notice] = 'Organization successfully updated.'
+
+    respond_to do |format|
+      format.html { redirect_to organization_path @organization }
+      format.json { render json: @organization }
+    end
+
   end
 
   def destroy
