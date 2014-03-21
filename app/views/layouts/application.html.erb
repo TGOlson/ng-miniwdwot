@@ -8,22 +8,11 @@
 </head>
 <body>
 
+  <div ng-controller='AdminCtrl' ng-include="'/assets/layout/admin_nav.html'"></div>
 
-  <%= render partial: 'layouts/admin_navbar' %>
-
-  <% if alert %>
-    <div class="alert alert-danger alert-dismissable">
-      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-      <p><%= alert %></p>
-    </div>
-  <% end %>
-
-  <% if notice %>
-    <div class="alert alert-info alert-dismissable">
-      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-      <p><%= notice %></p>
-    </div>
-  <% end %>
+  <div ng-show='alert'  class="alert alert-{{ alert.type }} alert-dismissable">
+    <p>{{ alert.message }}</p>
+  </div>
 
   <div class='container'>
     <div class="row">

@@ -1,12 +1,3 @@
-<div class="text-center">
-
-  <img src="{{ organization.logo_url }}" class="org-logo" width='360px' height='200px'>
-
-  <h1>{{ organization.name }}</h1>
-</div>
-
-<br>
-
 <nav class="navbar navbar-default" role="navigation">
 
   <div class="container-fluid">
@@ -30,9 +21,18 @@
       <div class='navbar-left'>
 
         <ul class="nav navbar-nav">
-          <li><a href="#/properties">Properties</a></li>
-          <li><a href="#/featured_properties">Featured Properties</a></li>
-          <li><a href="#/about">About</a></li>
+
+          <li ng-class='{ active: path=="/properties" }'>
+            <a href="#/properties">Properties</a>
+          </li>
+
+          <li ng-class='{ active: path=="/featured_properties" }'>
+            <a href="#/featured_properties">Featured Properties</a>
+          </li>
+
+          <li ng-class='{ active: path=="/about" }'>
+            <a href="#/about">About</a>
+          </li>
         </ul>
 
       </div>

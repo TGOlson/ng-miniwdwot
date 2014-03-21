@@ -1,46 +1,86 @@
 'use strict';
 
-app.controller('OrganizationCtrl', ['$scope', 'Organization', '$location', function ($scope, Organization, $location) {
+app.controller('OrganizationCtrl',
+  ['$scope', 'Organization', '$location', 'Flash', '$rootScope',
+  function ($scope, Organization, $location, Flash, $rootScope) {
 
-    // need to backtrack to get params that are set before angular route
     var orgId = $location.$$absUrl.split('/organizations/')[1].split('#')[0]
 
-    // var orgId = 1;
+    setOrg();
+-
+    console.log('here')
 
-    // console.log($routeParams)
+    function setOrg () {
 
-    Organization.get({ id: orgId}, function ( obj ) {
+      Organization.get({ id: orgId} , function ( obj ) {
 
-      $scope.organization = obj;
+        $scope.organization = obj;
+        if(!obj.id){ $scope.badOrg = true; }
 
-      if(!obj.id){
-
-        $scope.badOrg = true;
-
-      }
-
-    })
-
+      })
+    }
 
     $scope.update = function() {
-
-      // $scope.newOrg.id = orgId;
 
       Organization.update($scope.organization)
 
       $location.path('/');
+      Flash.message('info', 'Organization successfully updated.')
 
+    }
 
-    //   , function(resource) {
+    $scope.cancel = function () {
 
-    //     console.log(resource)
+      // revert to server organization settings
+      setOrg();
 
-    //     // $scope.newOrg = {};
+      $location.path('/');
+      Flash.message('danger', 'Updates aborted.')
 
-    //   }, function(response) {
+    }
 
-    //     console.log('failed', response)
-    //   });
+    $scope.delete = function () {
+
+      Organization.delete({ id: orgId} , function ( obj ) {
+
+        $location.path('/');
+
+        Flash.message('notice', 'Organization deleted.')
+
+      })
+
+    }
+
+    $scope.$on('$routeChangeStart', function(next, current) {
+
+      $scope.path = $location.$$path
+      $scope.hideNav = false;
+
+      if($scope.path === '/edit'){
+
+        // if( canEdit() ){
+        if( true ){
+
+          $scope.hideNav = true;
+
+        } else {
+
+          $location.path('/');
+          Flash.message('danger', 'You mussed be signed in as the organization to access that page.')
+
+        }
+
+      }
+
+    });
+
+    function canEdit () {
+      if( $rootScope.admin ) {
+        if( $rootScope.admin.id == orgId ) {
+          return true
+        }
+      }
+      return false
     }
 
 

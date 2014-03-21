@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-sm-8 col-sm-offset-2">
 
-    <p class='text-right'><a href="#/">View Organization Page</a></p>
+    <p><a href="#/"><- Back to Organization Page</a></p>
 
     <div class="panel panel-default">
       <div class="panel-heading">Organization Settings</div>
@@ -11,16 +11,35 @@
 
 
         <form ng-submit='update()'>
-          <div>
-            <label for='name'>Name</label>
-            <input type='text' name='name' id='name' ng-model='organization.name'/>
+
+          <div class='form-group'>
+            <label for='name'>Organization Name</label>
+            <input type='text' class='form-control' name='name' id='name' ng-model='organization.name'/>
           </div>
-          <p>{{ organization.name }}</p>
-          <div>
-            <label for='email'>Email</label>
-            <textarea name='email' id='email' ng-model='organization.contact_email'></textarea>
+
+          <div class='form-group'>
+            <label for='logo_url'>Logo Url</label>
+            <p class='text-muted'>Link to a logo for the organization. Note: image will be scaled to 360px by 200px.</p>
+            <input type='text' class='form-control' name='logo_url' id='logo_url' ng-model='organization.logo_url'/>
           </div>
-          <input type='submit' class='btn'/>
+
+          <div class='form-group'>
+            <label for='contact_email'>Contact Email</label>
+            <p class='text-muted'>Where would you like property questions sent to? Note: this will not affect your Site Control login.</p>
+            <input type='text' name='contact_email' class='form-control' id='contact_email' ng-model='organization.contact_email'>
+          </div>
+
+          <div class='form-group'>
+            <label for='about'>About</label>
+            <p class='text-muted'>To be displayed on the About page.</p>
+            <textarea name='about' class='form-control' id='about' ng-model='organization.about'></textarea>
+          </div>
+
+          <div class='form-group'>
+            <input type='submit' class='btn btn-primary' value='Update Organization'/>
+            <button ng-click='cancel()'  class='btn btn-default'>Cancel</button>
+          </div>
+
         </form>
 
 
@@ -28,11 +47,6 @@
 
 <!--
         <%= form_for @organization do |f| %>
-
-          <div class="form-group">
-            <%= f.label :name, 'Organization Name' %>
-            <%= f.text_field :name, :class => 'form-control' %>
-          </div>
 
           <div class="form-group">
             <%= f.label :logo_url, 'Logo Url' %>
@@ -76,6 +90,9 @@
   </div> <!-- col-sm-12 -->
 </div>  <!-- row -->
 
+
+
+
 <div class="row">
   <div class="col-sm-8 col-sm-offset-2">
 
@@ -83,11 +100,22 @@
       <div class="panel-heading">Delete Organization</div>
 
       <div class="panel-body">
-      <p class='text-muted'>Note: this action will only delete the organization from Mini WDOWT.</p>
-      <%= button_to 'Delete Organization', organization_path(@organization),
-        method: :delete, :class => 'btn btn-primary', data: { confirm: "Are you sure?" } %>
+
+        <p class='text-muted'>Note: this action will only delete the organization from Mini WDOWT display.</p>
+
+        <form ng-submit='delete()'>
+
+          <div class='form-group'>
+            <input type='submit' class='btn btn-primary' value='Delete Organization'/>
+          </div>
+
+        </form>
+
       </div>
     </div>
 
   </div>
 </div>
+
+
+

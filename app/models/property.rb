@@ -11,7 +11,5 @@
     # t.string   "longitude"
 
 class Property < ActiveRecord::Base
-
   belongs_to :map
-
 end

@@ -1,0 +1,43 @@
+<div id='admin-nav'>
+
+
+  <div ng-show='showForm' class='col-sm-3 col-sm-offset-9 text-left' id="admin-login-form">
+
+        <p class='text-muted'>Use your Site Control email and password to login.</p>
+
+        <p class='text-muted'>Please read our about page for any questions about account management.</p>
+
+        <form ng-submit='signIn()'>
+
+          <div class='form-group'>
+            <label for='email'>Email</label>
+            <input type='text' class='form-control' name='email' id='email' ng-model='login.email' autofocus='true'/>
+          </div>
+
+          <div class='form-group'>
+            <label for='password'>Password</label>
+            <input type='password' class='form-control' name='password' id='password' ng-model='login.password'/>
+          </div>
+
+          <div class='form-group text-center'>
+            <input type='submit' class='btn btn-primary' value='Sign in'/>
+            <a href ng-click="cancelSignIn()">Cancel</a>
+          </div>
+
+        </form>
+
+
+
+  </div>
+
+  <div ng-show='admin'>
+      <li>Signed in as <a href='/organizations/{{ admin.id }}#/'>{{ admin.email }}</a></li>
+      <li><a href='/organizations/{{ admin.id }}#/edit'>Organization Settings</a></li>
+      <li><a href ng-click='signOut()'>Sign out</a></li>
+  </div>
+
+  <div ng-hide='admin'>
+      <li><a href ng-click='show()'>Sign in</a></li>
+  </div>
+
+</div>

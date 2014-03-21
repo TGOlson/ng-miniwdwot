@@ -21,9 +21,11 @@ module OrganizationsHelper
 
     unless current_organization
       flash[:alert] = 'Please sign in before attempting that action.'
-
       redirect_to sign_in_path
     end
+  end
 
+  def current_token?
+    @organization.token == params[:organization][:token]
   end
 end

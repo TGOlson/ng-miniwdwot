@@ -14,23 +14,23 @@ app.config(['$routeProvider', '$httpProvider', function ($routeProvider, $httpPr
   $routeProvider
     .when('/', {
       templateUrl: '/assets/organization/index.html',
-      controller: 'ViewCtrl'
+      controller: 'OrgContentCtrl'
     })
     .when('/properties', {
       templateUrl: '/assets/organization/properties.html',
-      controller: 'ViewCtrl'
+      controller: 'OrgContentCtrl'
     })
     .when('/featured_properties', {
       templateUrl: '/assets/organization/featured_properties.html',
-      controller: 'ViewCtrl'
+      controller: 'OrgContentCtrl'
     })
     .when('/about', {
       templateUrl: '/assets/organization/about.html',
-      controller: 'ViewCtrl'
+      controller: 'OrgContentCtrl'
     })
     .when('/edit', {
       templateUrl: '/assets/organization/edit.html',
-      controller: 'ViewCtrl'
+      controller: 'OrgContentCtrl'
     })
     .otherwise({
       redirectTo: '/'

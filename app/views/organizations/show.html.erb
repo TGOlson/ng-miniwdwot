@@ -1,9 +1,14 @@
 <div ng-controller='OrganizationCtrl'>
 
   <div ng-if="!badOrg">
-    <div ng-include="'/assets/layout/navigation.html'"></div>
+
+    <div                  ng-include="'/assets/layout/header.html'"></div>
+    <div ng-if='!hideNav' ng-include="'/assets/layout/navigation.html'"></div>
+
     <br>
+
     <div ng-view></div>
+
   </div>
 
   <div ng-if="badOrg">

@@ -1,17 +1,8 @@
 class Organizations::SessionsController < ApplicationController
 
-  before_filter :authenticate_organization!, only: [:destroy]
-
-  def new
-
-    if current_organization
-      redirect_to organization_path current_organization
-    end
-
-    @organization = Organization.new
-  end
-
   def create
+
+    # email, password
     credentials = params[:organization]
 
     options = { body: credentials }
@@ -22,22 +13,12 @@ class Organizations::SessionsController < ApplicationController
 
       organization = Organization.find_or_create credentials[:email], response.parsed_response['token']
 
-      sign_in(organization)
-
-      redirect_to organization_path(organization)
+      render json: { success: true, organization: organization }
     else
-
-      flash[:alert] = 'Invalid email or password.'
-      redirect_to sign_in_path
+      render json: { success: false }
     end
 
   end
-
-  def destroy
-    sign_out
-    redirect_to root_path
-  end
-
 end
 
   # def self.connect(email, password)

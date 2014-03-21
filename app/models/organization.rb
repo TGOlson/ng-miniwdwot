@@ -32,12 +32,11 @@ class Organization < ActiveRecord::Base
 
     unless organization = Organization.find_by_email(email)
 
-      organization = Organization.new email: email, token: token
+      organization = Organization.new email: email, token: token #, contact_email: email
       organization.contact_email = email
       organization.save
     end
 
     organization
   end
-
 end
