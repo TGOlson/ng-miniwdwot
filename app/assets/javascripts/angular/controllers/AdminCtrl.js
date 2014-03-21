@@ -5,6 +5,7 @@ app.controller('AdminCtrl', ['$scope', 'Admin', 'Flash', '$rootScope', function(
   $scope.showForm = false;
 
   $scope.show = function () {
+
     $scope.showForm = true;
     $scope.login = {}
   }
@@ -44,6 +45,5 @@ app.controller('AdminCtrl', ['$scope', 'Admin', 'Flash', '$rootScope', function(
     $rootScope.admin = null;
     Flash.message('info', 'Sign out successful.')
   }
-
 
 }]);

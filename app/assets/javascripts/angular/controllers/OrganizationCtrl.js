@@ -1,14 +1,14 @@
 'use strict';
 
 app.controller('OrganizationCtrl',
-  ['$scope', 'Organization', '$location', 'Flash', '$rootScope',
-  function ($scope, Organization, $location, Flash, $rootScope) {
+  ['$scope', 'Organization', '$location', 'Flash', '$rootScope', '$window',
+  function ($scope, Organization, $location, Flash, $rootScope, $window) {
 
-    var orgId = $location.$$absUrl.split('/organizations/')[1].split('#')[0]
+    // grab organization id from data attribute
+    // this id is set before angular takes over
+    var orgId = $('#orgId').data().id
 
     setOrg();
--
-    console.log('here')
 
     function setOrg () {
 
@@ -41,14 +41,18 @@ app.controller('OrganizationCtrl',
 
     $scope.delete = function () {
 
-      Organization.delete({ id: orgId} , function ( obj ) {
+      if(confirm('Are you sure you want to submit?')){
 
-        $location.path('/');
+        // send entire organization for token validation
+        Organization.delete($scope.organization , function ( obj ) {
 
-        Flash.message('notice', 'Organization deleted.')
+          setOrg();
+          $location.path('/');
+          Flash.message('info', 'Organization deleted.')
 
-      })
+        })
 
+      }
     }
 
     $scope.$on('$routeChangeStart', function(next, current) {
@@ -82,6 +86,5 @@ app.controller('OrganizationCtrl',
       }
       return false
     }
-
 
   }]);

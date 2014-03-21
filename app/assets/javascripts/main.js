@@ -1,10 +1,5 @@
 'use strict';
 
-
-// Blog.config(["$httpProvider", (provider) ->
-//   provider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content')
-// ])
-
 var app = angular.module('miniwdwot', [
     'ngResource',
     'ngRoute'
@@ -20,8 +15,8 @@ app.config(['$routeProvider', '$httpProvider', function ($routeProvider, $httpPr
       templateUrl: '/assets/organization/properties.html',
       controller: 'OrgContentCtrl'
     })
-    .when('/featured_properties', {
-      templateUrl: '/assets/organization/featured_properties.html',
+    .when('/featured', {
+      templateUrl: '/assets/organization/featured.html',
       controller: 'OrgContentCtrl'
     })
     .when('/about', {

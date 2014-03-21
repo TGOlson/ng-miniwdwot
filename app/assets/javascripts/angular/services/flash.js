@@ -9,7 +9,7 @@ app.factory('Flash', ['$rootScope', function ( $rootScope ) {
         message: message
       }
 
-      $('.alert').show().delay(2000).fadeOut();
+      $('.alert').show().delay(2000).fadeOut(1000);
 
     }
   }

@@ -1,33 +1,29 @@
 <div id='admin-nav'>
 
-
   <div ng-show='showForm' class='col-sm-3 col-sm-offset-9 text-left' id="admin-login-form">
 
-        <p class='text-muted'>Use your Site Control email and password to login.</p>
+    <p class='text-muted'>Use your Site Control email and password to login.</p>
 
-        <p class='text-muted'>Please read our about page for any questions about account management.</p>
+    <p class='text-muted'>Please refer to <a href='http://sitecontrol.us/'>Site Control</a> for any questions about account management or to sign up.</p>
 
-        <form ng-submit='signIn()'>
+    <form ng-submit='signIn()'>
 
-          <div class='form-group'>
-            <label for='email'>Email</label>
-            <input type='text' class='form-control' name='email' id='email' ng-model='login.email' autofocus='true'/>
-          </div>
+      <div class='form-group'>
+        <label for='email'>Email</label>
+        <input type='text' class='form-control' name='email' id='email' ng-model='login.email' autofocus='true'/>
+      </div>
 
-          <div class='form-group'>
-            <label for='password'>Password</label>
-            <input type='password' class='form-control' name='password' id='password' ng-model='login.password'/>
-          </div>
+      <div class='form-group'>
+        <label for='password'>Password</label>
+        <input type='password' class='form-control' name='password' id='password' ng-model='login.password'/>
+      </div>
 
-          <div class='form-group text-center'>
-            <input type='submit' class='btn btn-primary' value='Sign in'/>
-            <a href ng-click="cancelSignIn()">Cancel</a>
-          </div>
+      <div class='form-group text-center'>
+        <input type='submit' class='btn btn-primary' value='Sign in'/>
+        <a href ng-click="cancelSignIn()">Cancel</a>
+      </div>
 
-        </form>
-
-
-
+    </form>
   </div>
 
   <div ng-show='admin'>
@@ -39,5 +35,4 @@
   <div ng-hide='admin'>
       <li><a href ng-click='show()'>Sign in</a></li>
   </div>
-
 </div>

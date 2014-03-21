@@ -31,9 +31,7 @@ class Organization < ActiveRecord::Base
   def self.find_or_create(email, token)
 
     unless organization = Organization.find_by_email(email)
-
-      organization = Organization.new email: email, token: token #, contact_email: email
-      organization.contact_email = email
+      organization = Organization.new email: email, token: token, contact_email: email
       organization.save
     end
 
