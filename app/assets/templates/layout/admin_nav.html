@@ -27,12 +27,16 @@
   </div>
 
   <div ng-show='admin'>
-      <li>Signed in as <a href='/organizations/{{ admin.id }}#/'>{{ admin.email }}</a></li>
-      <li><a href='/organizations/{{ admin.id }}#/edit'>Organization Settings</a></li>
+    <ul>
+      <li>Signed in as <a href='/#/{{ admin.id }}/'>{{ admin.email }}</a></li>
+      <li><a href='/#/{{ admin.id }}/edit'>Organization Settings</a></li>
       <li><a href ng-click='signOut()'>Sign out</a></li>
+    </ul>
   </div>
 
   <div ng-hide='admin'>
-      <li><a href ng-click='show()'>Sign in</a></li>
+    <ul>
+      <li><a href ng-click='showLoginForm()'>Sign in</a></li>
+    </ul>
   </div>
 </div>

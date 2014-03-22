@@ -12,7 +12,7 @@
         <span class="icon-bar"></span>
       </button>
 
-      <a href="#/" class='navbar-brand'>{{ organization.name }}</a>
+      <!-- <a href="#/" class='navbar-brand'>{{ organization.name }}</a> -->
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -21,16 +21,20 @@
 
         <ul class="nav navbar-nav">
 
-          <li ng-class='{ active: path=="/properties" }'>
-            <a href="#/properties">Properties</a>
+          <li ng-class='{ active: path==organization.id || path=="" }'>
+            <a href="#/{{ organization.id }}">Home</a>
           </li>
 
-          <li ng-class='{ active: path=="/featured" }'>
-            <a href="#/featured">Featured Properties</a>
+          <li ng-class='{ active: path=="properties" }'>
+            <a href="#/{{ organization.id }}/properties">Properties</a>
           </li>
 
-          <li ng-class='{ active: path=="/about" }'>
-            <a href="#/about">About</a>
+          <li ng-class='{ active: path=="featured" }'>
+            <a href="#/{{ organization.id }}/featured">Featured Properties</a>
+          </li>
+
+          <li ng-class='{ active: path=="about" }'>
+            <a href="#/{{ organization.id }}/about">About</a>
           </li>
 
         </ul>

@@ -4,7 +4,7 @@ app.controller('AdminCtrl', ['$scope', 'Admin', 'Flash', '$rootScope', function(
 
   $scope.showForm = false;
 
-  $scope.show = function () {
+  $scope.showLoginForm = function () {
 
     $scope.showForm = true;
     $scope.login = {}

@@ -1,21 +1,53 @@
 'use strict';
 
 app.controller('OrganizationCtrl',
-  ['$scope', 'Organization', '$location', 'Flash', '$rootScope', '$window',
-  function ($scope, Organization, $location, Flash, $rootScope, $window) {
+  [
+    '$scope',
+    '$location',
+    '$rootScope',
+    '$routeParams',
+    'Organization',
+    'Flash',
+    'Org',
+
+    function ($scope, $location, $rootScope, $routeParams, Organization, Flash, Org) {
 
     // grab organization id from data attribute
     // this id is set before angular takes over
-    var orgId = $('#orgId').data().id
+    var orgId = $routeParams.id
 
-    setOrg();
+    $scope.organization = Org;
+
+    $rootScope.badOrg = false;
+
+    // use this to prevent multiple calls to the server
+    // organization data is reused if it exists
+    if($scope.organization.id != orgId){
+
+      setOrg();
+
+    }
 
     function setOrg () {
 
       Organization.get({ id: orgId} , function ( obj ) {
 
+        // Here we manually call out the attributes
+        // that are needed inside any outside controllers.
+        // This is done to preserve the two-way binding.
+        $scope.organization.id       = obj.id;
+        $scope.organization.name     = obj.name;
+        $scope.organization.logo_url = obj.logo_url;
+
+        // Set any remaining attributes for current scope.
         $scope.organization = obj;
-        if(!obj.id){ $scope.badOrg = true; }
+
+        // organization is bad is no id present
+        if(!obj.id){
+
+          $rootScope.badOrg = true;
+
+        }
 
       })
     }
@@ -24,9 +56,9 @@ app.controller('OrganizationCtrl',
 
       Organization.update($scope.organization)
 
-      $location.path('/');
-      Flash.message('info', 'Organization successfully updated.')
+      $location.path('/' + orgId);
 
+      Flash.message('info', 'Organization successfully updated.')
     }
 
     $scope.cancel = function () {
@@ -34,57 +66,64 @@ app.controller('OrganizationCtrl',
       // revert to server organization settings
       setOrg();
 
-      $location.path('/');
-      Flash.message('danger', 'Updates aborted.')
+      $location.path('/' + orgId );
 
+      Flash.message('danger', 'Updates aborted.')
     }
 
     $scope.delete = function () {
 
-      if(confirm('Are you sure you want to submit?')){
+      if( confirm('Are you sure you want to submit?') ){
 
         // send entire organization for token validation
         Organization.delete($scope.organization , function ( obj ) {
 
           setOrg();
+
           $location.path('/');
+
           Flash.message('info', 'Organization deleted.')
 
         })
-
       }
+
     }
 
-    $scope.$on('$routeChangeStart', function(next, current) {
+    $scope.$on('$routeChangeSuccess', function(next, current) {
 
-      $scope.path = $location.$$path
-      $scope.hideNav = false;
 
-      if($scope.path === '/edit'){
+      var isEditPath = ( $location.$$path == ('/' + orgId + '/edit') )
 
-        // if( canEdit() ){
-        if( true ){
+      // if the current user is an admin of current organization
+      if( isEditPath && !canEdit() ){
+      // if( false ){ // for debugging
 
-          $scope.hideNav = true;
-
-        } else {
-
-          $location.path('/');
-          Flash.message('danger', 'You mussed be signed in as the organization to access that page.')
-
-        }
+        $location.path('/' + orgId);
+        Flash.message('danger', 'You mussed be signed in as this organization to access that page.')
 
       }
 
     });
 
+
     function canEdit () {
+
+      // if user is logged in
       if( $rootScope.admin ) {
+
+        // if logged in user id is equal to current organization
         if( $rootScope.admin.id == orgId ) {
+
+          // allow editing
           return true
+
         }
       }
+
+      // if not, boot 'em
       return false
+
     }
+
 
   }]);
