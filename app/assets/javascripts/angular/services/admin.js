@@ -1,9 +1,9 @@
 app.service('Admin', ['$resource', function($resource) {
 
-  var Admin = {}
+  Admin = $resource('http://whydontweownthis.com/users/sign_in.json')
 
-  Admin.signIn = $resource('/sign_in');
+  Admin.signIn = $resource('/sign_in.json');
 
-  return Admin;
+  return Admin
+
 }]);
-

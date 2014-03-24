@@ -5,7 +5,7 @@ var app = angular.module('miniwdwot', [
     'ngRoute'
   ]);
 
-app.config(['$routeProvider', '$httpProvider', function ($routeProvider, $httpProvider) {
+app.config(['$routeProvider', function ($routeProvider) {
   $routeProvider
     .when('/', {
       templateUrl: '/assets/organizations/index.html',
@@ -35,67 +35,5 @@ app.config(['$routeProvider', '$httpProvider', function ($routeProvider, $httpPr
       redirectTo: '/'
     });
 
-    $httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content')
-
 }]);
 
-
-// app.factory('Data', function() {
-
-//   var message = "I'm data from a service";
-
-//   function set (newMessage) {
-//     message = newMessage;
-//   }
-
-//   function get () {
-//     return { message: message };
-//   }
-
-//     return {
-//       message: message,
-//       set: set,
-//       get: get
-//     }
-// })
-
-
-// app.controller('FirstCtrl', function($scope, Data) {
-
-//   $scope.data = Data;
-
-//   console.log('1')
-
-//   // setTimeout( function(){
-
-//   //   $scope.data = Data.get();
-//   //   console.log( Data.get() )
-
-//   // }, 100)
-
-
-//   // $scope.data = { message: 'something new' }
-
-// })
-
-// app.controller('SecondCtrl', function($scope, Data) {
-
-//   $scope.data = Data;
-//   console.log('2')
-
-//   // Data.set( 'something cool' )
-
-//   // console.log(Data.get())
-
-//   // $scope.data.message = { message: 'a new' }
-//   // Data = { message: 'hi again' }
-//   // Data = 'seomthing new';
-// })
-
-
-// app.controller('AdminCtrl', ['$scope', 'Admin', 'Flash', '$rootScope', function($scope, Admin, Flash, $rootScope) {
-
-
-// function SecondCtrl($scope, Data){
-  // $scope.data = Data;
-// }

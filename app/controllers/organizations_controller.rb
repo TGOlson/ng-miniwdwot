@@ -1,7 +1,5 @@
 class OrganizationsController < ApplicationController
 
-  # currently used as layout and as a service
-  # needs to support html and json formats
   def index
     @organizations = Organization.all
 
@@ -11,15 +9,8 @@ class OrganizationsController < ApplicationController
     end
   end
 
-  # currently used as layout and as a service
-  # needs to support html and json formats
   def show
-    @organization = Organization.find_by_id params[:id]
-
-    respond_to do |format|
-      format.html
-      format.json { render json: @organization }
-    end
+    render json: Organization.find_by_id(params[:id])
   end
 
   def update
@@ -30,7 +21,7 @@ class OrganizationsController < ApplicationController
     if current_token?
       render json: { success: true, organization: @organization }
     else
-      render json: { success: false, message: 'Could be a bad token.' }
+      render_error
     end
   end
 
@@ -41,7 +32,7 @@ class OrganizationsController < ApplicationController
       @organization.destroy
       render json: { success: true, organization: @organization }
     else
-      render json: { success: false, message: 'Could be a bad token.' }
+      render_error
     end
   end
 

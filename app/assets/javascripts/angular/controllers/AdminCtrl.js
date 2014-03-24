@@ -16,27 +16,37 @@ app.controller('AdminCtrl', ['$scope', 'Admin', 'Flash', '$rootScope', function(
 
   $scope.signIn = function () {
 
-    var credentials = {
-      organization: {
-        email: $scope.login.email,
-        password: $scope.login.password
-      }
-    }
 
-    Admin.signIn.save( credentials , function ( obj ) {
+    // Check SiteControl to verify user
+    Admin.get( $scope.login , function ( response ) {
 
-      if(obj.success) {
+      if(response.status === 'ok') {
 
-        $scope.showForm = false;
+        var credentials = {
+          email: $scope.login.email,
+          token: response.token
+        }
+
+        // Get organization information from Rails server
+        Admin.signIn.save( credentials, function (obj){
+
+          // Set admin as object return
+          $rootScope.admin = obj.organization
+
+        })
+
+
         Flash.message('info', 'Sign in successful.')
-        $rootScope.admin = obj.organization
+
 
       } else {
 
-        $scope.showForm = false;
-        Flash.message('danger', 'Invalid email or password.')
+        Flash.message('danger', 'Bad email or password.')
 
       }
+
+
+      $scope.showForm = false;
     });
   }
 

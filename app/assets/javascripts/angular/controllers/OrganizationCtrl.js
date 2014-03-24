@@ -32,15 +32,13 @@ app.controller('OrganizationCtrl',
 
       Organization.get({ id: orgId} , function ( obj ) {
 
-        // Here we manually call out the attributes
-        // that are needed inside any outside controllers.
-        // This is done to preserve the two-way binding.
-        $scope.organization.id       = obj.id;
-        $scope.organization.name     = obj.name;
-        $scope.organization.logo_url = obj.logo_url;
+        // Here we manually call out each attribute
+        // to preserve the two-way binding with other controllers.
+        for( var i in obj ){
 
-        // Set any remaining attributes for current scope.
-        $scope.organization = obj;
+          $scope.organization[i] = obj[i];
+
+        }
 
         // organization is bad is no id present
         if(!obj.id){
@@ -73,16 +71,28 @@ app.controller('OrganizationCtrl',
 
     $scope.delete = function () {
 
+      console.log($scope.organization)
+
       if( confirm('Are you sure you want to submit?') ){
 
-        // send entire organization for token validation
-        Organization.delete($scope.organization , function ( obj ) {
+        var options = {
+          id: $scope.organization.id,
+          token: $scope.organization.token,
+        }
+
+        // send entire id and token for validation
+        Organization.delete( options, function ( obj ) {
 
           setOrg();
 
           $location.path('/');
 
           Flash.message('info', 'Organization deleted.')
+
+
+        }, function(res) {
+
+          console.log(res)
 
         })
       }
@@ -95,8 +105,8 @@ app.controller('OrganizationCtrl',
       var isEditPath = ( $location.$$path == ('/' + orgId + '/edit') )
 
       // if the current user is an admin of current organization
-      if( isEditPath && !canEdit() ){
-      // if( false ){ // for debugging
+      // if( isEditPath && !canEdit() ){
+      if( false ){ // for debugging
 
         $location.path('/' + orgId);
         Flash.message('danger', 'You mussed be signed in as this organization to access that page.')
