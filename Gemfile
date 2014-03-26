@@ -19,9 +19,6 @@ gem 'coffee-rails', '~> 4.0.0'
 
 gem 'jquery-rails'
 
-gem 'angular-rails-templates'
-
-
 # dependency for therubyracer
 # version required for ubuntu 12.04
 gem 'libv8', "~> 3.11.8.3"

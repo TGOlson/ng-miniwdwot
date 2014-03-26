@@ -19,5 +19,4 @@
 //= require angular-animate
 //= require main.js
 //= require_tree ./angular
-//= require_tree ./../templates
 //= require_tree .

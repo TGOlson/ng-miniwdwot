@@ -8,7 +8,7 @@
 </head>
 <body>
 
-  <div ng-controller='AdminCtrl' ng-include="'/assets/layout/admin_nav.html'"></div>
+  <div ng-controller='AdminCtrl' ng-include="'/templates/layout/admin_nav.html'"></div>
 
   <div ng-show='alert'  class="alert alert-{{ alert.type }} alert-dismissable">
     <p>{{ alert.message }}</p>
@@ -22,8 +22,8 @@
         <div ng-hide='hideAll' ng-controller='NavCtrl'>
 
           <div ng-hide="badOrg">
-            <div ng-include="'/assets/layout/header.html'"></div>
-            <div ng-include="'/assets/layout/navigation.html'" ng-hide='hideNav'></div>
+            <div ng-include="'/templates/layout/header.html'"></div>
+            <div ng-include="'/templates/layout/navigation.html'" ng-hide='hideNav'></div>
             <br>
           </div>
 
