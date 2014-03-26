@@ -17,3 +17,5 @@
 
 # Ignore notes
 notes*.txt
+
+.DS_Store

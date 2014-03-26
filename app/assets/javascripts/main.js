@@ -2,33 +2,34 @@
 
 var app = angular.module('miniwdwot', [
     'ngResource',
-    'ngRoute'
+    'ngRoute',
+    'templates'
   ]);
 
 app.config(['$routeProvider', function ($routeProvider) {
   $routeProvider
     .when('/', {
-      templateUrl: "<%= asset_path '/assets/organizations/index.html' %>",
+      templateUrl: '/assets/organizations/index.html',
       controller: 'OrganizationsCtrl'
     })
     .when('/:id', {
-      templateUrl: "<%= asset_path '/assets/organization/index.html' %>",
+      templateUrl: '/assets/organization/index.html',
       controller: 'OrganizationCtrl'
     })
     .when('/:id/properties', {
-      templateUrl: "<%= asset_path '/assets/organization/properties.html' %>",
+      templateUrl: '/assets/organization/properties.html',
       controller: 'OrganizationCtrl'
     })
     .when('/:id/featured', {
-      templateUrl: "<%= asset_path '/assets/organization/featured.html' %>",
+      templateUrl: '/assets/organization/featured.html',
       controller: 'OrganizationCtrl'
     })
     .when('/:id/about', {
-      templateUrl: "<%= asset_path '/assets/organization/about.html' %>",
+      templateUrl: '/assets/organization/about.html',
       controller: 'OrganizationCtrl'
     })
     .when('/:id/edit', {
-      templateUrl: "<%= asset_path '/assets/organization/edit.html' %>",
+      templateUrl: '/assets/organization/edit.html',
       controller: 'OrganizationCtrl'
     })
     .otherwise({
