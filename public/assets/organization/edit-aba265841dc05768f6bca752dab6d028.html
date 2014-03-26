@@ -1,0 +1,98 @@
+<div class="row">
+  <div class="col-sm-8 col-sm-offset-2">
+
+    <p><a href="#/"><- Back to Organization Page</a></p>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">Organization Settings</div>
+
+      <div class="panel-body">
+
+
+        <form ng-submit='update()'>
+
+          <div class='form-group'>
+            <label for='name'>Organization Name</label>
+            <input type='text' class='form-control' name='name' id='name' ng-model='organization.name'/>
+          </div>
+
+          <div class='form-group'>
+            <label for='logo_url'>Logo Url</label>
+            <p class='text-muted'>Link to a logo for the organization. Note: image will be scaled to 360px by 200px.</p>
+            <input type='text' class='form-control' name='logo_url' id='logo_url' ng-model='organization.logo_url'/>
+          </div>
+
+          <div class='form-group'>
+            <label for='contact_email'>Contact Email</label>
+            <p class='text-muted'>Where would you like property questions sent to? Note: this will not affect your login email.</p>
+            <input type='text' name='contact_email' class='form-control' id='contact_email' ng-model='organization.contact_email'>
+          </div>
+
+          <div class='form-group'>
+            <label for='about'>About</label>
+            <p class='text-muted'>To be displayed on the About page.</p>
+            <textarea name='about' class='form-control' id='about' ng-model='organization.about'></textarea>
+          </div>
+
+          <div class='form-group'>
+            <input type='submit' class='btn btn-primary' value='Update Organization'/>
+            <button ng-click='cancel()'  class='btn btn-default'>Cancel</button>
+          </div>
+
+        </form>
+
+
+
+
+<!--
+          <div class='form-group'>
+            <%= f.label :display_group_id, 'Group to Display' %>
+            <p class='text-muted'>This is the Site Control group your site will be generated from.</p>
+            <%= select_tag 'group', options_for_select(@organization.groups.collect{|n| [n.name, n.id]}), { :class => 'form-control' } %>
+          </div>
+
+          <div class='form-group'>
+            <%= label_tag 'Map to Display' %>
+            <% if @organization.display_group_id.nil? %>
+              <p>Please select a group to enable selection of maps.</p>
+            <% else %>
+              <%= select_tag 'map_id', options_for_select(@organization.group.maps.collect{|n| [n.name, n.id]}), { :class => 'form-control' } %>
+            <% end %>
+          </div>
+
+ -->
+
+      </div> <!-- panel body -->
+    </div> <!-- panel -->
+  </div> <!-- col-sm-12 -->
+</div>  <!-- row -->
+
+
+
+
+<div class="row">
+  <div class="col-sm-8 col-sm-offset-2">
+
+    <div class="panel panel-default">
+      <div class="panel-heading">Delete Organization</div>
+
+      <div class="panel-body">
+
+        <p class='text-muted'>Note: this action will only delete the organization from Mini WDOWT display.</p>
+
+        <form ng-submit='delete()'>
+
+          <div class='form-group'>
+            <input type='submit' class='btn btn-primary' value='Delete Organization' onsubmit="return confirm('Are you sure you want to submit?')"/>
+          </div>
+
+        </form>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+

@@ -1,0 +1,1 @@
+<h1>Featured Properties</h1>
