@@ -12,23 +12,23 @@ app.config(['$routeProvider', function ($routeProvider) {
       controller: 'OrganizationsCtrl'
     })
     .when('/:id', {
-      templateUrl: "<%= asset_path '/assets/organization/index.html'%>",
+      templateUrl: "<%= asset_path '/assets/organization/index.html' %>",
       controller: 'OrganizationCtrl'
     })
     .when('/:id/properties', {
-      templateUrl: "<%= asset_path '/assets/organization/properties.html'%>",
+      templateUrl: "<%= asset_path '/assets/organization/properties.html' %>",
       controller: 'OrganizationCtrl'
     })
     .when('/:id/featured', {
-      templateUrl: "<%= asset_path '/assets/organization/featured.html'%>",
+      templateUrl: "<%= asset_path '/assets/organization/featured.html' %>",
       controller: 'OrganizationCtrl'
     })
     .when('/:id/about', {
-      templateUrl: "<%= asset_path '/assets/organization/about.html'%>",
+      templateUrl: "<%= asset_path '/assets/organization/about.html' %>",
       controller: 'OrganizationCtrl'
     })
     .when('/:id/edit', {
-      templateUrl: "<%= asset_path '/assets/organization/edit.html'%>",
+      templateUrl: "<%= asset_path '/assets/organization/edit.html' %>",
       controller: 'OrganizationCtrl'
     })
     .otherwise({
