@@ -56,6 +56,7 @@ GEM
     factory_girl_rails (4.2.1)
       factory_girl (~> 4.2.0)
       railties (>= 3.0.0)
+    high_voltage (2.1.0)
     hike (1.2.3)
     httparty (0.9.0)
       multi_json (~> 1.0)
@@ -163,6 +164,7 @@ DEPENDENCIES
   angularjs-rails
   coffee-rails (~> 4.0.0)
   factory_girl_rails
+  high_voltage (~> 2.1.0)
   httparty
   jbuilder (~> 1.2)
   jquery-rails

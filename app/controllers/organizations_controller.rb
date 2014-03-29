@@ -2,28 +2,24 @@ class OrganizationsController < ApplicationController
 
   def index
     @organizations = Organization.all
-
-    respond_to do |format|
-      format.html
-      format.json { render json: @organizations }
-    end
+    render json: @organizations
   end
+
 
   def show
     render json: Organization.find_by_id(params[:id])
   end
 
+
   def update
     @organization = Organization.find_by_id params[:id]
 
-    @organization.update_attributes organization_params
-
     if current_token?
+      @organization.update_attributes organization_params
       render json: { success: true, organization: @organization }
-    else
-      render_error
     end
   end
+
 
   def destroy
     @organization = Organization.find_by_id params[:id]
@@ -31,10 +27,18 @@ class OrganizationsController < ApplicationController
     if current_token?
       @organization.destroy
       render json: { success: true, organization: @organization }
-    else
-      render_error
     end
   end
+
+
+  def sign_in
+    email = params[:email]
+    token = params[:token]
+
+    organization = Organization.find_or_create email, token
+    render json: { success: true, organization: organization }
+  end
+
 
   private
 
