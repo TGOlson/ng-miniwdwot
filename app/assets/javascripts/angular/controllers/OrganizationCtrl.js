@@ -24,11 +24,12 @@ app.controller('OrganizationCtrl',
     // organization data is reused if it exists
     if($scope.organization.id != orgId){
 
-      setOrg();
+      getOrg();
 
     }
 
-    function setOrg () {
+
+    function getOrg () {
 
       Organization.get({ id: orgId} , function ( obj ) {
 
@@ -52,28 +53,38 @@ app.controller('OrganizationCtrl',
       })
     }
 
+
     $scope.update = function() {
 
-      Organization.update($scope.organization)
+      Organization.update( $scope.organization , function( obj ) {
 
-      $location.path('/' + orgId);
 
-      Flash.message('info', 'Organization successfully updated.')
+        if( successfulCall( obj ) ){
+
+          $location.path('/' + orgId);
+          Flash.message('info', 'Organization successfully updated.')
+        
+        }
+        
+
+      });
+
+
     }
+
 
     $scope.cancel = function () {
 
       // revert to server organization settings
-      setOrg();
+      getOrg();
 
       $location.path('/' + orgId );
 
       Flash.message('danger', 'Updates aborted.')
     }
 
-    $scope.delete = function () {
 
-      console.log($scope.organization)
+    $scope.delete = function () {
 
       if( confirm('Are you sure you want to submit?') ){
 
@@ -82,24 +93,28 @@ app.controller('OrganizationCtrl',
           token: $scope.organization.token,
         }
 
-        // send entire id and token for validation
+        // send id and token for validation
         Organization.delete( options, function ( obj ) {
 
-          setOrg();
 
-          $location.path('/');
+          if( successfulCall( obj ) ){
 
-          Flash.message('info', 'Organization deleted.')
+            getOrg();
+            $location.path('/');
+            Flash.message('info', 'Organization deleted.')
+          
+          }
 
 
-        }, function(res) {
+        }, function(response) {
 
-          console.log(res)
+          console.log(response)
 
         })
       }
 
     }
+
 
     $scope.$on('$routeChangeSuccess', function(next, current) {
 
@@ -135,6 +150,21 @@ app.controller('OrganizationCtrl',
       // if not, boot 'em
       return false
 
+    }
+
+    function successfulCall ( obj ) {
+
+        if(obj.success){
+
+          return true
+        
+        } else {
+          
+          getOrg();
+          Flash.message('danger', 'Update failed.')
+          return false
+
+        }
     }
 
 
