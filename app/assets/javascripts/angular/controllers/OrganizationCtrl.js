@@ -32,6 +32,8 @@ app.controller('OrganizationCtrl',
 
       Organization.get({ id: orgId} , function ( obj ) {
 
+        console.log(obj)
+
         // Here we manually call out each attribute
         // to preserve the two-way binding with other controllers.
         for( var i in obj ){

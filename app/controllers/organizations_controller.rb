@@ -7,7 +7,9 @@ class OrganizationsController < ApplicationController
 
 
   def show
-    render json: Organization.find_by_id(params[:id])
+    organization = Organization.includes(:groups).find_by_id(params[:id])
+
+    render json: organization.to_json(include: :groups)
   end
 
 
@@ -32,10 +34,10 @@ class OrganizationsController < ApplicationController
 
 
   def sign_in
-    email = params[:email]
-    token = params[:token]
+    # email = params[:email]
+    # token = params[:token]
 
-    organization = Organization.find_or_create email, token
+    organization = Organization.find_or_create params
     render json: { success: true, organization: organization }
   end
 

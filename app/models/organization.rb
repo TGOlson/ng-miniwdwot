@@ -28,13 +28,36 @@ class Organization < ActiveRecord::Base
 
   has_many :groups
 
-  def self.find_or_create(email, token)
+  def self.find_or_create(params)
 
-    unless organization = Organization.find_by_email(email)
-      organization = Organization.new email: email, token: token, contact_email: email
-      organization.save
+    unless organization = Organization.find_by_id(params[:id])
+
+      org = Organization.new 
+
+      # prefer explicit callouts due to cockatil of params
+      org.email         = params[:email]
+      org.token         = params[:token] 
+      org.contact_email = params[:email]
+      org.id            = params[:id] 
+      org.groups        = find_or_create_groups(params[:groups])
+     
+      org.save
     end
 
     organization
   end
+end
+
+
+def find_or_create_groups(groups)
+
+  groups.map do |group_info|
+
+    unless group = Group.find_by_id(group_info[:id])
+      group = Group.create(group_info)
+    end
+    
+    group    
+  end
+
 end
