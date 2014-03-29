@@ -58,6 +58,7 @@ app.controller('OrganizationCtrl',
 
       Organization.update( $scope.organization , function( obj ) {
 
+        console.log(obj)
 
         if( successfulCall( obj ) ){
 
@@ -67,6 +68,10 @@ app.controller('OrganizationCtrl',
         }
         
 
+      }, function ( response ) {
+
+        getOrg();
+        Flash.message('danger', 'Updates failed.')
       });
 
 
@@ -108,7 +113,7 @@ app.controller('OrganizationCtrl',
 
         }, function(response) {
 
-          console.log(response)
+          console.log('failed', response)
 
         })
       }
@@ -154,7 +159,7 @@ app.controller('OrganizationCtrl',
 
     function successfulCall ( obj ) {
 
-        if(obj.success){
+        if(!obj.failure){
 
           return true
         

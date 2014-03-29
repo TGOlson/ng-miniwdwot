@@ -15,11 +15,11 @@ describe OrganizationsController do
   end
 
   let(:org_as_json) do 
-    { success: true, organization: organization }.to_json
+      organization.to_json(include: :groups) 
   end
 
   let(:error_response) do
-    { success: false, message: 'Could be a bad token.' }.to_json
+    { failure: true, message: 'Could be a bad token.' }.to_json
   end
 
   describe "GET #index" do
@@ -32,7 +32,7 @@ describe OrganizationsController do
   describe "GET #show" do
     it "should return a json organization with groups" do
       get :show, id: organization.id
-      expect(response.body).to eq organization.to_json(include: :groups)
+      expect(response.body).to eq org_as_json
     end
   end
 
@@ -43,9 +43,9 @@ describe OrganizationsController do
     end
 
     it "should return a new organization if the org is not already registered" do
-      post :sign_in, organization: { id: 1, groups: [] }
-      expect(response.body).to_not eq org_as_json     
-      expect(JSON.parse(response.body)['organization']['id']).to eq 1     
+      expect{
+        post :sign_in, organization: { id: 'a', email: 'b', token: 'c', groups: [] }
+      }.to change{ Organization.count }.by 1
     end    
   end
 

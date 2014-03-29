@@ -6,8 +6,8 @@ class OrganizationsController < ApplicationController
   end
 
   def show
-    organization = Organization.includes(:groups).find_by_id(params[:id])
-    render json: organization.to_json(include: :groups)
+    @organization = find_org_with_groups_by_id params[:id]
+    render_organization_as_json
   end
 
   def sign_in
@@ -16,7 +16,11 @@ class OrganizationsController < ApplicationController
   end
 
   def update
-    @organization = Organization.find_by_id params[:id]
+
+    p '*' * 80
+    p params
+
+    @organization = find_org_with_groups_by_id params[:id]
 
     if current_token?
       @organization.update_attributes organization_params
@@ -27,7 +31,10 @@ class OrganizationsController < ApplicationController
   end
 
   def destroy
-    @organization = Organization.find_by_id params[:id]
+    p '*' * 80
+    p params
+    @organization = find_org_with_groups_by_id params[:id]
+
 
     if current_token?
       @organization.destroy

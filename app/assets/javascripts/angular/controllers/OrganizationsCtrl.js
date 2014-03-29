@@ -2,6 +2,10 @@
 
 app.controller('OrganizationsCtrl', ['$scope', 'Organization', function($scope, Organization) {
 
-  $scope.organizations = Organization.query();
+  Organization.query( function ( obj ) {
+
+    $scope.organizations = obj;
+  
+  });
 
 }]);
