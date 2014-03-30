@@ -7,10 +7,11 @@ app.controller('OrganizationCtrl',
     '$rootScope',
     '$routeParams',
     'Organization',
-    'Flash',
     'Org',
+    'HandleError',
+    'Property',
 
-    function ($scope, $location, $rootScope, $routeParams, Organization, Flash, Org) {
+    function ($scope, $location, $rootScope, $routeParams, Organization, Org, HandleError, Property) {
 
     // grab organization id from data attribute
     // this id is set before angular takes over
@@ -24,12 +25,12 @@ app.controller('OrganizationCtrl',
     // organization data is reused if it exists
     if($scope.organization.id != orgId){
 
-      getOrg();
+      getOrg( getProperties );
 
     }
 
 
-    function getOrg () {
+    function getOrg ( nextCall ) {
 
       Organization.get( { id: orgId } , function ( obj ) {
 
@@ -48,134 +49,63 @@ app.controller('OrganizationCtrl',
 
         }
 
-      }, handleError );
+        if( nextCall ) { nextCall(); }
+
+
+      }, HandleErrorWithGetOrg );
     }
 
 
 
-    $scope.update = function() {
+    function getProperties () {
 
-
-      var options = {
-        id: $scope.organization.id,
-        token: $scope.organization.token,
-        organization: $scope.organization
-      };
-
-      Organization.update( options , function( obj ) {
-
-
-        if( successfulCall( obj ) ){
-
-          $location.path('/' + orgId);
-          Flash.message('info', 'Organization successfully updated.');
-        
-        }
-        
-
-      }, handleError );
-
-
-    }
-
-
-    $scope.cancel = function () {
-
-      // revert to server organization settings
-      getOrg();
-
-      $location.path('/' + orgId );
-
-      Flash.message('danger', 'Updates aborted.')
-    }
-
-
-    $scope.delete = function () {
-
-      // if( confirm('Are you sure you want to submit?') ){
-
-        var options = {
-          id: $scope.organization.id,
-          token: $scope.organization.token
-        }
-
-        // send id and token for validation
-        Organization.delete( options, function ( obj ) {
-
-
-          if( successfulCall( obj ) ){
-
-            getOrg();
-            $location.path('/');
-            Flash.message('info', 'Organization deleted.')
-          
-          }
-
-
-        }, handleError );
+      // options = {
+      //   token: userToken
       // }
 
-    }
+      // $.ajax({
+      //     type: "GET",
+      //     url: 'http://'+groupNameSlug+'.sitecontrol.us/m/'+mapNameSlug+'/blocks/' + hood + '.json?',
+      //     crossDomain: true,
+      //     timeout: 150000,
+      //     data: options,
+      //     dataType: "json",
+      //     success: function(data){
+      //         BESUCCESSFUL!
+      //     });
+      // });
 
+      // groupNameSlug = The group that the selected map belongs to.
+      // mapNameSlug   =  The requested map.
+      // userToken         = The logged in org/user auth token.
 
-    $scope.$on('$routeChangeSuccess', function(next, current) {
+      // This will return an array of all tagged properties in the map along with a key for each tag.
 
-
-      var isEditPath = ( $location.$$path == ('/' + orgId + '/edit') )
-
-      // if the current user is an admin of current organization
-      // if( isEditPath && !canEdit() ){
-      if( false ){ // for debugging
-
-        $location.path('/' + orgId);
-        Flash.message('danger', 'You mussed be signed in as this organization to access that page.')
-
+      var options = {
+        token: '3j9a51qrtfvfHiVsthXt'
       }
 
-    });
+
+      console.log('getting props')
+      Property.get( options, function ( obj ) {
+
+        console.log(obj)
+
+      }, HandleError );
 
 
-    function canEdit () {
-
-      // if user is logged in
-      if( $rootScope.admin ) {
-
-        // if logged in user id is equal to current organization
-        if( $rootScope.admin.id == orgId ) {
-
-          // allow editing
-          return true
-
-        }
-      }
-
-      // if not, boot 'em
-      return false
+      $scope.properties = [
+        { id: 1, name: 'Prop1'},
+        { id: 1, name: 'Prop2'},
+        { id: 1, name: 'Prop3'},
+        { id: 1, name: 'Prop4'}
+      ]
 
     }
 
-    function successfulCall ( obj ) {
 
-        if(!obj.failure){
-
-          return true;
-        
-        } else {
-          
-          handleError();
-          return false;
-
-        }
-    }
-
-    function handleError ( response ) {
-
-        console.log('Action failed', response);
-
-        var message = 'Something went wrong and that action could not be completed.';
-        Flash.message('danger', message);
-
-        getOrg();
+    function HandleErrorWithGetOrg ( response ) {
+       HandleError.newErr(response, getOrg); 
     }
 
 

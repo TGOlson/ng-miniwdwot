@@ -6,3 +6,9 @@
 
 <h1>{{ organization.name }}</h1>
 <h3>{{ organization.email }}</h3>
+
+<ul ng-if='properties'>
+
+  <li ng-repeat='property in properties'>Property: {{ property.id }} - {{ property.name }}</li>
+
+</ul>
