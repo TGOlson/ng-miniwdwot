@@ -19,3 +19,6 @@
 notes*.txt
 
 .DS_Store
+
+# Ignore coverage reports
+/coverage/
