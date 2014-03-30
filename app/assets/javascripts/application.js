@@ -16,7 +16,7 @@
 //= require angular
 //= require angular-resource
 //= require angular-route
-//= require angular-animate
+//= require angular-mocks
 //= require main.js
 //= require_tree ./angular
 //= require_tree .

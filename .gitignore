@@ -21,4 +21,7 @@ notes*.txt
 .DS_Store
 
 # Ignore coverage reports
-/coverage/
+/coverage
+
+# Ignore node modules
+/node_modules

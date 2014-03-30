@@ -41,15 +41,16 @@ app.controller('OrganizationCtrl',
 
         }
 
-        // organization is bad is no id present
-        if(!obj.id){
+        // organization is bad if no id present
+        if( !obj || !obj.id ) {
 
           $rootScope.badOrg = true;
 
         }
 
-      })
+      }, handleError );
     }
+
 
 
     $scope.update = function() {
@@ -72,12 +73,7 @@ app.controller('OrganizationCtrl',
         }
         
 
-      }, function ( response ) {
-
-        getOrg();
-        Flash.message('danger', 'Updates failed.');
-
-      });
+      }, handleError );
 
 
     }
@@ -96,7 +92,7 @@ app.controller('OrganizationCtrl',
 
     $scope.delete = function () {
 
-      if( confirm('Are you sure you want to submit?') ){
+      // if( confirm('Are you sure you want to submit?') ){
 
         var options = {
           id: $scope.organization.id,
@@ -116,12 +112,8 @@ app.controller('OrganizationCtrl',
           }
 
 
-        }, function(response) {
-
-          console.log('failed', response)
-
-        })
-      }
+        }, handleError );
+      // }
 
     }
 
@@ -166,16 +158,28 @@ app.controller('OrganizationCtrl',
 
         if(!obj.failure){
 
-          return true
+          return true;
         
         } else {
           
-          getOrg();
-          Flash.message('danger', 'Update failed.')
-          return false
+          handleError();
+          return false;
 
         }
     }
 
+    function handleError ( response ) {
+
+        console.log('Action failed', response);
+
+        var message = 'Something went wrong and that action could not be completed.';
+        Flash.message('danger', message);
+
+        getOrg();
+    }
+
+
+    // provide a hook for testing functions
+    this.getOrg = getOrg;
 
   }]);
