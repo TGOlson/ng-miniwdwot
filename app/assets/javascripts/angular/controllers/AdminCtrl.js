@@ -16,45 +16,47 @@ app.controller('AdminCtrl', ['$scope', 'Admin', 'Flash', '$rootScope', function(
 
   $scope.signIn = function () {
 
-    console.log($scope.login)
 
     // Check SiteControl to verify user
     Admin.get( $scope.login , function ( response ) {
 
-      console.log(response)
 
       if(response.status === 'ok') {
 
 
-        var credentials = {
-          email: $scope.login.email,
-          token: response.token,
+        console.log(response)
 
-          // send SiteControl user_id
-          id: response.user_id,
+        var options = {
 
-          // send groups to server in event that new organization is created
-          groups: response.groups
-        }
+          organization: {
+
+            // send SiteControl user_id
+            id: response.user_id,
+
+            // send other info in event that new organization is created
+            email: $scope.login.email,
+            token: response.token,
+            groups: response.groups
+
+          }
+
+        };
 
         // Get organization information from Rails server
-        Admin.signIn.save( credentials, function (obj){
+        Admin.signIn.save( options, function ( obj ) {
 
-
-          console.log(obj)
-          
           // Set admin as object return
-          $rootScope.admin = obj.organization
+          $rootScope.admin = obj;
 
-        })
+        });
 
 
-        Flash.message('info', 'Sign in successful.')
+        Flash.message('info', 'Sign in successful.');
 
 
       } else {
 
-        Flash.message('danger', 'Bad email or password.')
+        Flash.message('danger', 'Bad email or password.');
 
       }
 
@@ -66,7 +68,7 @@ app.controller('AdminCtrl', ['$scope', 'Admin', 'Flash', '$rootScope', function(
   $scope.signOut = function () {
 
     $rootScope.admin = null;
-    Flash.message('info', 'Sign out successful.')
+    Flash.message('info', 'Sign out successful.');
   }
 
 }]);

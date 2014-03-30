@@ -32,14 +32,14 @@ class Organization < ActiveRecord::Base
 
     unless organization = Organization.find_by_id(params[:id])
 
-      organization = Organization.new 
+      organization = Organization.new
 
       # prefer explicit callouts due to cockatil of params
       organization.email         = params[:email]
       organization.token         = params[:token] 
       organization.contact_email = params[:email]
       organization.id            = params[:id] 
-      organization.groups        = find_or_create_groups(params[:groups])
+      organization.groups        = find_or_create_groups params[:groups]
      
       organization.save
     end
@@ -48,16 +48,7 @@ class Organization < ActiveRecord::Base
   end
 
   def self.find_or_create_groups(groups)
-
-    groups.map do |group_info|
-
-      unless group = Group.find_by_id(group_info[:id])
-        group = Group.create group_info
-      end
-      
-      group    
-    end
+    Group.find_or_create_by_batch groups
   end
   
 end
-

@@ -16,10 +16,6 @@ class OrganizationsController < ApplicationController
   end
 
   def update
-
-    p '*' * 80
-    p params
-
     @organization = find_org_with_groups_by_id params[:id]
 
     if current_token?
@@ -31,10 +27,7 @@ class OrganizationsController < ApplicationController
   end
 
   def destroy
-    p '*' * 80
-    p params
     @organization = find_org_with_groups_by_id params[:id]
-
 
     if current_token?
       @organization.destroy
@@ -48,10 +41,7 @@ class OrganizationsController < ApplicationController
   private
 
   def organization_params
-    params
-      .permit(
-        :organization
-        )
+    params.require(:organization)
       .permit(
         :name,
         :contact_email,

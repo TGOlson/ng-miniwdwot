@@ -6,6 +6,7 @@ describe OrganizationsController do
   
   let(:org_params) do
     { id: organization.id, 
+      token: organization.token,   
       organization: { 
         id: organization.id, 
         token: organization.token, 
@@ -52,11 +53,12 @@ describe OrganizationsController do
   describe "PUT #update" do
     it "should update an organization with valid token" do
       put :update, org_params
-      expect(response.body).to eq org_as_json
+      org_name = JSON.parse(response.body)['name']
+      expect(org_name).to eq 'Cool'
     end
 
     it "should not update an organization without a valid token" do
-      org_params[:organization].delete(:token)
+      org_params.delete(:token)
       put :update, org_params
       expect(response.body).to eq error_response
     end
@@ -70,7 +72,7 @@ describe OrganizationsController do
     end
 
     it "should not delete an organization without a valid token" do
-      org_params[:organization].delete(:token)
+      org_params.delete(:token)
 
       expect{
         delete :destroy, org_params

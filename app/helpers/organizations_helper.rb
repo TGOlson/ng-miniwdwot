@@ -5,7 +5,7 @@ module OrganizationsHelper
   end
 
   def current_token?
-    @organization.token == params[:organization][:token]
+    @organization.token == params[:token]
   end
 
   def render_error

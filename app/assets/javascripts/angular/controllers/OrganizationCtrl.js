@@ -31,9 +31,7 @@ app.controller('OrganizationCtrl',
 
     function getOrg () {
 
-      Organization.get({ id: orgId} , function ( obj ) {
-
-        console.log(obj)
+      Organization.get( { id: orgId } , function ( obj ) {
 
         // Here we manually call out each attribute
         // to preserve the two-way binding with other controllers.
@@ -56,14 +54,20 @@ app.controller('OrganizationCtrl',
 
     $scope.update = function() {
 
-      Organization.update( $scope.organization , function( obj ) {
 
-        console.log(obj)
+      var options = {
+        id: $scope.organization.id,
+        token: $scope.organization.token,
+        organization: $scope.organization
+      };
+
+      Organization.update( options , function( obj ) {
+
 
         if( successfulCall( obj ) ){
 
           $location.path('/' + orgId);
-          Flash.message('info', 'Organization successfully updated.')
+          Flash.message('info', 'Organization successfully updated.');
         
         }
         
@@ -71,7 +75,8 @@ app.controller('OrganizationCtrl',
       }, function ( response ) {
 
         getOrg();
-        Flash.message('danger', 'Updates failed.')
+        Flash.message('danger', 'Updates failed.');
+
       });
 
 
@@ -95,7 +100,7 @@ app.controller('OrganizationCtrl',
 
         var options = {
           id: $scope.organization.id,
-          token: $scope.organization.token,
+          token: $scope.organization.token
         }
 
         // send id and token for validation
