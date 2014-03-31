@@ -1,22 +1,13 @@
 class PropertiesController < ApplicationController
 
   def index
-    # @map = Map.find_by_id params[:id]
-    @map = Map.includes(:properties).find_by_id(params[:map_id])
+    @properties = Property.where map_id: params[:map_id]
 
-    if @map = Map.includes(:properties).find_by_id(params[:map_id])
-      @properties = @map.properties
-
-      if @properties
-        render json: @properties
-      end
-
-    else
-      render json: {status: 'No props'}
+    if @properties.empty?
+      properties = Property.fetch_from_source_by_map params[:map_id], params[:token]
     end
 
-
-
+    render json: @properties
   end
 
 end

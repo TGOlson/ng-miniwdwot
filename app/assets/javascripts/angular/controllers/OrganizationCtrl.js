@@ -29,6 +29,10 @@ app.controller('OrganizationCtrl',
 
     } else if ( !$scope.properties ) {
 
+      // properties array refreshes
+      // may want to wrap a property controller
+      console.log('getting properties')
+      console.log($scope.properties)
       getProperties();
 
     }
@@ -64,66 +68,29 @@ app.controller('OrganizationCtrl',
 
     function getProperties () {
 
-      // options = {
-      //   token: userToken
-      // }
-
-      // $.ajax({
-      //     type: "GET",
-      //     url: 'http://'+groupNameSlug+'.sitecontrol.us/m/'+mapNameSlug+'/blocks/' + hood + '.json?',
-      //     crossDomain: true,
-      //     timeout: 150000,
-      //     data: options,
-      //     dataType: "json",
-      //     success: function(data){
-      //         BESUCCESSFUL!
-      //     });
-      // });
-
-      // groupNameSlug = The group that the selected map belongs to.
-      // mapNameSlug   =  The requested map.
-      // userToken         = The logged in org/user auth token.
-
-      // This will return an array of all tagged properties in the map along with a key for each tag.
-
-      if($scope.organization.display_group_id && $scope.organization.display_map_id){
+      if($scope.organization.display_map_id && !$scope.properties){
 
 
         var options = {
           token: $scope.organization.token,
-          group_id: $scope.organization.display_group_id,
           map_id: $scope.organization.display_map_id,
-          only_tagged: 1
         }
 
-        Property.get( options, function ( obj ) {
+        Property.query( options, function ( obj ) {
 
-          console.log(obj)
+          $scope.properties = obj;
 
-          $scope.properties = ( function( obj ) {
-
-            var properties = [];
-
-            for( var i in obj.features ){
-
-              properties.push(obj.features[i].properties)
-
+          // if(obj.length === 1){
+            if(obj[0].address == 'empty_set'){
+              $scope.emptySet = true;
+              
+              console.log('empty')
             }
-
-            return properties;
-
-          })( obj );
+          // }
 
           console.log($scope.properties)
 
         }, HandleError );
-
-        // $scope.properties = [
-        //   { id: 1, name: 'Prop1'},
-        //   { id: 1, name: 'Prop2'},
-        //   { id: 1, name: 'Prop3'},
-        //   { id: 1, name: 'Prop4'}
-        // ]
 
       }
     }

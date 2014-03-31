@@ -1,36 +1,16 @@
 class MapsController < ApplicationController
 
   def index
-    @group = Group.find params[:group_id]
 
-    p 'printing from index'
-    p @group
-
-    @maps = @group.maps
+    @maps = Map.where group_id: params[:group_id]
 
     if @maps.empty?
-
+      p '*' * 80
       p 'maps empty'
-
-      p @group.organization
-
-      options = {
-        body: {
-          token: @group.organization.token
-        }
-      }
-
-      response = HTTParty.get("http://sitecontrol.us/groups/#{@group.id}/maps.json", options) #, { group_id: '@group_id' });
-
-      @maps = JSON.parse(response.body)
-
-      @maps.each do |map|
-        @group.maps << Map.create(id: map['id'], name: map['name'])
-      end
-
+      Map.fetch_from_source_by_group params[:group_id], params[:token]
     end
 
-    render json: @group.maps
+    render json: @maps
   end
 
 end

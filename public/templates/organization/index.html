@@ -1,5 +1,3 @@
-<h1>{{ organization.name }}</h1>
-
 <div ng-if='!organization.display_map_id'>
   <h3>Hold up!</h3>
   <p>It looks like this organization has not configured their groups or maps.</p>
@@ -8,9 +6,14 @@
 
 <div ng-if='organization.display_map_id'>
   <h1>Properties</h1>
-  <ul ng-if='properties'>
 
-    <li ng-repeat='property in properties'>Property: {{ property.fid }} - {{ property.address }}</li>
-
+  <ul ng-if='properties' ng-hide='emptySet'>
+    <li ng-repeat='property in properties'>Property: {{ property.id }} - {{ property.address }}</li>
   </ul>
+  
+  <div ng-show='emptySet'>
+    <p>Looks like there are no properties here. Sorry.</p>
+    <p>If you are the admin of this organization try signing in and changing your settings.</p>
+  </div>
+
 </div>

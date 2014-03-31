@@ -16,15 +16,5 @@ describe GroupsController do
       expect(response.body).to eq [group].to_json
       expect(response.body).to eq organization.groups.to_json
     end
-
-    xit "should return an array of groups for an organization without existing groups" do
-      organization.groups = []
-      expect{
-        get :index, organization_id: organization.id
-      }.to change{ Group.count }.by 1
-      
-      # expect(response.body).to eq [group].to_json
-      # expect(response.body).to eq organization.groups.to_json
-    end
   end
 end

@@ -90,6 +90,7 @@ app.controller('OrganizationEditCtrl',
 
         Group.query({ organization_id: orgId }, function ( obj ) {
           
+          console.log('group', obj)
           $scope.groups = obj;
 
         }, HandleError)
@@ -115,7 +116,7 @@ app.controller('OrganizationEditCtrl',
 
           $scope.maps = obj;
 
-          console.log(obj)
+          console.log('maps', obj)
 
         }, HandleError );
 
