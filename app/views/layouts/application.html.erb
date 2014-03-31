@@ -9,17 +9,18 @@
 <body>
 
 
-<div class="row">
-  <div class="col-sm-12">
-
-    <div class='alert-wrapper'>
+<div class='alert-wrapper'>
       
   <div class="col-sm-8 col-sm-offset-2">
-    <div ng-show='alert'  class="alert alert-{{ alert.type }} alert-dismissable">
+    <div ng-show='alert'  class="alert alert-{{ alert.type }}">
         <p>{{ alert.message }}</p>
       </div>
   </div>
-    </div>
+
+</div>
+
+<div class="row">
+  <div class="col-sm-12">
 
     <div ng-controller='AdminCtrl' ng-include="'/templates/layout/admin_nav.html'"></div>
     
