@@ -6,32 +6,32 @@ class OrganizationsController < ApplicationController
   end
 
   def show
-    @organization = find_org_with_groups_by_id params[:id]
-    render_organization_as_json
+    @organization = Organization.find params[:id]
+    render json: @organization
   end
 
   def sign_in
     @organization = Organization.find_or_create params[:organization]
-    render_organization_as_json          
+    render json: @organization          
   end
 
   def update
-    @organization = find_org_with_groups_by_id params[:id]
+    @organization = Organization.find params[:id]
 
     if current_token?
       @organization.update_attributes organization_params
-      render_organization_as_json      
+      render json: @organization      
     else
       render_error
     end
   end
 
   def destroy
-    @organization = find_org_with_groups_by_id params[:id]
+    @organization = Organization.find params[:id]
 
     if current_token?
       @organization.destroy
-      render_organization_as_json      
+      render json: @organization      
     else
       render_error
     end

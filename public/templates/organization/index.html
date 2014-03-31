@@ -1,14 +1,16 @@
-<div ng-if='!organization.display_group_id' ng-controller='AdminCtrl'>
+<h1>{{ organization.name }}</h1>
+
+<div ng-if='!organization.display_map_id'>
   <h3>Hold up!</h3>
   <p>It looks like this organization has not configured their groups or maps.</p>
-  <p>If you are the owner, please <a href ng-click='show()'>sign in</a> and navigate to the Organization Settings page.</p>
+  <p>If you are the owner, please sign in and navigate to the Organization Settings page.</p>
 </div>
 
-<h1>{{ organization.name }}</h1>
-<h3>{{ organization.email }}</h3>
+<div ng-if='organization.display_map_id'>
+  <h1>Properties</h1>
+  <ul ng-if='properties'>
 
-<ul ng-if='properties'>
+    <li ng-repeat='property in properties'>Property: {{ property.fid }} - {{ property.address }}</li>
 
-  <li ng-repeat='property in properties'>Property: {{ property.id }} - {{ property.name }}</li>
-
-</ul>
+  </ul>
+</div>

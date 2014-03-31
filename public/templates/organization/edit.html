@@ -38,7 +38,7 @@
             <label for='display_group'>Group to Display</label>
             <p class='text-muted'>This is the Site Control group your site will be generated from.</p> 
             <select class='form-control' name='display_group' ng-model='organization.display_group_id' ng-change='getMaps()'>
-              <option ng-repeat='group in organization.groups' value='{{ group.id }}'>{{ group.name }}</option>
+              <option ng-repeat='group in groups' value='{{ group.id }}'>{{ group.name }}</option>
             </select>
           </div>
 

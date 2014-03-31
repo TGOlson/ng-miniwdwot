@@ -11,8 +11,9 @@ app.controller('OrganizationEditCtrl',
     'Org',
     'Map',
     'HandleError',
+    'Group',
 
-    function ($scope, $location, $rootScope, $routeParams, Organization, Flash, Org, Map, HandleError) {
+    function ($scope, $location, $rootScope, $routeParams, Organization, Flash, Org, Map, HandleError, Group) {
 
 
     var orgId;
@@ -77,12 +78,21 @@ app.controller('OrganizationEditCtrl',
 
         // Here we manually call out each attribute
         // to preserve the two-way binding with other controllers.
+
+        console.log(obj)
+
         for( var i in obj ){
 
 
           $scope.organization[i] = obj[i];
 
         }
+
+        Group.query({ organization_id: orgId }, function ( obj ) {
+          
+          $scope.groups = obj;
+
+        }, HandleError)
 
         if( nextCall ) { nextCall(); }
 

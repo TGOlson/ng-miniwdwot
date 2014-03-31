@@ -12,6 +12,8 @@ gem 'angularjs-rails'
 
 gem 'high_voltage', '~> 2.1.0'
 
+gem 'httparty'
+
 gem 'simplecov', :require => false, :group => :test
 
 # Use Uglifier as compressor for JavaScript assets

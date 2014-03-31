@@ -27,7 +27,12 @@ app.controller('OrganizationCtrl',
 
       getOrg( getProperties );
 
+    } else if ( !$scope.properties ) {
+
+      getProperties();
+
     }
+
 
 
     function getOrg ( nextCall ) {
@@ -81,26 +86,46 @@ app.controller('OrganizationCtrl',
 
       // This will return an array of all tagged properties in the map along with a key for each tag.
 
-      var options = {
-        token: '3j9a51qrtfvfHiVsthXt'
+      if($scope.organization.display_group_id && $scope.organization.display_map_id){
+
+
+        var options = {
+          token: $scope.organization.token,
+          group_id: $scope.organization.display_group_id,
+          map_id: $scope.organization.display_map_id,
+          only_tagged: 1
+        }
+
+        Property.get( options, function ( obj ) {
+
+          console.log(obj)
+
+          $scope.properties = ( function( obj ) {
+
+            var properties = [];
+
+            for( var i in obj.features ){
+
+              properties.push(obj.features[i].properties)
+
+            }
+
+            return properties;
+
+          })( obj );
+
+          console.log($scope.properties)
+
+        }, HandleError );
+
+        // $scope.properties = [
+        //   { id: 1, name: 'Prop1'},
+        //   { id: 1, name: 'Prop2'},
+        //   { id: 1, name: 'Prop3'},
+        //   { id: 1, name: 'Prop4'}
+        // ]
+
       }
-
-
-      console.log('getting props')
-      Property.get( options, function ( obj ) {
-
-        console.log(obj)
-
-      }, HandleError );
-
-
-      $scope.properties = [
-        { id: 1, name: 'Prop1'},
-        { id: 1, name: 'Prop2'},
-        { id: 1, name: 'Prop3'},
-        { id: 1, name: 'Prop4'}
-      ]
-
     }
 
 
