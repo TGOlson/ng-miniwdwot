@@ -116,7 +116,9 @@ app.controller('OrganizationEditCtrl',
 
           $scope.maps = obj;
 
-          console.log('maps', obj)
+
+
+          console.log('maps', $scope.maps)
 
         }, HandleError );
 

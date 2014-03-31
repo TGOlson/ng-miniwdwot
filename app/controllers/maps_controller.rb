@@ -1,16 +1,15 @@
 class MapsController < ApplicationController
 
   def index
+    @group = Group.find params[:group_id]
 
-    @maps = Map.where group_id: params[:group_id]
+    # @maps = @g÷roup.maps
 
-    if @maps.empty?
-      p '*' * 80
-      p 'maps empty'
-      Map.fetch_from_source_by_group params[:group_id], params[:token]
+    if @group.maps.empty?
+      @group.maps = @group.fetch_maps_from_source params[:token]
     end
 
-    render json: @maps
+    render json: @group.maps
   end
 
 end
