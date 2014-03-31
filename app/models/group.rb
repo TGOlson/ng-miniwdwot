@@ -26,32 +26,9 @@ class Group < ActiveRecord::Base
     maps = JSON.parse(response.body)
 
     maps.map do |map_info|
-      Map.find_or_create map_info
+      Map.find_or_create map_info, self.id
     end
   
   end
-
-  # def self.find_or_create(map_info, group_id)
-  #   if map = self.find_by_id(map_info['id'])
-  #     map
-  #   else
-  #     self.create id: map_info['id'], name: map_info['name'], group_id: group_id
-  #   end
-  # end
-  # def fetch_groups_from_org_id(org_id)
-  #   organization = Organization.find_by_id org_id
-
-  #     options = {
-  #       body: {
-  #         token: organization.token
-  #       }
-  #     }
-
-  #   response = HTTParty.get("http://sitecontrol.us/groups/#{@group.id}/maps.json", options)
-
-  #   #   return $resource('/organizations/:id', { id: '@id' },
-  #   # { update: { method: "PUT" } });
-
-  # end
 
 end

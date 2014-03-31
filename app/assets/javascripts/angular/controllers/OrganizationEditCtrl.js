@@ -90,7 +90,6 @@ app.controller('OrganizationEditCtrl',
 
         Group.query({ organization_id: orgId }, function ( obj ) {
           
-          console.log('group', obj)
           $scope.groups = obj;
 
         }, HandleError)
@@ -145,7 +144,6 @@ app.controller('OrganizationEditCtrl',
 
         if( successfulCall( obj ) ){
 
-          $location.path('/' + orgId);
           Flash.message('info', 'Organization successfully updated.');
         
         }
@@ -161,8 +159,6 @@ app.controller('OrganizationEditCtrl',
 
       // revert to server organization settings
       getOrg();
-
-      $location.path('/' + orgId );
 
       Flash.message('danger', 'Updates aborted.')
     }

@@ -15,11 +15,11 @@ class Map < ActiveRecord::Base
   
   end
 
-  def self.find_or_create(map_info)
+  def self.find_or_create(map_info, group_id)
     if map = self.find_by_id(map_info['id'])
       map
     else
-      self.create id: map_info['id'], name: map_info['name']
+      self.create id: map_info['id'], name: map_info['name'], group_id: group_id
     end
   end   
 
