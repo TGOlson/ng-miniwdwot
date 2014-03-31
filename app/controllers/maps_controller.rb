@@ -3,9 +3,16 @@ class MapsController < ApplicationController
   def index
     @group = Group.find params[:group_id]
 
+    p 'printing from index'
+    p @group
+
     @maps = @group.maps
 
     if @maps.empty?
+
+      p 'maps empty'
+
+      p @group.organization
 
       options = {
         body: {

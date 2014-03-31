@@ -17,4 +17,20 @@ class Group < ActiveRecord::Base
     group
   end
 
+  # def fetch_groups_from_org_id(org_id)
+  #   organization = Organization.find_by_id org_id
+
+  #     options = {
+  #       body: {
+  #         token: organization.token
+  #       }
+  #     }
+
+  #   response = HTTParty.get("http://sitecontrol.us/groups/#{@group.id}/maps.json", options)
+
+  #   #   return $resource('/organizations/:id', { id: '@id' },
+  #   # { update: { method: "PUT" } });
+
+  # end
+
 end
