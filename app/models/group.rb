@@ -18,15 +18,20 @@ class Group < ActiveRecord::Base
   end
 
 
-  def fetch_maps_from_source(token)
-    options = { body: { token: token } }
+  def fetch_maps_from_source
+    
+    options = { 
+      body: { 
+        token: self.organization.token 
+        } 
+      }
 
     response = HTTParty.get("http://sitecontrol.us/groups/#{self.id}/maps.json", options)
     
     maps = JSON.parse(response.body)
 
     maps.map do |map_info|
-      Map.find_or_create map_info, self.id
+      Map.find_or_create map_info
     end
   
   end
