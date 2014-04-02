@@ -1,6 +1,6 @@
 'use strict';
 
-app.controller('PropertyCtrl', ['$scope', '$routeParams', 'Property', 'Org', '$http', function($scope, $routeParams, Property, Org, $http) {
+app.controller('PropertyCtrl', ['$scope', '$routeParams', 'Property', 'Org', function($scope, $routeParams, Property, Org) {
 
 
   $scope.organization = Org;
@@ -36,8 +36,6 @@ app.controller('PropertyCtrl', ['$scope', '$routeParams', 'Property', 'Org', '$h
     }
 
     var streetviewUrl = parseStreetviewUrl(data);
-
-    console.log(streetviewUrl)
 
     return {
       blexts: data.blexts,

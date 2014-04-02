@@ -2,7 +2,7 @@ app.factory('HandleError', ['Flash', function ( Flash ) {
 
   return {
 
-    newErr: function ( response, callback ) {
+    newErr: function (response) {
 
       console.log('Action failed', response);
 
@@ -10,8 +10,6 @@ app.factory('HandleError', ['Flash', function ( Flash ) {
                     'and that action could not be completed.';
       
       Flash.message('danger', message);
-
-      callback();
 
     }
 

@@ -10,8 +10,9 @@ app.controller('OrganizationCtrl',
     'Org',
     'HandleError',
     'Property',
+    'Search',
 
-    function ($scope, $location, $rootScope, $routeParams, Organization, Org, HandleError, Property) {
+    function ($scope, $location, $rootScope, $routeParams, Organization, Org, HandleError, Property, Search) {
 
     // grab organization id from data attribute
     // this id is set before angular takes over
@@ -19,19 +20,15 @@ app.controller('OrganizationCtrl',
 
     $scope.organization = Org;
 
+    $scope.search = Search;
+
     $rootScope.badOrg = false;
 
     // use this to prevent multiple calls to the server
     // organization data is reused if it exists
     if($scope.organization.id != orgId){
 
-      getOrg( getProperties );
-
-    } else if ( !$scope.properties ) {
-
-      // properties array refreshes
-      // may want to wrap a property controller
-      getProperties();
+      getOrg();
 
     }
 
@@ -63,35 +60,9 @@ app.controller('OrganizationCtrl',
     }
 
 
-
-    function getProperties () {
-
-      if($scope.organization.display_map_id && !$scope.properties){
-
-
-        var options = {
-          token: $scope.organization.token,
-          map_id: $scope.organization.display_map_id,
-        }
-
-        Property.query( options, function ( obj ) {
-
-          $scope.properties = obj;
-
-            if(obj[0].address == 'empty_set'){
-              $scope.emptySet = true;
-              
-              console.log('empty')
-            }
-
-        }, HandleError );
-
-      }
-    }
-
-
-    function HandleErrorWithGetOrg ( response ) {
-       HandleError.newErr(response, getOrg); 
+    function HandleErrorWithGetOrg (response) {
+       HandleError.newErr(response);
+       getOrg(); 
     }
 
     // provide a hook for testing functions

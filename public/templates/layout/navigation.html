@@ -45,12 +45,11 @@
 
         <form class="navbar-form" role="search">
           <div class="form-group">
-            <input type="text" class="form-control" placeholder="Search">
+            <button class='btn btn-default' ng-show='search.text.length' ng-click='clearSearch()'>X</button>
+            <input type="text" class="form-control" placeholder="Search" ng-model='search.text'>
           </div>
         </form>
-
       </div>
-
 
     </div>
   </div><!-- /.container-fluid -->

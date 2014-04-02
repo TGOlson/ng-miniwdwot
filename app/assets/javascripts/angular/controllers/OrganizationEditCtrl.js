@@ -106,11 +106,11 @@ app.controller('OrganizationEditCtrl',
 
     function getGroups () {
 
-        Group.query({ organization_id: orgId }, function ( obj ) {
-          
-          $scope.groups = obj;
+      Group.query({ organization_id: orgId }, function ( obj ) {
+        
+        $scope.groups = obj;
 
-        }, editPageError)
+      }, editPageError)
       
     }
 

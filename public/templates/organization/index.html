@@ -4,29 +4,6 @@
   <p>If you are the owner, please sign in and navigate to the Organization Settings page.</p>
 </div>
 
-<div class='col-sm-12'>
-    
-  <form class="navbar-form" role="search">
-    <div class="form-group">
-      <input type='text' class="form-control" placeholder="Search" ng-model='searchText'>
-    </div>
-  </form>
-
+<div ng-if='organization.display_map_id' ng-controller='PropertiesCtrl'>  
+    <div ng-include="'/templates/properties/index.html'"></div>
 </div>
-
-<div ng-if='organization.display_map_id'>
-  <h1>Properties</h1>
-
-  <ul ng-if='properties' ng-hide='emptySet'>
-    <li ng-repeat='property in properties | filter:searchText'>
-      <a href='#/{{ organization.id }}/properties/{{ property.id }}'>Property: {{ property.id }} - {{ property.address }}<a/>
-    </li>
-  </ul>
-  
-  <div ng-show='emptySet'>
-    <p>Looks like there are no properties here. Sorry.</p>
-    <p>If you are the admin of this organization try signing in and changing your settings.</p>
-  </div>
-
-</div>
-

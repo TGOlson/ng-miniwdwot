@@ -32,7 +32,7 @@ app.config(['$routeProvider', function ($routeProvider) {
       controller: 'OrganizationEditCtrl'
     })
     .when('/:organization_id/properties/:property_id', {
-      templateUrl: '/templates/property/show.html',
+      templateUrl: '/templates/property/index.html',
       controller: 'PropertyCtrl'
     })    
     .otherwise({

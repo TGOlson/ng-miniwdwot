@@ -1,0 +1,12 @@
+<ul ng-if='properties' ng-hide='emptySet'>
+  <li ng-repeat='property in filteredProperties = ( properties | filter:search.text )'>
+    <a href='#/{{ organization.id }}/properties/{{ property.id }}'>Property: {{ property.id }} - {{ property.address }}<a/>
+  </li>
+  <h4 ng-hide='filteredProperties.length'>No properties match those search criteria.</h4>
+</ul>
+
+
+<div ng-show='emptySet'>
+  <p>Looks like there are no properties here. Sorry.</p>
+  <p>If you are the admin of this organization try signing in and changing your settings.</p>
+</div>

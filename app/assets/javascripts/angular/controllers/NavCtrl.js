@@ -1,9 +1,11 @@
 'use strict';
 
-app.controller('NavCtrl', ['$scope', 'Org', '$location', function($scope, Org, $location) {
+app.controller('NavCtrl', ['$scope', 'Org', '$location', 'Search', function($scope, Org, $location, Search) {
 
   // bind nav $scope.organization to Org service
   $scope.organization = Org;
+
+  $scope.search = Search;
 
   $scope.$on('$routeChangeStart', function(){
 
@@ -34,7 +36,11 @@ app.controller('NavCtrl', ['$scope', 'Org', '$location', function($scope, Org, $
 
     }
 
-  })
+  });
+
+  $scope.clearSearch = function () {
+    $scope.search.text = null;
+  }
 
 
 }]);
