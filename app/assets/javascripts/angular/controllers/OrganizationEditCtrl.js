@@ -44,11 +44,20 @@ app.controller('OrganizationEditCtrl',
       // default Org for two way binding, 
       $scope.organization = Org;
 
-      // and get org info
-      getOrg( getMaps );
+      getAllData();
 
 
     })();
+
+
+    function getAllData () {
+
+      getOrg()
+        .then(getGroups)
+        .then(getMaps)
+        .done();
+    
+    }
 
 
     function canEdit () {
@@ -71,39 +80,44 @@ app.controller('OrganizationEditCtrl',
     }
 
 
-
-    function getOrg ( nextCall ) {
+    function getOrg () {
+      var deferred = Q.defer();
 
       Organization.get( { id: orgId } , function ( obj ) {
 
-        // Here we manually call out each attribute
-        // to preserve the two-way binding with other controllers.
+        // wait until organization params are done parsing
+        // before declaring resolved
+        Q.fcall(parseOrgParams, obj)
+          .then(deferred.resolve)
+        
+      // should probably declare deferred.reject below
+      }, editPageError );
 
-        console.log(obj)
+      return deferred.promise;
+    }
 
-        for( var i in obj ){
+    function parseOrgParams(obj){
+      for( var i in obj ){
+        $scope.organization[i] = obj[i];
+      }
+    }
 
 
-          $scope.organization[i] = obj[i];
-
-        }
+    function getGroups () {
 
         Group.query({ organization_id: orgId }, function ( obj ) {
           
           $scope.groups = obj;
 
-        }, HandleError)
-
-        if( nextCall ) { nextCall(); }
-
-      }, function( response ) { HandleError.newErr(response, getOrg) }  );
-
+        }, editPageError)
+      
     }
 
 
     function getMaps () {
 
       if($scope.organization.display_group_id){
+
 
         var options = {
           group_id: $scope.organization.display_group_id,
@@ -115,11 +129,7 @@ app.controller('OrganizationEditCtrl',
 
           $scope.maps = obj;
 
-
-
-          console.log('maps', $scope.maps)
-
-        }, HandleError );
+        }, editPageError );
 
 
       }
@@ -127,7 +137,7 @@ app.controller('OrganizationEditCtrl',
     }
 
     // set hook for scope calls
-    $scope.getMaps = getMaps;
+    // $scope.getMaps = getMaps;
 
 
     $scope.update = function() {
@@ -149,7 +159,7 @@ app.controller('OrganizationEditCtrl',
         }
         
 
-      }, function( response ) { HandleError.newErr(response, getOrg) }  );
+      }, editPageError );
 
 
     }
@@ -158,7 +168,7 @@ app.controller('OrganizationEditCtrl',
     $scope.cancel = function () {
 
       // revert to server organization settings
-      getOrg();
+      getAllData();
 
       Flash.message('danger', 'Updates aborted.')
     }
@@ -186,7 +196,7 @@ app.controller('OrganizationEditCtrl',
           }
 
 
-        }, function( response ) { HandleError.newErr(response, getOrg) } );
+        }, editPageError );
       // }
 
     }
@@ -199,10 +209,16 @@ app.controller('OrganizationEditCtrl',
         
         } else {
           
-          HandleError.newErr('failure', getOrg);
+          HandleError.newErr('failure', getAllData);
           return false;
 
         }
+    }
+
+    // all errors from the edit page involve resetting the org
+    function editPageError ( response ) {
+      HandleError.newErr(response)
+      getAllData()
     }
 
 
