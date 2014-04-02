@@ -71,7 +71,9 @@ app.controller('AdminCtrl', ['$scope', 'Admin', 'Flash', '$rootScope', function(
 
     };
 
-    // Admin.verifyExistance.save( options, function ( obj ) {}    
+    Admin.verifyExistance.save( options, function ( obj ) {
+
+    });    
 
   }
 
