@@ -31,8 +31,6 @@ app.controller('OrganizationCtrl',
 
       // properties array refreshes
       // may want to wrap a property controller
-      console.log('getting properties')
-      console.log($scope.properties)
       getProperties();
 
     }
@@ -41,7 +39,7 @@ app.controller('OrganizationCtrl',
 
     function getOrg ( nextCall ) {
 
-      Organization.get( { id: orgId } , function ( obj ) {
+      Organization.get({ id: orgId } , function ( obj ) {
 
         // Here we manually call out each attribute
         // to preserve the two-way binding with other controllers.
@@ -80,15 +78,11 @@ app.controller('OrganizationCtrl',
 
           $scope.properties = obj;
 
-          // if(obj.length === 1){
             if(obj[0].address == 'empty_set'){
               $scope.emptySet = true;
               
               console.log('empty')
             }
-          // }
-
-          console.log($scope.properties)
 
         }, HandleError );
 
@@ -99,7 +93,6 @@ app.controller('OrganizationCtrl',
     function HandleErrorWithGetOrg ( response ) {
        HandleError.newErr(response, getOrg); 
     }
-
 
     // provide a hook for testing functions
     this.getOrg = getOrg;

@@ -95,6 +95,7 @@ app.controller('OrganizationEditCtrl',
 
       return deferred.promise;
     }
+    
 
     function parseOrgParams(obj){
       for( var i in obj ){
