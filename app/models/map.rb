@@ -3,14 +3,37 @@ class Map < ActiveRecord::Base
   belongs_to :group
   has_many   :properties
 
-  def self.fetch_from_source_by_group(group_id, token)
-    options = { body: { token: token } }
+  def self.fetch_properties(id)
 
-    response = HTTParty.get("http://sitecontrol.us/groups/#{group_id}/maps.json", options)
-    maps = JSON.parse(response.body)
+    map = Map.find id
+    
+    if map.properties.empty?
+      map.properties = map.fetch_properties_from_source
+    end
 
-    maps.map do |map_info|
-      find_or_create map_info, group_id
+    map.properties
+  end
+
+  def fetch_properties_from_source
+
+    options = { 
+      body: { 
+        token: self.group.organization.token,
+        only_tagged: 1 
+        } 
+      }
+
+    group_slug = 'mike-evans-world'
+
+    response = HTTParty.get("http://#{group_slug}.sitecontrol.us/maps/#{self.id}/list.json", options)
+    
+
+    properties = JSON.parse(response.body)['features'].map{ |info| info['properties'] }
+    
+    return Property.empty_set if properties.empty?
+
+    properties.map do |property_info|
+      Property.find_or_create property_info
     end
   
   end

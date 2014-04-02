@@ -16,3 +16,7 @@
 #admin-nav a {
   /*color: white;*/
 }
+
+.ng-invalid-email{
+  border-color: #FF5F5F !important;
+}
