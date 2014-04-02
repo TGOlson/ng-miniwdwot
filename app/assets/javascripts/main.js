@@ -31,6 +31,10 @@ app.config(['$routeProvider', function ($routeProvider) {
       templateUrl: '/templates/organization/edit.html',
       controller: 'OrganizationEditCtrl'
     })
+    .when('/:organization_id/properties/:property_id', {
+      templateUrl: '/templates/property/show.html',
+      controller: 'PropertyCtrl'
+    })    
     .otherwise({
       redirectTo: '/'
     });

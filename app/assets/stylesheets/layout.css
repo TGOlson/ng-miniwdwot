@@ -20,3 +20,8 @@
 .ng-invalid-email{
   border-color: #FF5F5F !important;
 }
+
+.property-screenshot{
+  width: 100%;
+  margin-bottom: 20px;
+}
