@@ -1,10 +1,22 @@
 <ul ng-if='properties' ng-hide='emptySet'>
+
   <li ng-repeat='property in filteredProperties = ( properties | filter:search.text )'>
-    <a href='#/{{ organization.id }}/properties/{{ property.id }}'>Property: {{ property.id }} - {{ property.address }}<a/>
+    <h3><a href='#/{{ organization.id }}/properties/{{ property.id }}'>{{ property.address }}<a/></h3>
+    <p>{{ property.ownercity }}, {{ property.ownerstate }} {{ property.zip }}</p>
+    <ul>
+      <li ng-repeat='tag in property.tags' class='property-tags'><span class="label label-info">{{ tag }}</span></li>
+    </ul>
+
   </li>
+
   <h4 ng-hide='filteredProperties.length'>No properties match those search criteria.</h4>
+
+
 </ul>
 
+<div ng-hide='emptySet || properties'>
+  <p><img src="/img/loader.gif"> Loading available properties.</p>
+</div>
 
 <div ng-show='emptySet'>
   <p>Looks like there are no properties here. Sorry.</p>

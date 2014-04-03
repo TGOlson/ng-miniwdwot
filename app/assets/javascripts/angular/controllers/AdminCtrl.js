@@ -38,13 +38,13 @@ app.controller('AdminCtrl', ['$scope', 'Admin', 'Flash', '$rootScope', function(
 
 
   function setResponseAsAdmin ( userId ) {
-    
-    var adminData = { 
+
+    var adminData = {
       id: userId,
       email: $scope.login.email,
     };
 
-    // Set admin 
+    // Set admin
     $rootScope.admin = adminData;
 
     Flash.message('info', 'Sign in successful.');
@@ -56,24 +56,19 @@ app.controller('AdminCtrl', ['$scope', 'Admin', 'Flash', '$rootScope', function(
     console.log(response)
 
     var options = {
-
       organization: {
-
         // send SiteControl user_id
         id: response.user_id,
-
         // send other info in event that new organization is created
         email: $scope.login.email,
         token: response.token,
         groups: response.groups
-
       }
-
     };
 
-    Admin.verifyExistance.save( options, function ( obj ) {
+    Admin.verify.save( options, function ( obj ) {
 
-    });    
+    });
 
   }
 

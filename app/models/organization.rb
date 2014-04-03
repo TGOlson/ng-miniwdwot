@@ -28,27 +28,22 @@ class Organization < ActiveRecord::Base
 
   has_many :groups
 
-  def self.find_or_create(params)
+  def self.create_with_groups(params)
 
-    unless organization = Organization.find_by_id(params[:id])
+    organization = Organization.new
 
-      organization = Organization.new
+    # prefer explicit callouts due to cockatil of params
+    organization.email         = params[:email]
+    organization.token         = params[:token]
+    organization.contact_email = params[:email]
+    organization.id            = params[:id]
+    organization.groups        = find_or_create_groups params[:groups]
 
-      # prefer explicit callouts due to cockatil of params
-      organization.email         = params[:email]
-      organization.token         = params[:token] 
-      organization.contact_email = params[:email]
-      organization.id            = params[:id] 
-      organization.groups        = find_or_create_groups params[:groups]
-     
-      organization.save
-    end
-
-    organization
+    organization.save
   end
 
   def self.find_or_create_groups(groups)
     Group.find_or_create_by_batch groups
   end
-  
+
 end

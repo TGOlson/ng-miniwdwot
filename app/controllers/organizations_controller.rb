@@ -10,19 +10,24 @@ class OrganizationsController < ApplicationController
     render json: @organization
   end
 
-  def sign_in
-    @organization = Organization.find_or_create params[:organization]
-    render json: @organization          
+  def verify
+    p '*' * 80
+    p params
+
+    if Organization.find_by_id params[:id]
+      render json: { new_org: false }
+    else
+      Organization.create_with_groups params[:organization]
+      render json: { new_org: true }
+    end
   end
 
   def update
     @organization = Organization.find params[:id]
 
     if current_token?
-      p 'updating'
       @organization.update_attributes organization_params
-      p @organization
-      render json: @organization      
+      render json: @organization
     else
       render_error
     end
@@ -33,7 +38,7 @@ class OrganizationsController < ApplicationController
 
     if current_token?
       @organization.destroy
-      render json: @organization      
+      render json: @organization
     else
       render_error
     end

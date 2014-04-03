@@ -4,7 +4,7 @@ gem 'rails', '4.0.1'
 
 gem 'pg'
 
-gem 'httparty'
+gem 'babosa'
 
 gem 'sass-rails', '~> 4.0.0'
 

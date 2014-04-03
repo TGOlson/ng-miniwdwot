@@ -39,6 +39,7 @@ GEM
     angularjs-rails (1.2.14)
     arel (4.0.2)
     atomic (1.1.15)
+    babosa (0.3.11)
     builder (3.1.4)
     coffee-rails (4.0.1)
       coffee-script (>= 2.2.0)
@@ -168,6 +169,7 @@ PLATFORMS
 
 DEPENDENCIES
   angularjs-rails
+  babosa
   coffee-rails (~> 4.0.0)
   factory_girl_rails
   high_voltage (~> 2.1.0)

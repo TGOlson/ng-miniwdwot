@@ -28,7 +28,7 @@ app.controller('OrganizationEditCtrl',
 
       // check admin privelages
       ( function () {
-    
+
         // if the current user is an admin of current organization
         // if( !canEdit() ){
         if( false ){ // for debugging
@@ -41,7 +41,7 @@ app.controller('OrganizationEditCtrl',
       })();
 
 
-      // default Org for two way binding, 
+      // default Org for two way binding,
       $scope.organization = Org;
 
       getAllData();
@@ -56,7 +56,7 @@ app.controller('OrganizationEditCtrl',
         .then(getGroups)
         .then(getMaps)
         .done();
-    
+
     }
 
 
@@ -89,13 +89,13 @@ app.controller('OrganizationEditCtrl',
         // before declaring resolved
         Q.fcall(parseOrgParams, obj)
           .then(deferred.resolve)
-        
+
       // should probably declare deferred.reject below
       }, editPageError );
 
       return deferred.promise;
     }
-    
+
 
     function parseOrgParams(obj){
       for( var i in obj ){
@@ -107,11 +107,11 @@ app.controller('OrganizationEditCtrl',
     function getGroups () {
 
       Group.query({ organization_id: orgId }, function ( obj ) {
-        
+
         $scope.groups = obj;
 
       }, editPageError)
-      
+
     }
 
 
@@ -119,26 +119,20 @@ app.controller('OrganizationEditCtrl',
 
       if($scope.organization.display_group_id){
 
-
         var options = {
           group_id: $scope.organization.display_group_id,
           token: $scope.organization.token
         }
 
-
         Map.query(options, function (obj) {
-
           $scope.maps = obj;
-
         }, editPageError );
 
-
       }
-
     }
 
     // set hook for scope calls
-    // $scope.getMaps = getMaps;
+    $scope.getMaps = getMaps;
 
 
     $scope.update = function() {
@@ -156,9 +150,9 @@ app.controller('OrganizationEditCtrl',
         if( successfulCall( obj ) ){
 
           Flash.message('info', 'Organization successfully updated.');
-        
+
         }
-        
+
 
       }, editPageError );
 
@@ -190,10 +184,9 @@ app.controller('OrganizationEditCtrl',
 
           if( successfulCall( obj ) ){
 
-            getOrg();
             $location.path('/');
             Flash.message('info', 'Organization deleted.')
-          
+
           }
 
 
@@ -207,9 +200,9 @@ app.controller('OrganizationEditCtrl',
         if(!obj.failure){
 
           return true;
-        
+
         } else {
-          
+
           HandleError.newErr('failure', getAllData);
           return false;
 

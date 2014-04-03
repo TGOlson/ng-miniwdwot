@@ -36,10 +36,16 @@
 
           <div class='form-group'>
             <label>Group to Display</label>
-            <p class='text-muted'>This is the Site Control group your site will be generated from.</p> 
+            <p class='text-muted'>This is the Site Control group your site will be generated from.</p>
 
-            <select class='form-control' ng-model='organization.display_group_id' ng-change='getMaps()' ng-options='group.id as group.name for group in groups'>
-            </select>
+            <div ng-show="groups.length">
+              <select class='form-control' ng-model='organization.display_group_id' ng-change='getMaps()' ng-options='group.id as group.name for group in groups'>
+              </select>
+            </div>
+
+            <div ng-show='!groups.length'>
+              <p><span class="glyphicon glyphicon-exclamation-sign"></span> Looks like you don't have any groups. Try going to Site Control and setting them.</p>
+            </div>
 
           </div>
 
@@ -55,14 +61,14 @@
               </div>
 
               <div ng-if='!maps'>
-                <p>Loading available maps for this group.</p>
+                <p><img src="/img/loader.gif"> Loading available maps for this group.</p>
               </div>
-            
+
 
             </div>
 
             <div ng-if='!organization.display_group_id'>
-              <p>You need to set your display group before you can choose a map.</p>
+              <p><span class="glyphicon glyphicon-exclamation-sign"></span> You need to set your display group before you can choose a map.</p>
             </div>
           </div>
 

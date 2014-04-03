@@ -5,7 +5,7 @@ Miniwdwot::Application.routes.draw do
   end
 
 
-  resources :groups, only: [:show] do 
+  resources :groups, only: [:show] do
     resources :maps, only: [:index]
   end
 
@@ -13,7 +13,7 @@ Miniwdwot::Application.routes.draw do
     resources :properties, only: [:index]
   end
 
-  post   '/sign_in',  to: 'organizations#sign_in'
+  post   '/verify',  to: 'organizations#verify'
 
   root to: 'high_voltage/pages#show', id: 'welcome'
 
