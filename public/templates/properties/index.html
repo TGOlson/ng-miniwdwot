@@ -1,18 +1,29 @@
-<ul ng-if='properties' ng-hide='emptySet'>
+<div ng-if='properties' ng-hide='emptySet'>
 
-  <li ng-repeat='property in filteredProperties = ( properties | filter:search.text )'>
-    <h3><a href='#/{{ organization.id }}/properties/{{ property.id }}'>{{ property.address }}<a/></h3>
-    <p>{{ property.ownercity }}, {{ property.ownerstate }} {{ property.zip }}</p>
-    <ul>
-      <li ng-repeat='tag in property.tags' class='property-tags'><span class="label label-info">{{ tag }}</span></li>
-    </ul>
+  <div class='row'>
+    <div class='col-sm-3 col-sm-offset-9'>
+    <p class='text-muted'>Showing {{ filteredProperties.length }} of {{ properties.length }} properties.</p>
+    </div>
+  </div>
 
-  </li>
+  <div class='row' ng-repeat='property in filteredProperties = ( properties | filter:search.text )'>
 
-  <h4 ng-hide='filteredProperties.length'>No properties match those search criteria.</h4>
+    <div class="col-sm-6">
+      <img ng-src="{{ property.streetview_url }}" class='property-image'>
+    </div>
 
+    <div class="col-sm-6">
+      <h1><a href='#/{{ organization.id }}/properties/{{ property.id }}'>{{ property.address }}<a/></h1>
+      <h3>{{ property.city }}, {{ property.state }} {{ property.zip }}</h3>
+      <ul>
+        <li ng-repeat='tag in property.tags' class='property-tags'><span class="label label-info">{{ tag }}</span></li>
+      </ul>
+    </div>
 
-</ul>
+    <h4 ng-hide='filteredProperties.length'>No properties match those search criteria.</h4>
+  </div>
+
+</div>
 
 <div ng-hide='emptySet || properties'>
   <p><img src="/img/loader.gif"> Loading available properties.</p>

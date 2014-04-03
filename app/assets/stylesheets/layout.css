@@ -21,7 +21,14 @@
   border-color: #FF5F5F !important;
 }
 
-.property-screenshot{
+.property-image{
   width: 100%;
   margin-bottom: 20px;
 }
+
+.property-tags{
+  line-height: none;
+  display: inline;
+  padding-right: 10px;
+}
+

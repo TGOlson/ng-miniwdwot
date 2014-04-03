@@ -18,24 +18,43 @@ class Property < ActiveRecord::Base
     if property = self.find_by_fid(property_info['fid'])
       property
     else
-      self.create filtered_attrs(property_info)
-      # self.create fid: property_info['fid'], address: property_info['address'], city: D
+      property = self.create filtered_attrs(property_info)
+      property.generate_streetview_url
+      property
     end
   end
 
   def self.filtered_attrs(info)
     {
-      fid:        info['info'],
-      address:    info['address'],
-      zip:        info['zip'],
-      ownercity:  info['ownercity'],
-      ownerstate: info['ownerstate'],
-      tags:       info['tags']
+      fid:     info['info'],
+      address: info['address'],
+      zip:     info['zip'],
+      city:    info['ownercity'],
+      state:   info['ownerstate'],
+      tags:    info['tags']
     }
   end
 
   def self.empty_set
     self.create address: :empty_set
+  end
+
+  def generate_streetview_url
+
+     options = {
+       :size     => '700x400',
+       :location => "#{self.address}, #{self.city}",
+       :fov      => 90,
+       :pitch    => 10,
+       :sensor   => false,
+       :key      => 'AIzaSyDJruY1kNOZhiw4dJFpVa-1UgyZ1pcS_MI'
+     }
+
+    url = "http://maps.googleapis.com/maps/api/streetview?#{options.to_query}"
+
+    self.streetview_url = url
+    self.save
+
   end
 
 end
