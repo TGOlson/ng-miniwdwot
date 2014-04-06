@@ -2,7 +2,7 @@
 
 app.controller('PropertiesCtrl', ['$scope', 'Property', 'Organization', 'HandleError', function($scope, Property, Organization, HandleError) {
 
-  console.log(Organization.current)
+  $scope.search = Property.search;
 
   var options = {
     token: Organization.current.token,
@@ -10,17 +10,14 @@ app.controller('PropertiesCtrl', ['$scope', 'Property', 'Organization', 'HandleE
   }
 
 
-  Property.query( options, function ( obj ) {
+  Property.query(options)
+    .$promise
+    .then( function ( obj ) {
 
-    $scope.properties = obj;
+      $scope.properties = obj;
+      if(obj[0].address == 'empty_set') $scope.emptySet = true;
 
-      if(obj[0].address == 'empty_set'){
-        $scope.emptySet = true;
-        
-        console.log('empty')
-      }
-
-  }, HandleError.newErr ); 
-
+    })
+    .catch(HandleError.newErr) 
 
 }]);

@@ -7,16 +7,14 @@ app.controller('OrganizationCtrl',
     '$routeParams',
     'Organization',
     'HandleError',
-    'Search',
 
-    function ($scope, $rootScope, $routeParams, Organization, HandleError, Search) {
+    function ($scope, $rootScope, $routeParams, Organization, HandleError) {
 
     // grab organization id from data attribute
     // this id is set before angular takes over
     var orgId = $routeParams.id;
 
     $scope.organization = Organization.current;
-    $scope.search = Search;
 
     // *** 
     // causes some bugs, 

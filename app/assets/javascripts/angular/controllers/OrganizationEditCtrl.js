@@ -61,7 +61,7 @@ app.controller('OrganizationEditCtrl',
       Organization.update(options)
         .$promise
         .then( function (){
-          Flash.msg.info('Organization successfully updated.');
+          Flash.msg.info('updateSuccess');
         })
         .catch(editPageError)
 
@@ -72,7 +72,7 @@ app.controller('OrganizationEditCtrl',
 
       // revert to server organization settings
       getOrg();
-      Flash.msg.danger('Updates aborted.')
+      Flash.msg.danger('updateAbort')
     }
 
 
@@ -90,7 +90,7 @@ app.controller('OrganizationEditCtrl',
           .$promise
           .then( function () {
             $location.path('/');
-            Flash.msg.info('Organization deleted.')            
+            Flash.msg.info('deleteSuccess')            
           })
           .catch(editPageError)
 

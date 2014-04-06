@@ -1,18 +1,13 @@
-app.factory('HandleError', ['Flash', function ( Flash ) {
+app.factory('HandleError', ['Flash', function (Flash) {
+
+
+  function newErr(response) {
+    console.log('Action failed', response);
+    Flash.msg.danger('failedAction');
+  }
 
   return {
-
-    newErr: function (response) {
-
-      console.log('Action failed', response);
-
-      var message = 'Something went wrong' + 
-                    'and that action could not be completed.';
-      
-      Flash.msg.danger(message);
-
-    }
-
+    newErr: newErr
   }
 
   

@@ -32,7 +32,8 @@ app.controller('AdminCtrl', ['$scope', 'Admin', 'Flash', '$rootScope', function(
         $scope.showForm = false;
       
       } else {
-        Flash.msg.danger('Bad email or password.');
+        Flash.msg.danger('signInFail');
+        $scope.login = {}
       }
 
     });
@@ -49,7 +50,7 @@ app.controller('AdminCtrl', ['$scope', 'Admin', 'Flash', '$rootScope', function(
     // Set admin
     $rootScope.admin = adminData;
 
-    Flash.msg.info('Sign in successful.');
+    Flash.msg.info('signInSuccess');
   }
 
 
@@ -71,8 +72,8 @@ app.controller('AdminCtrl', ['$scope', 'Admin', 'Flash', '$rootScope', function(
     };
 
     Admin.verify.save( options, function ( obj ) {
-      // consider doing something with obj.newOrg here
-      console.log(obj)
+      // consider doing something with obj.new_org check here
+      console.log(obj.new_org)
     });
 
   }
@@ -80,7 +81,7 @@ app.controller('AdminCtrl', ['$scope', 'Admin', 'Flash', '$rootScope', function(
   $scope.signOut = function () {
 
     $rootScope.admin = null;
-    Flash.msg.info('Sign out successful.');
+    Flash.msg.info('signOutSuccess');
   }
 
 }]);

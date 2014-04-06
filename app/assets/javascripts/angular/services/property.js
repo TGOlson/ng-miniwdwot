@@ -1,20 +1,27 @@
 app.service('Property', ['$resource', function($resource) {
 
+  var wdwot,
+      resource;
 
-  // Property = $resource('http://'+groupNameSlug+'.sitecontrol.us/m/'+mapNameSlug+'/blocks/' + hood + '.json', { group_id: '@group_id' });
-  // Property = $resource('http://mike-evans-world.sitecontrol.us/m/banana-hammock-land/detroit.json');
-
-  // Property = $resource('http://mike-evans-world.sitecontrol.us/maps/:map_id/list.json?');
+  resource = $resource('/maps/:map_id/properties');
   
+  wdwot    = $resource('http://whydontweownthis.com/sc/mi/wayne/detroit/:id.json');
 
-  Property = $resource('/maps/:map_id/properties');
+  var Property = function () {
+    this.search  = {text: null};
+    this.service = resource;
+    this.wdwot   = wdwot;
+  }
 
-  Property.wdwot = $resource('http://whydontweownthis.com/sc/mi/wayne/detroit/:id.json');
+  // extend resource
+  Property.prototype.query = function (args) {
+    return this.service.query(args)
+  }
 
+  Property.prototype.get = function (args) {
+    return this.service.get(args)
+  }
 
-
-                     // http://mike-evans-world.sitecontrol.us/m/like/detroit.json?token=3j9a51qrtfvfHiVsthXt
-
-  return Property
+  return new Property();
 
 }]);
