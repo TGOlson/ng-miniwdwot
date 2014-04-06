@@ -1,36 +1,46 @@
 'use strict';
 
-app.controller('GroupsMapsCtrl', ['$scope', 'Group', 'Map', 'HandleError', 'Org', function($scope, Group, Map, HandleError, Org) {
+app.controller('GroupsMapsCtrl', ['$scope', 'Group', 'Map', 'HandleError', 'Organization', function($scope, Group, Map, HandleError, Organization) {
 
-  var organization = Org;
+  var org = Organization.current;
 
-  console.log(organization)
 
-  function getGroups () {
+  // initializers
+  ( function () {
+    getGroups();
+    getMaps();
+  })();
 
-    Group.query({ organization_id: Org.id }, function ( obj ) {
 
-      $scope.groups = obj;
-
-    }, editPageError)
-
+  function getGroups(){
+    var options = {organization_id: org.id};
+    queryResource(Group, options, 'groups');
   }
 
 
-  function getMaps () {
+  function getMaps() {
 
-    if($scope.organization.display_group_id){
+    // if the organization has a group set
+    // then it is ready to query for maps
+    if(org.display_group_id){
 
       var options = {
-        group_id: $scope.organization.display_group_id,
-        token: $scope.organization.token
-      }
+        group_id: org.display_group_id,
+        token: org.token
+      };
 
-      Map.query(options, function (obj) {
-        $scope.maps = obj;
-      }, editPageError );
-
+      queryResource(Map, options, 'maps');
     }
+  }
+
+
+  function queryResource(type, options, scopeName) {
+    type.query(options)
+      .$promise
+      .then( function(obj) {
+        $scope[scopeName] = obj;
+      })
+      .catch(HandleError.newErr);
   }
 
   // set hook for scope calls

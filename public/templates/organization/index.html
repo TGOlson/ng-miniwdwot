@@ -1,9 +1,9 @@
-<div ng-if='!organization.display_map_id'>
+<div ng-if='noMapSet'>
   <h3>Hold up!</h3>
   <p>It looks like this organization has not configured their groups or maps.</p>
   <p>If you are the owner, please sign in and navigate to the Organization Settings page.</p>
 </div>
 
-<div ng-if='organization.display_map_id' ng-controller='PropertiesCtrl'>  
-    <div ng-include="'/templates/properties/index.html'"></div>
+<div ng-if='organization.display_map_id'>  
+    <div ng-controller='PropertiesCtrl' ng-include="'/templates/properties/index.html'"></div>
 </div>

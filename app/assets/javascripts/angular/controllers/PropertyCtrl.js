@@ -1,11 +1,11 @@
 'use strict';
 
-app.controller('PropertyCtrl', ['$scope', '$routeParams', 'Property', 'Org', function($scope, $routeParams, Property, Org) {
+app.controller('PropertyCtrl', ['$scope', '$routeParams', 'Property', 'Organization', function($scope, $routeParams, Property, Organization) {
 
 
-  $scope.organization = Org;
+  $scope.organization = Organization.current;
   
-
+  
   var id = $routeParams.property_id;
 
   Property.wdwot.get({id: id}, function(obj) {

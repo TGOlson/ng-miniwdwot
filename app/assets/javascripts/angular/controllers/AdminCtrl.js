@@ -25,14 +25,16 @@ app.controller('AdminCtrl', ['$scope', 'Admin', 'Flash', '$rootScope', function(
 
         setResponseAsAdmin(response.user_id);
 
-        // check with rails server to see if org exists
+        // check with server to see if org exists
+        // or if we need to save the data to the database
         verifyOrgExists(response)
 
+        $scope.showForm = false;
+      
       } else {
         Flash.message('danger', 'Bad email or password.');
       }
 
-      $scope.showForm = false;
     });
   }
 
@@ -57,8 +59,10 @@ app.controller('AdminCtrl', ['$scope', 'Admin', 'Flash', '$rootScope', function(
 
     var options = {
       organization: {
+
         // send SiteControl user_id
         id: response.user_id,
+        
         // send other info in event that new organization is created
         email: $scope.login.email,
         token: response.token,
@@ -67,7 +71,8 @@ app.controller('AdminCtrl', ['$scope', 'Admin', 'Flash', '$rootScope', function(
     };
 
     Admin.verify.save( options, function ( obj ) {
-
+      // consider doing something with obj.newOrg here
+      console.log(obj)
     });
 
   }

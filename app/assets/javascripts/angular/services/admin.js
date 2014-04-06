@@ -1,8 +1,34 @@
-app.service('Admin', ['$resource', function($resource) {
+app.service('Admin', ['$resource', '$rootScope', '$location', 'Flash', function($resource, $rootScope, $location, Flash) {
 
   Admin = $resource('http://whydontweownthis.com/users/sign_in.json')
 
   Admin.verify = $resource('/verify');
+
+
+  function canEdit(orgId) {
+
+    // if user is logged in
+    if( $rootScope.admin ) {
+
+      // if logged in user id is equal to current organization
+      if( $rootScope.admin.id == orgId ) return true;
+    }
+
+    // otherwise, they can't edit
+    return false;
+  }
+
+  Admin.verifyCanEdit = function (orgId) {
+
+    if(!canEdit(orgId)) {
+
+      $location.path('/' + orgId);
+    
+      Flash.message('danger', 'You mussed be signed in as this organization to access that page.')
+    
+    }
+
+  }
 
   return Admin
 

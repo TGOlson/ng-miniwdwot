@@ -4,96 +4,41 @@ app.controller('OrganizationEditCtrl',
   [
     '$scope',
     '$location',
-    '$rootScope',
+    'Admin',
     '$routeParams',
     'Organization',
     'Flash',
-    'Org',
     'Map',
     'HandleError',
     'Group',
 
-    function ($scope, $location, $rootScope, $routeParams, Organization, Flash, Org, Map, HandleError, Group) {
+    function ($scope, $location, Admin, $routeParams, Organization, Flash, Map, HandleError, Group) {
 
 
     var orgId;
-
-
 
     // page initializers
     ( function () {
 
       orgId = $routeParams.id;
 
-
-      // check admin privelages
-      ( function () {
-
-        // if the current user is an admin of current organization
-        // if( !canEdit() ){
-        if( false ){ // for debugging
-
-          $location.path('/' + orgId);
-          Flash.message('danger', 'You mussed be signed in as this organization to access that page.')
-
-        }
-
-      })();
-
+      // comment out for debugging
+      // Admin.verifyCanEdit(orgId);
 
       // default Org for two way binding,
-      $scope.organization = Org;
+      $scope.organization = Organization.current;
 
-      getAllData();
-
+      getOrg();
 
     })();
 
+    function getOrg() {
 
-    function getAllData () {
+      Organization.get({id: orgId})
+        .$promise
+        .then(parseOrgParams)
+        .catch(editPageError);
 
-      getOrg()
-        .then(getGroups)
-        .then(getMaps)
-        .done();
-
-    }
-
-
-    function canEdit () {
-
-      // if user is logged in
-      if( $rootScope.admin ) {
-
-        // if logged in user id is equal to current organization
-        if( $rootScope.admin.id == orgId ) {
-
-          // allow editing
-          return true
-
-        }
-      }
-
-      // if not, boot 'em
-      return false
-
-    }
-
-
-    function getOrg () {
-      var deferred = Q.defer();
-
-      Organization.get( { id: orgId } , function ( obj ) {
-
-        // wait until organization params are done parsing
-        // before declaring resolved
-        Q.fcall(parseOrgParams, obj)
-          .then(deferred.resolve)
-
-      // should probably declare deferred.reject below
-      }, editPageError );
-
-      return deferred.promise;
     }
 
 
@@ -101,42 +46,11 @@ app.controller('OrganizationEditCtrl',
       for( var i in obj ){
         $scope.organization[i] = obj[i];
       }
+      $scope.orgSet = true;
     }
-
-
-    function getGroups () {
-
-      Group.query({ organization_id: orgId }, function ( obj ) {
-
-        $scope.groups = obj;
-
-      }, editPageError)
-
-    }
-
-
-    function getMaps () {
-
-      if($scope.organization.display_group_id){
-
-        var options = {
-          group_id: $scope.organization.display_group_id,
-          token: $scope.organization.token
-        }
-
-        Map.query(options, function (obj) {
-          $scope.maps = obj;
-        }, editPageError );
-
-      }
-    }
-
-    // set hook for scope calls
-    $scope.getMaps = getMaps;
 
 
     $scope.update = function() {
-
 
       var options = {
         id: $scope.organization.id,
@@ -144,18 +58,12 @@ app.controller('OrganizationEditCtrl',
         organization: $scope.organization
       };
 
-      Organization.update( options , function( obj ) {
-
-
-        if( successfulCall( obj ) ){
-
+      Organization.update(options)
+        .$promise
+        .then( function (){
           Flash.message('info', 'Organization successfully updated.');
-
-        }
-
-
-      }, editPageError );
-
+        })
+        .catch(editPageError)
 
     }
 
@@ -163,15 +71,14 @@ app.controller('OrganizationEditCtrl',
     $scope.cancel = function () {
 
       // revert to server organization settings
-      getAllData();
-
+      getOrg();
       Flash.message('danger', 'Updates aborted.')
     }
 
 
     $scope.delete = function () {
 
-      // if( confirm('Are you sure you want to submit?') ){
+      if( confirm('Are you sure you want to submit?') ){
 
         var options = {
           id: $scope.organization.id,
@@ -179,47 +86,28 @@ app.controller('OrganizationEditCtrl',
         }
 
         // send id and token for validation
-        Organization.delete( options, function ( obj ) {
-
-
-          if( successfulCall( obj ) ){
-
+        Organization.delete(options) 
+          .$promise
+          .then( function () {
             $location.path('/');
-            Flash.message('info', 'Organization deleted.')
+            Flash.message('info', 'Organization deleted.')            
+          })
+          .catch(editPageError)
 
-          }
-
-
-        }, editPageError );
-      // }
+      }
 
     }
 
-    function successfulCall ( obj ) {
 
-        if(!obj.failure){
-
-          return true;
-
-        } else {
-
-          HandleError.newErr('failure', getAllData);
-          return false;
-
-        }
-    }
 
     // all errors from the edit page involve resetting the org
     function editPageError ( response ) {
-      HandleError.newErr(response)
-      getAllData()
+      HandleError.newErr(response);
+      getOrg();
     }
 
 
     // provide a hook for testing functions
     this.getOrg = getOrg;
-    // dont provide canEdit hook for security reasons
-    this.successfulCall = successfulCall;
-
 
 }]);

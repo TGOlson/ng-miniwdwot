@@ -1,10 +1,12 @@
 'use strict';
 
-app.controller('PropertiesCtrl', ['$scope', 'Property', 'Org', 'HandleError', function($scope, Property, Org, HandleError) {
+app.controller('PropertiesCtrl', ['$scope', 'Property', 'Organization', 'HandleError', function($scope, Property, Organization, HandleError) {
+
+  console.log(Organization.current)
 
   var options = {
-    token: Org.token,
-    map_id: Org.display_map_id
+    token: Organization.current.token,
+    map_id: Organization.current.display_map_id
   }
 
 

@@ -34,44 +34,47 @@
             <textarea name='about' class='form-control' id='about' ng-model='organization.about'></textarea>
           </div>
 
-          <div class='form-group'>
-            <label>Group to Display</label>
-            <p class='text-muted'>This is the Site Control group your site will be generated from.</p>
+          <div ng-if='orgSet' ng-controller='GroupsMapsCtrl'>
+            
+            <div class='form-group'>
+              <label>Group to Display</label>
+              <p class='text-muted'>This is the Site Control group your site will be generated from.</p>
 
-            <div ng-show="groups.length">
-              <select class='form-control' ng-model='organization.display_group_id' ng-change='getMaps()' ng-options='group.id as group.name for group in groups'>
-              </select>
-            </div>
-
-            <div ng-show='!groups.length'>
-              <p><span class="glyphicon glyphicon-exclamation-sign"></span> Looks like you don't have any groups. Try going to Site Control and setting them.</p>
-            </div>
-
-          </div>
-
-          <div class='form-group'>
-            <label>Map to Display</label>
-            <p class='text-muted'>This is the Site Control map your site will be generated from.</p>
-
-            <div ng-if='organization.display_group_id'>
-
-              <div ng-if='maps'>
-                <select class='form-control' ng-model='organization.display_map_id' ng-options='map.id as map.name for map in maps'>
+              <div ng-show="groups.length">
+                <select class='form-control' ng-model='organization.display_group_id' ng-change='getMaps()' ng-options='group.id as group.name for group in groups'>
                 </select>
               </div>
 
-              <div ng-if='!maps'>
-                <p><img src="/img/loader.gif"> Loading available maps for this group.</p>
+              <div ng-show='!groups.length'>
+                <p><span class="glyphicon glyphicon-exclamation-sign"></span> Looks like you don't have any groups. Try going to Site Control and setting them.</p>
               </div>
 
-
             </div>
 
-            <div ng-if='!organization.display_group_id'>
-              <p><span class="glyphicon glyphicon-exclamation-sign"></span> You need to set your display group before you can choose a map.</p>
-            </div>
-          </div>
+            <div class='form-group'>
+              <label>Map to Display</label>
+              <p class='text-muted'>This is the Site Control map your site will be generated from.</p>
 
+              <div ng-if='organization.display_group_id'>
+
+                <div ng-if='maps'>
+                  <select class='form-control' ng-model='organization.display_map_id' ng-options='map.id as map.name for map in maps'>
+                  </select>
+                </div>
+
+                <div ng-if='!maps'>
+                  <p><img src="/img/loader.gif"> Loading available maps for this group.</p>
+                </div>
+
+
+              </div>
+
+              <div ng-if='!organization.display_group_id'>
+                <p><span class="glyphicon glyphicon-exclamation-sign"></span> You need to set your display group before you can choose a map.</p>
+              </div>
+            </div>
+
+          </div> <!-- if orgSet -->
 
           <div class='form-group'>
             <button ng-click='update()' class='btn btn-primary'>Update Organization</button>

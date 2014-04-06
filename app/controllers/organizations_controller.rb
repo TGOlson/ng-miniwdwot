@@ -11,10 +11,8 @@ class OrganizationsController < ApplicationController
   end
 
   def verify
-    p '*' * 80
-    p params
 
-    if Organization.find_by_id params[:id]
+    if Organization.find_by_id params[:organization][:id]
       render json: { new_org: false }
     else
       Organization.create_with_groups params[:organization]

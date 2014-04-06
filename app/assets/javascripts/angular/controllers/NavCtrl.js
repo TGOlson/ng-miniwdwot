@@ -1,17 +1,28 @@
 'use strict';
 
-app.controller('NavCtrl', ['$scope', 'Org', '$location', 'Search', function($scope, Org, $location, Search) {
+app.controller('NavCtrl', 
+  
+  ['$scope',
+   'Organization',
+   '$location',
+   'Search',
+   '$rootScope',
+
+   function($scope, Organization, $location, Search, $rootScope) {
 
   // bind nav $scope.organization to Org service
-  $scope.organization = Org;
+  $scope.organization = Organization.current;
 
   $scope.search = Search;
+
 
   $scope.$on('$routeChangeStart', function(){
 
     // reset to defaults
     $scope.hideNav = false;
     $scope.hideAll = false;
+  
+    $rootScope.badOrg = false;
 
     // hide nav for root path
     if( $location.$$path === '/' ){
@@ -25,14 +36,8 @@ app.controller('NavCtrl', ['$scope', 'Org', '$location', 'Search', function($sco
 
       $scope.path = path[ path.length - 1 ]
 
-
       // hide navigation during editing
-      if( $scope.path === 'edit' ){
-
-        $scope.hideNav = true;
-
-      }
-
+      if( $scope.path === 'edit' ) $scope.hideNav = true;
 
     }
 
