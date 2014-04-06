@@ -9,7 +9,7 @@ app.factory('HandleError', ['Flash', function ( Flash ) {
       var message = 'Something went wrong' + 
                     'and that action could not be completed.';
       
-      Flash.message('danger', message);
+      Flash.msg.danger(message);
 
     }
 
