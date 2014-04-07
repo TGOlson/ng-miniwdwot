@@ -83,14 +83,13 @@ app.controller('AdminCtrl',
 
     Admin.verify.save( options, function ( obj ) {
       // consider doing something with obj.new_org check here
-      console.log(obj)
-      console.log(obj.new_org)
+      console.log('admin verify.save', obj)
+      console.log('admin verify.save.new_org', obj.new_org)
     });
 
   }
 
   $scope.signOut = function () {
-
     $rootScope.admin = null;
     $cookieStore.remove('admin');
     Flash.msg.info('signOutSuccess');
