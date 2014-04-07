@@ -1,20 +1,13 @@
 #admin-nav {
-  /*position: absolute;*/
   padding: 2px 5px 0 0;
   right: 0;
   text-align: right;
-  /*top: 0;*/
-  /*background-color: red;*/
 }
 
 #admin-nav li {
   list-style: none;
   display: inline-block;
   margin: 0 5px;
-}
-
-#admin-nav a {
-  /*color: white;*/
 }
 
 .ng-invalid-email{
@@ -27,8 +20,10 @@
 }
 
 .property-tags{
-  line-height: none;
-  display: inline;
-  padding-right: 10px;
+  margin-bottom: 20px;
 }
 
+.property-count{
+  padding-top: 30px;
+  text-align: right;
+}

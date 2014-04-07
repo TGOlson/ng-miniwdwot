@@ -16,14 +16,18 @@ app.controller('OrganizationCtrl',
 
     $scope.organization = Organization.current;
 
+    // *** 
+    // causes some bugs, 
+    // noMapSet will reset if this setting is used
+    // consider adding back later 
+    // ***
 
     // use this to prevent multiple calls to the server
     // organization data is reused if it exists
-    if($scope.organization.id != orgId){
+    // if($scope.organization.id != orgId){
       getOrg();
-    }
+    // }
 
-    getOrg();
 
     function getOrg() {
 
