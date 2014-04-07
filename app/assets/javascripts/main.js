@@ -2,7 +2,8 @@
 
 var app = angular.module('miniwdwot', [
     'ngResource',
-    'ngRoute'
+    'ngRoute',
+    'ngCookies'
   ]);
 
 app.config(['$routeProvider', function ($routeProvider) {

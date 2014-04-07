@@ -24,7 +24,7 @@ app.service('Admin', ['$resource', '$rootScope', '$location', 'Flash', function(
 
       $location.path('/' + orgId);
     
-      Flash.msg.danger('You mussed be signed in as this organization to access that page.')
+      Flash.msg.danger('notSignedIn')
     
     }
 

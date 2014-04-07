@@ -1,7 +1,19 @@
 'use strict';
 
-app.controller('AdminCtrl', ['$scope', 'Admin', 'Flash', '$rootScope', function($scope, Admin, Flash, $rootScope) {
+app.controller('AdminCtrl', 
 
+  ['$scope',
+   'Admin',
+   'Flash',
+   '$rootScope',
+   '$cookieStore',
+
+  function($scope, Admin, Flash, $rootScope, $cookieStore) {
+
+
+  if( $cookieStore.get('admin') ){
+    $rootScope.admin = $cookieStore.get('admin');
+  }
 
   $scope.showLoginForm = function () {
     $scope.showForm = true;
@@ -30,7 +42,7 @@ app.controller('AdminCtrl', ['$scope', 'Admin', 'Flash', '$rootScope', function(
         verifyOrgExists(response)
 
         $scope.showForm = false;
-      
+
       } else {
         Flash.msg.danger('signInFail');
         $scope.login = {}
@@ -43,20 +55,18 @@ app.controller('AdminCtrl', ['$scope', 'Admin', 'Flash', '$rootScope', function(
   function setResponseAsAdmin ( userId ) {
 
     var adminData = {
-      id: userId,
+      id:    userId,
       email: $scope.login.email,
     };
 
     // Set admin
     $rootScope.admin = adminData;
-
+    $cookieStore.put('admin', adminData);
     Flash.msg.info('signInSuccess');
   }
 
 
   function verifyOrgExists ( response ) {
-
-    console.log(response)
 
     var options = {
       organization: {
@@ -73,6 +83,7 @@ app.controller('AdminCtrl', ['$scope', 'Admin', 'Flash', '$rootScope', function(
 
     Admin.verify.save( options, function ( obj ) {
       // consider doing something with obj.new_org check here
+      console.log(obj)
       console.log(obj.new_org)
     });
 
@@ -81,6 +92,7 @@ app.controller('AdminCtrl', ['$scope', 'Admin', 'Flash', '$rootScope', function(
   $scope.signOut = function () {
 
     $rootScope.admin = null;
+    $cookieStore.remove('admin');
     Flash.msg.info('signOutSuccess');
   }
 
