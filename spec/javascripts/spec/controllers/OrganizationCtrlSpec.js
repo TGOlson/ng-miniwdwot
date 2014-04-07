@@ -7,34 +7,30 @@ describe('Controller: OrganizationCtrl', function () {
 
   var OrganizationCtrl,
     $scope,
-    $location,
     Organization,
-    Flash,
-    org,
-    returnError;
+    org;
 
+  // make a fake promise
+  // call it a white lie
+  function fakePromise(retVal) {
+    return {
+      $promise: {
+        then: function(callback) { 
+          callback(retVal); return this; 
+        },
+        catch: function(){}
+      }
+    }    
+  }
+
+  org = {};
 
   // stub out fake services
   Organization = function () {
-    this.get = function ( id, callback ) {
-      return callback ( org );
-    }
+    this.current = { id: null };
+    this.get = function () { return fakePromise(org); }
   }
 
-  Flash = {
-    message: function ( klass, message ) {
-      return;
-    }
-  }
-
-  $location = {
-    currentPath: null,
-
-    path: function ( newPath ) {
-      if( newPath ) { this.currentPath = newPath; }
-      else { return this.currentPath }
-    }
-  }
 
   // Initialize the controller and a mock scope
   beforeEach(inject(function ($controller, $rootScope) {
@@ -44,8 +40,6 @@ describe('Controller: OrganizationCtrl', function () {
     OrganizationCtrl = $controller('OrganizationCtrl', {
       $scope: $scope,
       Organization: new Organization(),
-      Flash: Flash,
-      $location: $location,
       $routeParams: { id: 1 }
     });
 
@@ -58,12 +52,6 @@ describe('Controller: OrganizationCtrl', function () {
       logo_url: 'something.com'
     }
     
-    $location.path('/' + org.id)
-    
-
-    // flag for error testing
-    returnError = false;
-
   }));
 
 
@@ -72,9 +60,21 @@ describe('Controller: OrganizationCtrl', function () {
     expect($scope.organization.id).toBeNull();
   });
   
-  it('should default badOrg to false', function () {
-    expect($scope.badOrg).toBe(false);
+  describe('noMapSet', function(){
+
+    it('should be true if no map id is set', function () {
+      expect($scope.noMapSet).toBe(true);
+    });
+
+
+    it('should be true if no map id is set', function () {
+      org.display_map_id = 1;
+      OrganizationCtrl.parseOrganization(org);
+      expect($scope.noMapSet).toBe(false);
+    });    
+
   });
+
 
   describe('get', function () {
 
@@ -87,13 +87,16 @@ describe('Controller: OrganizationCtrl', function () {
       expect($scope.organization).toEqual(org);
     });
 
-    it("should set badOrg to true for a bad response", function() {
-      org.id = null;
-      OrganizationCtrl.getOrg();
-      expect($scope.badOrg).toBe(true);
-    });
-
   });
 
+  describe('handErrorAsBadOrg', function(){
+
+    it("should set badOrg to true", function() {
+      expect($scope.badOrg).toBe(undefined);  
+      OrganizationCtrl.handleErrorAsBadOrg();
+      expect($scope.badOrg).toBe(true);    
+    });
+  
+  });
 
 });

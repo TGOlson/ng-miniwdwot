@@ -6,16 +6,28 @@ describe('Controller: OrganizationsCtrl', function () {
   beforeEach(module('miniwdwot'));
 
   var OrganizationsCtrl,
-    $scope,
-    Organization,
-    org,
-    orgs;
+      $scope,
+      Organization,
+      org,
+      orgs;
 
+  // make a fake promise
+  // call it a white lie
+  function fakePromise(retVal) {
+    return {
+      $promise: {
+        then: function(callback) { 
+          callback(retVal); return this; 
+        },
+        catch: function(){}
+      }
+    }    
+  }
 
   // stub out fake service
   Organization = function () {
-    this.query = function ( callback ) {
-      return callback ( [orgs] );
+    this.query = function () {
+      return fakePromise([orgs]);
     }
   }
 
@@ -31,13 +43,9 @@ describe('Controller: OrganizationsCtrl', function () {
       Organization: new Organization()
     });
 
-    org = {
-      id: 1,
-      name: 'hi',
-      email: 'hello@hi.co'
-    }
+    org = {};
 
-    orgs = [org]
+    orgs = [org];
   }));
 
 

@@ -4,15 +4,13 @@ app.controller('OrganizationEditCtrl',
   [
     '$scope',
     '$location',
-    'Admin',
     '$routeParams',
+    'Admin',
     'Organization',
     'Flash',
-    'Map',
     'HandleError',
-    'Group',
 
-    function ($scope, $location, Admin, $routeParams, Organization, Flash, Map, HandleError, Group) {
+    function ($scope, $location, $routeParams, Admin, Organization, Flash, HandleError) {
 
 
     var orgId;
@@ -32,10 +30,10 @@ app.controller('OrganizationEditCtrl',
 
     })();
 
+
     function getOrg() {
 
-      Organization.get({id: orgId})
-        .$promise
+      Organization.get({id: orgId}).$promise
         .then(parseOrgParams)
         .catch(editPageError);
 
@@ -43,23 +41,26 @@ app.controller('OrganizationEditCtrl',
 
 
     function parseOrgParams(obj){
+
       for( var i in obj ){
         $scope.organization[i] = obj[i];
       }
+      
       $scope.orgSet = true;
     }
 
 
-    $scope.update = function() {
+    $scope.update = function () {
+
+      var org = $scope.organization;
 
       var options = {
-        id: $scope.organization.id,
-        token: $scope.organization.token,
-        organization: $scope.organization
+        id:           org.id,
+        token:        org.token,
+        organization: org
       };
 
-      Organization.update(options)
-        .$promise
+      Organization.update(options).$promise
         .then( function (){
           Flash.msg.info('updateSuccess');
         })
@@ -80,14 +81,15 @@ app.controller('OrganizationEditCtrl',
 
       if( confirm('Are you sure you want to submit?') ){
 
+        var org = $scope.organization;
+
         var options = {
-          id: $scope.organization.id,
-          token: $scope.organization.token
+          id:    org.id,
+          token: org.token
         }
 
         // send id and token for validation
-        Organization.delete(options) 
-          .$promise
+        Organization.delete(options).$promise
           .then( function () {
             $location.path('/');
             Flash.msg.info('deleteSuccess')            
@@ -99,9 +101,8 @@ app.controller('OrganizationEditCtrl',
     }
 
 
-
     // all errors from the edit page involve resetting the org
-    function editPageError ( response ) {
+    function editPageError(response) {
       HandleError.newErr(response);
       getOrg();
     }
@@ -109,5 +110,7 @@ app.controller('OrganizationEditCtrl',
 
     // provide a hook for testing functions
     this.getOrg = getOrg;
+    this.parseOrgParams = parseOrgParams;
+    this.editPageError = editPageError;
 
 }]);

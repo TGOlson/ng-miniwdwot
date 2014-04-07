@@ -2,11 +2,12 @@
 
 app.controller('OrganizationsCtrl', ['$scope', 'Organization', 'HandleError', function($scope, Organization, HandleError) {
 
-  Organization.query()
-    .$promise
-    .then( function (obj){
-      $scope.organizations = obj;
-    })
+  Organization.query().$promise
+    .then(setOrgs)
     .catch(HandleError.newErr)
+
+  function setOrgs(obj){
+    $scope.organizations = obj;  
+  }
 
 }]);

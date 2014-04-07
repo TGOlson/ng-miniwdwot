@@ -16,26 +16,20 @@ app.controller('OrganizationCtrl',
 
     $scope.organization = Organization.current;
 
-    // *** 
-    // causes some bugs, 
-    // noMapSet will reset if this setting is used
-    // consider adding back later 
-    // ***
 
     // use this to prevent multiple calls to the server
     // organization data is reused if it exists
-    // if($scope.organization.id != orgId){
-      // getOrg();
-    // }
+    if($scope.organization.id != orgId){
+      getOrg();
+    }
 
     getOrg();
 
     function getOrg() {
 
-      Organization.get({ id: orgId })
-        .$promise
+      Organization.get({ id: orgId }).$promise
         .then(parseOrganization)
-        .catch(HandleErrorAsBadOrg);
+        .catch(handleErrorAsBadOrg);
     
     }
 
@@ -48,11 +42,15 @@ app.controller('OrganizationCtrl',
       }
 
       // if no map id is set the group settings are fully configured
-      if(!obj.display_map_id) $scope.noMapSet = true;
+      if(!obj.display_map_id) { 
+        $scope.noMapSet = true;
+      } else {
+        $scope.noMapSet = false;
+      }
     }
 
 
-    function HandleErrorAsBadOrg(response) {
+    function handleErrorAsBadOrg(response) {
       $rootScope.badOrg = true
       HandleError.newErr(response);
     }
@@ -60,5 +58,7 @@ app.controller('OrganizationCtrl',
     // provide a hook for testing functions
     // consider using exports
     this.getOrg = getOrg;
+    this.parseOrganization = parseOrganization;
+    this.handleErrorAsBadOrg = handleErrorAsBadOrg;
 
   }]);
