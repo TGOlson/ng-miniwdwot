@@ -38,8 +38,7 @@ app.controller('GroupsMapsCtrl', ['$scope', 'Group', 'Map', 'HandleError', 'Orga
 
 
   function queryResource(type, options, scopeName) {
-    type.query(options)
-      .$promise
+    type.query(options).$promise
       .then( function(obj) {
         $scope[scopeName] = obj;
       })
