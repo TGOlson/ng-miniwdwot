@@ -20,6 +20,9 @@ app.controller('GroupsMapsCtrl', ['$scope', 'Group', 'Map', 'HandleError', 'Orga
 
   function getMaps() {
 
+    // resets to show query in process
+    $scope.maps = null;
+
     // if the organization has a group set
     // then it is ready to query for maps
     if(org.display_group_id){
