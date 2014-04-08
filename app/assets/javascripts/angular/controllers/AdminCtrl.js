@@ -39,7 +39,7 @@ app.controller('AdminCtrl',
 
         // check with server to see if org exists
         // or if we need to save the data to the database
-        // verifyOrgExists(response) // comment out for debugging
+        verifyOrgExists(response)
 
         $scope.showForm = false;
 

@@ -23,7 +23,7 @@ app.controller('OrganizationEditCtrl',
       // check if user is logged in
       // and is admin of current org
       // otherwise redirect home
-      Admin.verifyCanEdit(orgId);
+      // Admin.verifyCanEdit(orgId); // comment out for debugging
 
       // default Org for two way binding,
       $scope.organization = Organization.current;
