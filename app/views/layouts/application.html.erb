@@ -8,7 +8,6 @@
 </head>
 <body>
 
-
 <div class='alert-wrapper'>
       
   <div class="col-sm-8 col-sm-offset-2">
@@ -28,30 +27,30 @@
 </div>
 
 
-  <div class='container'>
-    <div class="row">
-      <div class="col-sm-12">
+<div class='container'>
+  <div class="row">
+    <div class="col-sm-12">
 
-        <div ng-hide='hideAll' ng-controller='NavCtrl'>
+      <div ng-hide='hideAll' ng-controller='NavCtrl'>
 
-          <div ng-hide="badOrg">
-            <div ng-include="'/templates/layout/header.html'"></div>
-            <div ng-include="'/templates/layout/navigation.html'" ng-hide='hideNav'></div>
-            <br>
-          </div>
-
-          <div ng-show="badOrg">
-            <h1>Looks like that organization no longer exists.</h1>
-            <p>Sorry.</p>
-            <p>Try going <a href="/#/">home</a>.</p>
-          </div>
+        <div ng-hide="badOrg">
+          <div ng-include="'/templates/layout/header.html'"></div>
+          <div ng-include="'/templates/layout/navigation.html'" ng-hide='hideNav'></div>
+          <br>
         </div>
 
-        <div ng-hide='badOrg' ng-view></div>
-
+        <div ng-show="badOrg">
+          <h1>Looks like that organization no longer exists.</h1>
+          <p>Sorry.</p>
+          <p>Try going <a href="/#/">home</a>.</p>
+        </div>
       </div>
+
+      <div ng-hide='badOrg' ng-view></div>
+
     </div>
   </div>
+</div>
 
 </body>
 </html>

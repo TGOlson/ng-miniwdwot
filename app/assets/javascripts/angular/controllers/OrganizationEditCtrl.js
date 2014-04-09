@@ -32,6 +32,32 @@ app.controller('OrganizationEditCtrl',
 
     })();
 
+    $scope.colors = [
+      'default',
+      'primary',
+      'success',
+      'info',
+      'warning',
+      'danger',
+    ]
+
+    $scope.selectedColor = $scope.colors[0];
+
+
+    $scope.previewColor = function (color) {
+      $('body').attr('id', color);
+    }
+
+    $scope.setColor = function (color) {
+      $('body').attr('id', color);
+      $scope.selectedColor = color;
+    }
+
+    $scope.resetColor = function () {
+      $('body').attr('id', $scope.selectedColor);
+    }
+
+    $scope.setColor($scope.selectedColor);
 
     function getOrg() {
 

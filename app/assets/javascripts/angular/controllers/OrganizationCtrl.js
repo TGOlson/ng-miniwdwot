@@ -53,6 +53,10 @@ app.controller('OrganizationCtrl',
       }
     }
 
+    $scope.toggleMap = function () {
+      $scope.hideMap = !$scope.hideMap;
+    }
+
 
     function handleErrorAsBadOrg(response) {
       $rootScope.badOrg = true

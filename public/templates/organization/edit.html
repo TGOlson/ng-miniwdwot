@@ -1,7 +1,11 @@
 <div class="row">
-  <div class="col-sm-8 col-sm-offset-2">
-
+  <div class="col-sm-7 col-sm-offset-1">
     <p><a href="#/{{ organization.id }}">&#8592 Back to Organization Page</a></p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-7 col-sm-offset-1">
 
     <div class="panel panel-default">
       <div class="panel-heading">Organization Settings</div>
@@ -86,13 +90,31 @@
       </div> <!-- panel body -->
     </div> <!-- panel -->
   </div> <!-- col-sm-8 -->
+
+
+  <div class="col-sm-3">
+   <div class="panel panel-default" ng-mouseleave='resetColor()'>
+      <div class="panel-heading">Page Background Color</div>
+      <div class="panel-body">
+
+        <p class='text-muted'>Hover to preview, click to set.</p>
+
+        <div class="col-sm-12" ng-repeat='color in colors'>
+          <button type="button" class="btn btn-{{color}} color-picker" ng-mouseover='previewColor(color)' ng-click='setColor(color)' ng-class="{ selected: color === selectedColor }"></button>
+        </div>          
+
+      </div>
+    </div>
+  </div>
+
+
 </div>  <!-- row -->
 
 
 
 
 <div class="row">
-  <div class="col-sm-8 col-sm-offset-2">
+  <div class="col-sm-10 col-sm-offset-1">
 
     <div class="panel panel-default">
       <div class="panel-heading">Delete Organization</div>
