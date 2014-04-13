@@ -24,6 +24,7 @@ class OrganizationsController < ApplicationController
     @organization = Organization.find params[:id]
 
     # if current_token?
+     p '*' * organization_params
       @organization.update_attributes organization_params
       render json: @organization
     # else
