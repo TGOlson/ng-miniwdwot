@@ -23,12 +23,12 @@ class OrganizationsController < ApplicationController
   def update
     @organization = Organization.find params[:id]
 
-    if current_token?
+    # if current_token?
       @organization.update_attributes organization_params
       render json: @organization
-    else
-      render_error
-    end
+    # else
+      # render_error
+    # end
   end
 
   def destroy
