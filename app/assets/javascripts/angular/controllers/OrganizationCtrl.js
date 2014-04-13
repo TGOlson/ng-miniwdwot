@@ -51,7 +51,10 @@ app.controller('OrganizationCtrl',
       } else {
         $scope.noMapSet = false;
       }
+
+      Organization.loadColorScheme();
     }
+
 
     $scope.toggleMap = function () {
       $scope.hideMap = !$scope.hideMap;

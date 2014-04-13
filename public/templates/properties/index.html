@@ -8,29 +8,59 @@
   </div>
 </div>
 
-<div ng-if='properties' ng-hide='emptySet' class='row' ng-repeat='property in filteredProperties = ( properties | filter:search.text )'>
-
-  <div class="col-sm-6">
-    <img ng-src="{{ property.streetview_url }}" class='property-image'>
+<div class='row display-icons'>
+  <div class='col-sm-12'>
+    <p class='pull-right'>
+      <a ng-click='setPropertyLayout("rows")'><i class="fa fa-bars fa-2x fa-border"></i></a>
+      <a ng-click='setPropertyLayout("grid")'><i class="fa fa-th fa-2x fa-border"></i></a>
+    </p>
   </div>
+</div>
 
-  <div class="col-sm-6">
+<div ng-if='properties' ng-hide='emptySet' ng-repeat='property in filteredProperties = ( properties | filter:search.text )'>
 
-    <h1><a href='#/{{ organization.id }}/properties/{{ property.id }}'>{{ property.address }}<a/></h1>
-    <h3>{{ property.city }}, {{ property.state }} {{ property.zip }}</h3>
-    
-    <h4>Property Tags</h4>
-    <div class='property-tags'>
-      <span ng-repeat='tag in property.tags' class='property-tags'><span class="label label-warning">{{ tag }}</span></span>
-    </div>
 
-    <div class='property-inquiry'>
-      <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#propertyInquiryModal">
-        Ask About This Property
-      </button>
-    </div>
+  <div class="col-sm-{{ grid ? 6 : 12 }}">
 
-  </div>
+      <div class="panel panel-default">
+        <div class="panel-body">
+
+          <div class='row'>
+
+            <div class="col-sm-6">
+              <img ng-src="{{ property.streetview_url }}" class='property-image img-thumbnail'>
+            </div>
+
+            <div class="col-sm-6">
+
+              <h1><a href='#/{{ organization.id }}/properties/{{ property.id }}'>{{ property.address }}<a/></h1>
+              <h3>{{ property.city }}, {{ property.state }} {{ property.zip }}</h3>
+              
+              <div ng-hide='grid'>
+                
+              <h4>Property Tags</h4>
+              <div class='property-tags'>
+                <span ng-repeat='tag in property.tags' class='property-tags'><span class="label label-warning">{{ tag }}</span></span>
+              </div>
+
+              <div class='property-inquiry'>
+                <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#propertyInquiryModal">
+                  Ask About This Property
+                </button>
+              </div>
+
+              </div>
+            </div>
+
+          </div> <!-- row -->
+        </div> <!-- panel-body -->
+      </div> <!-- panel -->
+
+  </div> <!-- col-sm-12 -->
+
+
+
+
 
   <h4 ng-hide='filteredProperties.length'>No properties match those search criteria.</h4>
 

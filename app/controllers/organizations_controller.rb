@@ -53,7 +53,8 @@ class OrganizationsController < ApplicationController
         :about,
         :display_group_id,
         :display_map_id,
-        :logo_url
+        :logo_url,
+        :color_scheme
       )
   end
 end

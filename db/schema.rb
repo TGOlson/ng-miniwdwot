@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140403055117) do
+ActiveRecord::Schema.define(version: 20140413201251) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,6 +42,7 @@ ActiveRecord::Schema.define(version: 20140403055117) do
     t.string   "logo_url",         default: "http://makeloveland.com/images/graphic-09.png"
     t.string   "contact_email"
     t.string   "about",            default: "This is my organization."
+    t.string   "color_scheme",     default: "default"
   end
 
   create_table "properties", force: true do |t|

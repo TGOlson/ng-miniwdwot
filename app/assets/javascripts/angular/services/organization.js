@@ -15,6 +15,17 @@ app.service('Organization', ['$resource', function($resource) {
   var Organization = function () {
     this.current = current;
     this.service = resource;
+
+
+    this.colors = [
+      'default',
+      'primary',
+      'success',
+      'info',
+      'warning',
+      'danger',
+    ]
+
   }
 
   // extend resource
@@ -32,6 +43,19 @@ app.service('Organization', ['$resource', function($resource) {
 
   Organization.prototype.delete = function (args) {
     return this.service.delete(args)
+  }
+
+  Organization.prototype.loadColorScheme = function () {
+    var colorScheme = this.current.color_scheme;
+    setBodyId(colorScheme);
+  }
+
+  Organization.prototype.previewColorScheme = function (colorScheme) {
+    setBodyId(colorScheme);
+  }
+
+  function setBodyId(id) {
+    $('body').attr('id', id);
   }
 
   return new Organization();

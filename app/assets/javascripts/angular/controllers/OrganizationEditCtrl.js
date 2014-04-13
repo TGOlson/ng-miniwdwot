@@ -15,7 +15,10 @@ app.controller('OrganizationEditCtrl',
 
     var orgId;
 
-    // page initializers
+    /*
+     * page initializers
+     */
+
     ( function () {
 
       orgId = $routeParams.id;
@@ -32,32 +35,10 @@ app.controller('OrganizationEditCtrl',
 
     })();
 
-    $scope.colors = [
-      'default',
-      'primary',
-      'success',
-      'info',
-      'warning',
-      'danger',
-    ]
 
-    $scope.selectedColor = $scope.colors[0];
-
-
-    $scope.previewColor = function (color) {
-      $('body').attr('id', color);
-    }
-
-    $scope.setColor = function (color) {
-      $('body').attr('id', color);
-      $scope.selectedColor = color;
-    }
-
-    $scope.resetColor = function () {
-      $('body').attr('id', $scope.selectedColor);
-    }
-
-    $scope.setColor($scope.selectedColor);
+    /*
+     * get org from server
+     */
 
     function getOrg() {
 
@@ -68,15 +49,51 @@ app.controller('OrganizationEditCtrl',
     }
 
 
+    /*
+     * parse organization params to keep two way binding
+     */
+
     function parseOrgParams(obj){
 
       for( var i in obj ){
         $scope.organization[i] = obj[i];
       }
       
+      Organization.loadColorScheme();
+
+      // notify view that the org is set
       $scope.orgSet = true;
     }
 
+
+    /*
+     * Color Definitions and Actions
+     */
+
+    // load color options from organization
+    $scope.colors = Organization.colors;
+
+
+    // preview color without saving
+    $scope.previewColor = function (color) {
+      Organization.previewColorScheme(color);
+    }
+
+    // set color to organization
+    $scope.setColor = function (color) {
+      $scope.organization.color_scheme = color;
+      $scope.update();
+    }
+
+    // reset to last saved org color scheme
+    $scope.resetColor = function () {
+      Organization.loadColorScheme();
+    }
+
+
+    /*
+     * update
+     */
 
     $scope.update = function () {
 
@@ -97,6 +114,10 @@ app.controller('OrganizationEditCtrl',
     }
 
 
+    /*
+     * cancel updates
+     */
+
     $scope.cancel = function () {
 
       // revert to server organization settings
@@ -104,6 +125,10 @@ app.controller('OrganizationEditCtrl',
       Flash.msg.danger('updateAbort')
     }
 
+
+    /*
+     * delete org
+     */
 
     $scope.delete = function () {
 
@@ -128,6 +153,9 @@ app.controller('OrganizationEditCtrl',
 
     }
 
+    /*
+     * display edit page error
+     */
 
     // all errors from the edit page involve resetting the org
     function editPageError(response) {
@@ -137,6 +165,7 @@ app.controller('OrganizationEditCtrl',
 
 
     // provide a hook for testing functions
+    // consider using node-style module exports
     this.getOrg = getOrg;
     this.parseOrgParams = parseOrgParams;
     this.editPageError = editPageError;

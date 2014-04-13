@@ -26,19 +26,37 @@ app.controller('PropertiesCtrl',
   })($location);
 
 
-  var options = {
-    token: Organization.current.token,
-    map_id: Organization.current.display_map_id
-  };
+  // setPropertyLayout("rows")
+
+  $scope.setPropertyLayout = function (style) {
+
+    if(style === 'grid') {
+      $scope.grid = true;
+    } else {
+      $scope.grid = false;
+    }
+
+  }
+
+  setProperties();
+
+  function setProperties() {
+
+    var options = {
+      token: Organization.current.token,
+      map_id: Organization.current.display_map_id
+    };
 
 
-  Property.query(options).$promise
-    .then( function ( obj ) {
+    Property.query(options).$promise
+      .then( function ( obj ) {
 
-      $scope.properties = obj;
-      if(obj[0].address == 'empty_set') $scope.emptySet = true;
+        $scope.properties = obj;
+        if(obj[0].address == 'empty_set') $scope.emptySet = true;
 
-    })
-    .catch(HandleError.newErr) 
+      })
+      .catch(HandleError.newErr) 
+
+  }
 
 }]);

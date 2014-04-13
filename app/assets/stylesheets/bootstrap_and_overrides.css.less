@@ -98,35 +98,58 @@ img .org-logo{
 }
 
 body{
- &#default {}
- &#primary {   
+
+  // white background
+  &#default {}
+
+  // primary blue
+  &#primary {   
     background-color: @brand-primary;
-    a{
-      color: #000;
+  
+    #admin-nav a,
+    #edit-back-link a,
+    .hide-map a,
+    {
+      color: @brand-info;
+    }
+
+    .text-muted {
+        color: #444;
     }
   } 
+
+  // green
   &#success {   
     background-color: @brand-success;
-    // a{
-    //   color: #fff
-    // }
+  .text-muted {
+      color: #eee;
+    }
   }
- &#info {   
+
+  // light blue
+  &#info {   
     background-color: @brand-info;
-    // a{
-    //   color: #fff
-    // }
+    
+    .text-muted {
+        color: #444;
+    }
   }
- &#warning {   
+
+  // orange
+  &#warning {   
     background-color: @brand-warning;
-    // a{
-    //   color: #fff
-    // }
+    
+    .text-muted {
+        color: #444;
+    }
   }
- &#danger {   
+
+  // red
+  &#danger {   
     background-color: @brand-danger;
-    // a{
-    //   color: #fff
-    // }
+    
+    .text-muted {
+        color: #444;
+    }
   }
 }
