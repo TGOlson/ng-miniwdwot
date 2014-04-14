@@ -3,7 +3,10 @@ app.service('Property', ['$resource', function($resource) {
   var wdwot,
       resource;
 
-  resource = $resource('/maps/:map_id/properties');
+  resource = $resource('/maps/:map_id/properties/:property_id', 
+      { map_id: '@map_id', property_id: '@property_id' }, 
+      { update: { method:'PUT' } }
+    );
   
   wdwot    = $resource('http://whydontweownthis.com/sc/mi/wayne/detroit/:id.json');
 
@@ -20,6 +23,10 @@ app.service('Property', ['$resource', function($resource) {
 
   Property.prototype.get = function (args) {
     return this.service.get(args)
+  }  
+
+  Property.prototype.update = function (args) {
+    return this.service.update(args)
   }
 
   return new Property();

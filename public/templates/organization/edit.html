@@ -62,7 +62,7 @@
               <div ng-if='organization.display_group_id'>
 
                 <div ng-if='maps'>
-                  <select class='form-control' ng-model='organization.display_map_id' ng-options='map.id as map.name for map in maps'>
+                  <select class='form-control' ng-model='organization.display_map_id' ng-change='setProperties()' ng-options='map.id as map.name for map in maps'>
                   </select>
                 </div>
 
@@ -89,7 +89,26 @@
 
       </div> <!-- panel body -->
     </div> <!-- panel -->
-  </div> <!-- col-sm-8 -->
+
+    <div class="panel panel-default">
+      <div class="panel-heading">Delete This Organization's MiniWDWOT</div>
+
+      <div class="panel-body">
+
+        <p class='text-muted'>Note: this action will only delete the organization from Mini WDOWT display. All organization information on Site Control will remain intact.</p>
+
+        <form ng-submit='delete()'>
+
+          <div class='form-group'>
+            <input type='submit' class='btn btn-primary' value='Delete MiniWDWOT' onsubmit="return confirm('Are you sure you want to submit?')"/>
+          </div>
+
+        </form>
+
+      </div>
+    </div>
+
+  </div> <!-- col-sm -->
 
 
   <div class="col-sm-3">
@@ -116,26 +135,27 @@
 <div class="row">
   <div class="col-sm-10 col-sm-offset-1">
 
-    <div class="panel panel-default">
-      <div class="panel-heading">Delete Organization</div>
+  <div class="panel panel-default">
+    <div class="panel-heading">Properties</div>
+      <div class="panel-body"> 
 
-      <div class="panel-body">
+        <div ng-if='organization.display_map_id'>  
+          <div ng-controller='PropertiesCtrl' ng-include="'/templates/properties/edit.html'"></div>
+        </div>
 
-        <p class='text-muted'>Note: this action will only delete the organization from Mini WDOWT display.</p>
+        <div ng-if='!organization.display_group_id'>
+            <p>
+              <span class="glyphicon glyphicon-exclamation-sign"></span> 
+              You need to set your display group before you can choose a map.
+            </p>
+        </div>
 
-        <form ng-submit='delete()'>
+      
+      </div> <!-- panel body -->
+    </div> <!-- panel -->
 
-          <div class='form-group'>
-            <input type='submit' class='btn btn-primary' value='Delete Organization' onsubmit="return confirm('Are you sure you want to submit?')"/>
-          </div>
-
-        </form>
-
-      </div>
-    </div>
-
-  </div>
-</div>
+  </div> <!-- col -->
+</div> <!-- row -->
 
 
 

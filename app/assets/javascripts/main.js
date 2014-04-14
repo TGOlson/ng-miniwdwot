@@ -3,8 +3,19 @@
 var app = angular.module('miniwdwot', [
     'ngResource',
     'ngRoute',
-    'ngCookies'
+    'ngCookies',
+    "xeditable"
   ]);
+
+app.run(function(editableOptions, editableThemes) {
+  editableOptions.theme = 'bs3';
+
+  editableThemes.bs3.inputClass = 'input-sm';
+  editableThemes.bs3.buttonsClass = 'btn-sm';
+
+  editableThemes['bs3'].submitTpl = null;
+  editableThemes['bs3'].cancelTpl = '<button type="button" class="btn btn-default btn-sm" ng-click="deleteTag(property, $index); $hide();"><span class="glyphicon glyphicon-remove"></span></button>'
+});
 
 app.config(['$routeProvider', function ($routeProvider) {
   $routeProvider

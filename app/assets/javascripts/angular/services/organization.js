@@ -47,7 +47,6 @@ app.service('Organization', ['$resource', function($resource) {
 
   Organization.prototype.loadColorScheme = function () {
     var colorScheme = this.current.color_scheme;
-    console.log(colorScheme)
     setBodyId(colorScheme);
   }
 

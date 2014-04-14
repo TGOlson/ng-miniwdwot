@@ -26,7 +26,7 @@ class Property < ActiveRecord::Base
 
   def self.filtered_attrs(info)
     {
-      fid:     info['info'],
+      fid:     info['fid'],
       address: info['address'],
       zip:     info['zip'],
       city:    info['ownercity'],

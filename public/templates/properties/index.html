@@ -11,8 +11,12 @@
 <div class='row display-icons'>
   <div class='col-sm-12'>
     <p class='pull-right'>
-      <a ng-click='setPropertyLayout("rows")'><i class="fa fa-bars fa-2x fa-border"></i></a>
-      <a ng-click='setPropertyLayout("grid")'><i class="fa fa-th fa-2x fa-border"></i></a>
+      <button type="button" class="btn btn-default" ng-click='setPropertyLayout("row")'>
+        <span class="glyphicon glyphicon-align-justify"></span>
+      </button>
+      <button type="button" class="btn btn-default" ng-click='setPropertyLayout("grid")'>
+        <span class="glyphicon glyphicon-th-large"></span>
+      </button>      
     </p>
   </div>
 </div>
@@ -33,7 +37,7 @@
 
             <div class="col-sm-6">
 
-              <h1><a href='#/{{ organization.id }}/properties/{{ property.id }}'>{{ property.address }}<a/></h1>
+              <h1><a href='#/{{ organization.id }}/properties/{{ property.fid }}'>{{ property.address }}<a/></h1>
               <h3>{{ property.city }}, {{ property.state }} {{ property.zip }}</h3>
               
               <div ng-hide='grid'>

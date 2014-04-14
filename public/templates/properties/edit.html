@@ -1,0 +1,49 @@
+<div ng-if='properties' ng-hide='emptySet'>
+
+  <div ng-repeat='property in properties | orderBy: ( predicate = "id")'>  
+    <div class='row'>
+      <div class="col-sm-3">
+        <p><a href='#/{{ organization.id }}/properties/{{ property.fid }}'>{{ property.address }}</a></p>
+      </div>
+
+      <div class="col-sm-3">
+        <p>{{ property.city }}, {{ property.state }} {{ property.zip }}</p>
+      </div>
+
+      <div class="col-sm-2">
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" ng-model="property.featured" ng-change='toggleFeatured(property)'> Featured
+          </label>
+        </div>
+      </div>
+
+
+      <div class="col-sm-4">
+        <div class='property-tags'>
+          <span ng-repeat='tag in property.tags' class='property-tags'>
+            <a href="#" editable-text="property.tags[$index]" e-size="10" onaftersave='updateTags(property)'>
+              {{ property.tags[$index] || "empty" }}
+            </a> &nbsp;
+          </span>
+
+          <a href ng-click='addTag(property)'><span class='glyphicon glyphicon-plus-sign'></span></a>
+        </div>  
+      </div>
+    
+    </div>
+  </div>
+
+
+
+</div>
+
+<div ng-hide='emptySet || properties'>
+  <p><img src="/img/loader.gif"> Loading available properties.</p>
+</div>
+
+<div ng-show='emptySet'>
+  <p>Looks like there are no properties here. Sorry.</p>
+  <p>If you are the admin of this organization try signing in and changing your settings.</p>
+</div>
+

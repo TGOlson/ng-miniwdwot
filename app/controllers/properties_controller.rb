@@ -5,4 +5,17 @@ class PropertiesController < ApplicationController
     render json: properties
   end
 
+  def update
+    property = Property.find_by_id params[:property_id]
+    p '*' * 80
+    p property_params
+    property.update_attributes property_params
+    render json: property
+  end
+
+  private
+
+  def property_params
+    params.require(:property).permit!
+  end
 end
