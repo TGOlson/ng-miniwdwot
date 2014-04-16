@@ -157,3 +157,44 @@ body{
 .checkbox{
   margin-top: 0;
 }
+
+
+.org-preview {
+
+  // // white background
+  // &#default {}
+
+  // primary blue
+  &.primary {   
+    background-color: @brand-primary;
+    a {
+      color: @brand-info;
+    }
+  } 
+
+  // green
+  &.success {   
+    background-color: @brand-success;
+  }
+
+  // light blue
+  &.info {   
+    background-color: @brand-info;
+  }
+
+  // orange
+  &.warning {   
+    background-color: @brand-warning;
+  }
+
+  // red
+  &.danger {   
+    background-color: @brand-danger;
+  }
+
+  .panel-body {
+    padding-top: 40px;
+    text-align: center;
+  }
+}
+

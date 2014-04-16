@@ -1,8 +1,16 @@
-<h1>All Orgs</h1>
+<div class='page-header'>
+  <h1>Mini WDWOT Oranizations</h1>
+</div>
 
-<ul>
-  <li ng-repeat='organization in organizations'>
-    <a href="#/{{ organization.id }}">{{ organization.name }}</a>
-    - {{ organization.id }}
-  </li>
-</ul>
+<div class='row'>
+  <div ng-repeat='organization in organizations' class='col-sm-6'>
+    <div class="panel panel-default org-preview {{ organization.color_scheme }}">
+      <div class="panel-body">
+        <img ng-src="{{ organization.logo_url }}" alt="{{ organization.name }}-logo" class="org-logo" width='360px' height='200px'>
+        <a href='#/{{ organization.id }}'><h1 class='org-header'>{{ organization.name }}</h1></a>
+  
+      </div>
+    </div>
+  </div>
+
+</div>

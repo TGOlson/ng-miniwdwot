@@ -10,4 +10,6 @@ app.controller('OrganizationsCtrl', ['$scope', 'Organization', 'HandleError', fu
     $scope.organizations = obj;  
   }
 
+  Organization.previewColorScheme('default');
+
 }]);
