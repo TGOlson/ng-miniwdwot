@@ -1,70 +1,57 @@
-<div class="row page-header">
-
-
-<nav class="navbar" role="navigation">
-
-  <div class="container-fluid">
-
-    <div class="navbar-header">
-
-      <!-- Brand and toggle get grouped for better mobile display -->
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-
-      <!-- <a href="#/" class='navbar-brand'>{{ organization.name }}</a> -->
-    </div>
-
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <div class='navbar-left'>
-
-      </div>
-
-      <div class='navbar-right'>
-
-        <form class="navbar-form" role="search">
-          <div class="form-group">
-            <label class="checkbox-inline">
-              <input type="checkbox" ng-model='search.featured'> Featured
-            </label>
-            <button class='btn btn-default' ng-show='search.text.length' ng-click='clearSearch()'>X</button>
-            <input type="text" class="form-control" placeholder="Search" ng-model='search.text'>
-          </div>
-        </form>
-      </div>
-
-    </div>
-  </div><!-- /.container-fluid -->
-</nav>
-
-
-  <div class='col-sm-6'>
-    <h1>{{ header }}</h1>
-  </div>
-
-  <div class='col-sm-6'>
-    <p class='text-muted property-count'>Showing {{ filteredProperties.length || 0 }} of {{ properties.length || 0 }} properties.</p>
-  </div>
-</div>
-
-<div class='row display-icons'>
+<div class="row">
+  
   <div class='col-sm-12'>
-    <p class='pull-right'>
-      <button type="button" class="btn btn-default" ng-click='setPropertyLayout("row")' ng-class='{selected: !grid}'>
-        <span class="glyphicon glyphicon-align-justify"></span>
-      </button>
-      <button type="button" class="btn btn-default" ng-click='setPropertyLayout("grid")' ng-class='{selected: grid}'>
-        <span class="glyphicon glyphicon-th-large"></span>
-      </button>      
-    </p>
+    <h1 class='page-header'>{{ header }}</h1>
   </div>
+      
+  <div class="col-sm-12">
+    <iframe width='100%' height='300px' frameBorder='0' src='http://a.tiles.mapbox.com/v3/loveland.h2nk5m03/mm/zoompan,zoomwheel,geocoder,share.html' ng-hide='hideMap' class='map-border'></iframe>
+
+    <div class='hide-map pull-right'>
+      <p><a href ng-click="toggleMap()">{{ hideMap ? "Show" : "Hide"}} map</a></p>
+    </div>
+  </div>
+
+
+  <div class='col-sm-12'>
+    <form class="form-inline" role="form">
+      <div class='form-group'>
+        <input type="text" class="form-control" placeholder="Search" ng-model='search.text'>
+      </div>
+      <div class='form-group'>
+        <button class='btn btn-default' ng-show='search.text.length' ng-click='clearSearch()'>X</button>
+      </div>
+    </form>
+  </div>
+
+  <div class='col-sm-12'>
+    <div class='form-group'>
+      <div class="checkbox checkbox-inline">
+        <label><input type="checkbox" ng-model='search.featured'> Featured</label>
+      </div>
+    </div>
+  <p class='text-muted property-count'>Showing {{ filteredProperties.length || 0 }} of {{ properties.length || 0 }} properties.</p>
+  </div>  
+
 </div>
 
-<div class='row'>
+
+  <div class='col-sm-12' ng-hide="!filteredProperties.length">
+    <div class='display-icons'>
+      <p class='pull-right'>
+        <button type="button" class="btn btn-default" ng-click='setPropertyLayout("row")' ng-class='{selected: !grid}'>
+          <span class="glyphicon glyphicon-align-justify"></span>
+        </button>
+        <button type="button" class="btn btn-default" ng-click='setPropertyLayout("grid")' ng-class='{selected: grid}'>
+          <span class="glyphicon glyphicon-th-large"></span>
+        </button>      
+      </p>
+    </div>
+  </div>
+
+
+  <div class='row'>
+    
   <div ng-if='properties' ng-hide='emptySet' ng-repeat='property in filteredProperties = ( properties | filter:search.text | featured:search.featured )'>
 
     <div class="col-sm-{{ grid ? 6 : 12 }}">
@@ -100,27 +87,22 @@
 
         </div> <!-- panel-body -->
       </div> <!-- panel -->
-
     </div> <!-- col-sm-12 -->
-
-
-
-
-
-    <h4 ng-hide='filteredProperties.length'>No properties match those search criteria.</h4>
-
   </div>
+  </div>
+
+  <h4 ng-hide='filteredProperties.length'>No properties match those search criteria.</h4>
 </div> <!-- row -->
 
 
-<div ng-hide='emptySet || properties'>
-  <p><img src="/img/loader.gif"> Loading available properties.</p>
-</div>
+  <div ng-hide='emptySet || properties'>
+    <p><img src="/img/loader.gif"> Loading available properties.</p>
+  </div>
 
-<div ng-show='emptySet'>
-  <p>Looks like there are no properties here. Sorry.</p>
-  <p>If you are the admin of this organization try signing in and changing your settings.</p>
-</div>
+  <div ng-show='emptySet'>
+    <p>Looks like there are no properties here. Sorry.</p>
+    <p>If you are the admin of this organization try signing in and changing your settings.</p>
+  </div>
 
 
-<div ng-include="'/templates/properties/inquiry_modal.html'"></div>
+  <div ng-include="'/templates/properties/inquiry_modal.html'"></div>
