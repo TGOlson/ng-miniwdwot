@@ -83,7 +83,7 @@ app.controller('PropertiesCtrl',
   function updateProperty(property) {
     var options = {
       map_id: Organization.current.display_map_id,
-      property_id: property.id,
+      property_id: property.fid,
 
       // only need to pass featured and tags for now
       property: {

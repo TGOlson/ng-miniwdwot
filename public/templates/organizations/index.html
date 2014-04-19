@@ -6,9 +6,10 @@
   <div ng-repeat='organization in organizations' class='col-sm-6'>
     <div class="panel panel-default org-preview {{ organization.color_scheme }}">
       <div class="panel-body">
-        <img ng-src="{{ organization.logo_url }}" alt="{{ organization.name }}-logo" class="org-logo" width='360px' height='200px'>
-        <a href='#/{{ organization.id }}'><h1 class='org-header'>{{ organization.name }}</h1></a>
-  
+        <a href='#/{{ organization.id }}'>
+          <img ng-src="{{ organization.logo_url }}" alt="{{ organization.name }}-logo" class="org-logo" width='360px' height='200px'>
+          <h1 class='org-header'>{{ organization.name }}</h1></a>
+        </a>
       </div>
     </div>
   </div>

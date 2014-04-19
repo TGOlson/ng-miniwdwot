@@ -97,99 +97,87 @@ img .org-logo{
   background-color: none;
 }
 
-body{
-
-  // white background
-  &#default {}
-
-  // primary blue
-  &#primary {   
-    background-color: @brand-primary;
-  
-    #admin-nav a,
-    #edit-back-link a,
-    .hide-map a,
-    {
-      color: @brand-info;
-    }
-
-    .text-muted {
-        color: #444;
-    }
-  } 
-
-  // green
-  &#success {   
-    background-color: @brand-success;
-  .text-muted {
-      color: #444;
-    }
-  }
-
-  // light blue
-  &#info {   
-    background-color: @brand-info;
-    
-    .text-muted {
-        color: #444;
-    }
-  }
-
-  // orange
-  &#warning {   
-    background-color: @brand-warning;
-    
-    .text-muted {
-        color: #444;
-    }
-  }
-
-  // red
-  &#danger {   
-    background-color: @brand-danger;
-    
-    .text-muted {
-        color: #444;
-    }
-  }
-}
 
 .checkbox{
   margin-top: 0;
 }
 
+.checkbox-inline {
+  margin-right: 10px;
+}
 
-.org-preview {
+body{
 
-  // // white background
-  // &#default {}
+  &#default { // white background 
+  }
 
-  // primary blue
-  &.primary {   
+  &#primary { // primary blue 
     background-color: @brand-primary;
-    a {
+  
+    #admin-nav a,
+    #edit-back-link a,
+    .hide-map a {
       color: @brand-info;
+    }
+    .text-muted {
+        color: #444;
     }
   } 
 
-  // green
-  &.success {   
+  &#success { // green
     background-color: @brand-success;
+    .text-muted { 
+      color: #444; 
+    }
   }
 
-  // light blue
-  &.info {   
+  &#info { // light blue
+    background-color: @brand-info;
+    .text-muted { 
+      color: #444; 
+    }
+  }
+ 
+  &#warning { // orange  
+    background-color: @brand-warning;    
+    .text-muted {
+        color: #444;
+    }
+  }
+
+  &#danger { // red  
+    background-color: @brand-danger;
+    .text-muted {
+        color: #444;
+    }
+  }
+}
+
+
+.org-preview {
+
+  &.primary {   
+    background-color: @brand-primary;
+    a { color: @brand-info; }
+  } 
+
+  &.success { // green 
+    background-color: @brand-success;
+    a { color: darken(@brand-success, 30%); }
+  }
+
+  &.info { // light blue 
     background-color: @brand-info;
   }
 
-  // orange
-  &.warning {   
+  &.warning { // orange  
     background-color: @brand-warning;
+    a { color: darken(@brand-warning, 30%); }
   }
 
-  // red
-  &.danger {   
+  &.danger { // red 
     background-color: @brand-danger;
+    a { color: darken(@brand-danger, 30%); }
   }
 
   .panel-body {

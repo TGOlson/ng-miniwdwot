@@ -13,58 +13,35 @@ app.controller('OrganizationEditCtrl',
     function ($scope, $location, $routeParams, Admin, Organization, Flash, HandleError) {
 
 
-    var orgId;
 
     /*
      * page initializers
      */
 
-    ( function () {
+    var orgId = $routeParams.id;
 
-      orgId = $routeParams.id;
+    $scope.organization = Organization.current;
 
-      // check if user is logged in
-      // and is admin of current org
-      // otherwise redirect home
-      // Admin.verifyCanEdit(orgId); // comment out for debugging
 
-      // default Org for two way binding,
-      $scope.organization = Organization.current;
+    // check if user is logged in
+    // and is admin of current org
+    // otherwise redirect home
+    // ***
+    // Admin.verifyCanEdit(orgId); // comment out for debugging
 
-      getOrg();
-
-    })();
+    getOrg();
 
 
     /*
-     * get org from server
+     * get from server if neccesary
      */
 
     function getOrg() {
-
-      Organization.get({id: orgId}).$promise
-        .then(parseOrgParams)
-        .catch(editPageError);
-
+      Organization.setCurrent(orgId)
+        .then(function () {
+          $scope.orgSet = true;
+        });
     }
-
-
-    /*
-     * parse organization params to keep two way binding
-     */
-
-    function parseOrgParams(obj){
-
-      for( var i in obj ){
-        $scope.organization[i] = obj[i];
-      }
-      
-      Organization.loadColorScheme();
-
-      // notify view that the org is set
-      $scope.orgSet = true;
-    }
-
 
     /*
      * Color Definitions and Actions
@@ -167,7 +144,6 @@ app.controller('OrganizationEditCtrl',
     // provide a hook for testing functions
     // consider using node-style module exports
     this.getOrg = getOrg;
-    this.parseOrgParams = parseOrgParams;
     this.editPageError = editPageError;
 
 }]);

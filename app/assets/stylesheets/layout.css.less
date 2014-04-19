@@ -21,6 +21,10 @@
 
 .property-tags{
   margin-bottom: 20px;
+
+  .label {
+    margin-right: 5px;
+  }
 }
 
 .property-count{
@@ -45,10 +49,18 @@
 
 .display-icons{
   margin-bottom: 10px;
+
+  .selected {
+    &.btn-default {
+      background-color: #333;
+    }
+    span {
+      color: white;
+    }
+  }
 }
 
 .fa-border{
-  // padding: 4px;
   background-color: #ffffff;
   border: 1px solid #dddddd;
   border-radius: 4px; 

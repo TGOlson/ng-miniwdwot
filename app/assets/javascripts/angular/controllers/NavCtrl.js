@@ -15,7 +15,6 @@ app.controller('NavCtrl',
 
   $scope.search = Property.search;
 
-
   $scope.$on('$routeChangeStart', function(){
 
     // reset to defaults

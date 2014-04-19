@@ -5,8 +5,13 @@ class PropertiesController < ApplicationController
     render json: properties
   end
 
+  def show
+    property = Property.find_by_fid params[:id]
+    render json: property
+  end
+
   def update
-    property = Property.find_by_id params[:property_id]
+    property = Property.find_by_fid params[:property_id]
     p '*' * 80
     p property_params
     property.update_attributes property_params
