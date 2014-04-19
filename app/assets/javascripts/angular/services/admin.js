@@ -1,6 +1,6 @@
 app.service('Admin', ['$resource', '$rootScope', '$location', 'Flash', function($resource, $rootScope, $location, Flash) {
 
-  Admin = $resource('http://whydontweownthis.com/users/sign_in.json')
+  Admin = $resource('http://whydontweownthis.com/users/sign_in.json');
 
   Admin.verify = $resource('/verify');
 
@@ -21,15 +21,11 @@ app.service('Admin', ['$resource', '$rootScope', '$location', 'Flash', function(
   Admin.verifyCanEdit = function (orgId) {
 
     if(!canEdit(orgId)) {
-
       $location.path('/' + orgId);
-    
-      Flash.msg.danger('notSignedIn')
-    
+      Flash.msg.danger('notSignedIn');
     }
-
   }
 
-  return Admin
+  return Admin;
 
 }]);

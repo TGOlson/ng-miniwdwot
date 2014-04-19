@@ -5,15 +5,12 @@ app.controller('NavCtrl',
   ['$scope',
    'Organization',
    '$location',
-   'Property',
    '$rootScope',
 
-   function($scope, Organization, $location, Property, $rootScope) {
+   function($scope, Organization, $location, $rootScope) {
 
   // bind nav $scope.organization to Org service
   $scope.organization = Organization.current;
-
-  $scope.search = Property.search;
 
   $scope.$on('$routeChangeStart', function(){
 
@@ -41,10 +38,6 @@ app.controller('NavCtrl',
     }
 
   });
-
-  $scope.clearSearch = function () {
-    $scope.search.text = null;
-  }
 
 
 }]);

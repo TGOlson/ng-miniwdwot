@@ -27,8 +27,6 @@ app.controller('PropertiesCtrl',
   })($location);
 
 
-  // setPropertyLayout("rows")
-
   $scope.setPropertyLayout = function (style) {
 
     if(style === 'grid') {
@@ -37,6 +35,10 @@ app.controller('PropertiesCtrl',
       $scope.grid = false;
     }
 
+  }
+
+  $scope.clearSearch = function () {
+    $scope.search.text = null;
   }
 
   setProperties();

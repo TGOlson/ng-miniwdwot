@@ -33,8 +33,6 @@
   <p class='text-muted property-count'>Showing {{ filteredProperties.length || 0 }} of {{ properties.length || 0 }} properties.</p>
   </div>  
 
-</div>
-
 
   <div class='col-sm-12' ng-hide="!filteredProperties.length">
     <div class='display-icons'>
@@ -48,6 +46,8 @@
       </p>
     </div>
   </div>
+  
+</div>
 
 
   <div class='row'>
@@ -88,7 +88,6 @@
         </div> <!-- panel-body -->
       </div> <!-- panel -->
     </div> <!-- col-sm-12 -->
-  </div>
   </div>
 
   <h4 ng-hide='filteredProperties.length'>No properties match those search criteria.</h4>
