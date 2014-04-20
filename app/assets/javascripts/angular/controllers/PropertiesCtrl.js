@@ -5,26 +5,13 @@ app.controller('PropertiesCtrl',
    'Property',
    'Organization',
    'HandleError',
-   '$location',
    'Flash',
 
-   function($scope, Property, Organization, HandleError, $location, Flash) {
+   function($scope, Property, Organization, HandleError, Flash) {
 
   $scope.search = Property.search;
 
-
-  // set header based on path
-  ( function (location) {
-
-    var path = $location.$$path.split('/')
-
-    if(path[path.length - 1] === 'featured') {
-      $scope.header = 'Featured Properties';
-    } else {
-      $scope.header = 'Properties';
-    }
-
-  })($location);
+  setProperties();
 
 
   $scope.setPropertyLayout = function (style) {
@@ -34,14 +21,12 @@ app.controller('PropertiesCtrl',
     } else {
       $scope.grid = false;
     }
-
   }
 
   $scope.clearSearch = function () {
     $scope.search.text = null;
   }
 
-  setProperties();
 
   function setProperties() {
 
@@ -64,6 +49,10 @@ app.controller('PropertiesCtrl',
 
   // set hook for view
   $scope.setProperties = setProperties();
+
+  $scope.toggleMap = function () {
+    $scope.hideMap = !$scope.hideMap;
+  }
 
   $scope.toggleFeatured = function (property) {
     updateProperty(property)

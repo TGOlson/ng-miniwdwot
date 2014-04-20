@@ -6,33 +6,17 @@ app.controller('OrganizationCtrl',
     '$rootScope',
     '$routeParams',
     'Organization',
-    'HandleError',
 
-    function ($scope, $rootScope, $routeParams, Organization, HandleError) {
+    function ($scope, $rootScope, $routeParams, Organization) {
 
-    // grab organization id from data attribute
-    // this id is set before angular takes over
-    var orgId = $routeParams.id;
+    var id = $routeParams.id;
 
     $scope.organization = Organization.current;
 
-    // *** 
-    // causes some bugs, 
-    // noMapSet will reset if this setting is used
-    // consider adding back later 
-    // ***
-
-    // use this to prevent multiple calls to the server
-    // organization data is reused if it exists
-    if(!$scope.organization.id || $scope.organization.id != orgId){
-      getOrg();
-    } else {
-      checkIfMapSet();
-    }
-
+    getOrg();
 
     function getOrg() {
-      Organization.setCurrent(orgId)
+      Organization.setCurrent(id)
         .then(checkIfMapSet);
     }
 
@@ -44,20 +28,8 @@ app.controller('OrganizationCtrl',
       }
     }
 
-
-    $scope.toggleMap = function () {
-      $scope.hideMap = !$scope.hideMap;
+    $scope.sendEmail = function (email) {
+      console.log(email)
     }
 
-
-    function handleErrorAsBadOrg(response) {
-      $rootScope.badOrg = true
-      HandleError.newErr(response);
-    }
-
-    // provide a hook for testing functions
-    // consider using exports
-    this.getOrg = getOrg;
-    this.handleErrorAsBadOrg = handleErrorAsBadOrg;
-
-  }]);
+}]);

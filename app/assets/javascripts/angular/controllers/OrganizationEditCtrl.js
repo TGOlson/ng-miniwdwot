@@ -13,7 +13,6 @@ app.controller('OrganizationEditCtrl',
     function ($scope, $location, $routeParams, Admin, Organization, Flash, HandleError) {
 
 
-
     /*
      * page initializers
      */
@@ -42,6 +41,7 @@ app.controller('OrganizationEditCtrl',
           $scope.orgSet = true;
         });
     }
+
 
     /*
      * Color Definitions and Actions
@@ -130,6 +130,7 @@ app.controller('OrganizationEditCtrl',
 
     }
 
+
     /*
      * display edit page error
      */
@@ -143,7 +144,5 @@ app.controller('OrganizationEditCtrl',
 
     // provide a hook for testing functions
     // consider using node-style module exports
-    this.getOrg = getOrg;
-    this.editPageError = editPageError;
 
 }]);
