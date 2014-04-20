@@ -29,7 +29,12 @@ app.controller('OrganizationCtrl',
     }
 
     $scope.sendEmail = function (email) {
-      console.log(email)
+      email.to = $scope.organization.contact_email;
+
+      console.log(email);
+
+
+
     }
 
 }]);

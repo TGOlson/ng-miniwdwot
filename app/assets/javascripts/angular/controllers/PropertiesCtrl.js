@@ -14,20 +14,6 @@ app.controller('PropertiesCtrl',
   setProperties();
 
 
-  $scope.setPropertyLayout = function (style) {
-
-    if(style === 'grid') {
-      $scope.grid = true;
-    } else {
-      $scope.grid = false;
-    }
-  }
-
-  $scope.clearSearch = function () {
-    $scope.search.text = null;
-  }
-
-
   function setProperties() {
 
     var options = {
@@ -38,21 +24,14 @@ app.controller('PropertiesCtrl',
 
     Property.query(options).$promise
       .then( function (obj) {
-
         $scope.properties = obj;
         if(obj[0].address == 'empty_set') $scope.emptySet = true;
-
       })
       .catch(HandleError.newErr);
-
   }
 
   // set hook for view
   $scope.setProperties = setProperties();
-
-  $scope.toggleMap = function () {
-    $scope.hideMap = !$scope.hideMap;
-  }
 
   $scope.toggleFeatured = function (property) {
     updateProperty(property)

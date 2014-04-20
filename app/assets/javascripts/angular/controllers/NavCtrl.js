@@ -30,10 +30,8 @@ app.controller('NavCtrl',
       // parse path to match route names
       var path = $location.$$path.split('/')
 
-      $scope.path = path[ path.length - 1 ]
-
       // hide navigation during editing
-      if( $scope.path === 'edit' ) $scope.hideNav = true;
+      if( path === 'edit' ) $scope.hideNav = true;
 
     }
 

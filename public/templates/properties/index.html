@@ -1,14 +1,14 @@
 <div class="row">
   
   <div class='col-sm-12'>
-    <h1 class='page-header'>props</h1>
+    <h1 class='page-header'>Properties</h1>
   </div>
       
   <div class="col-sm-12">
     <iframe width='100%' height='300px' frameBorder='0' src='http://a.tiles.mapbox.com/v3/loveland.h2nk5m03/mm/zoompan,zoomwheel,geocoder,share.html' ng-hide='hideMap' class='map-border'></iframe>
 
     <div class='hide-map pull-right'>
-      <p><a href ng-click="toggleMap()">{{ hideMap ? "Show" : "Hide"}} map</a></p>
+      <p><a href ng-click="hideMap = !hideMap">{{ hideMap ? "Show" : "Hide"}} map</a></p>
     </div>
   </div>
 
@@ -36,12 +36,8 @@
   <div class='col-sm-12' ng-hide="!filteredProperties.length">
     <div class='display-icons'>
       <p class='pull-right'>
-        <button type="button" class="btn btn-default" ng-click='setPropertyLayout("row")' ng-class='{selected: !grid}'>
-          <span class="glyphicon glyphicon-align-justify"></span>
-        </button>
-        <button type="button" class="btn btn-default" ng-click='setPropertyLayout("grid")' ng-class='{selected: grid}'>
-          <span class="glyphicon glyphicon-th-large"></span>
-        </button>      
+        <i class="fa fa-pause fa-2x fa-rotate-90 fa-border" ng-click='slim = false' ng-class='{selected: !slim}'></i>
+        <i class="fa fa-bars fa-2x fa-border" ng-click='slim = true' ng-class='{selected: slim}'></i>    
       </p>
     </div>
   </div>
@@ -53,22 +49,22 @@
     
   <div ng-if='properties' ng-hide='emptySet' ng-repeat='property in filteredProperties = ( properties | filter:search.text | featured:search.featured )'>
 
-    <div class="col-sm-{{ grid ? 6 : 12 }}">
+    <div class="col-sm-12">
 
       <div class="panel panel-default">
         <div class="panel-body">
 
 
-            <div class="col-sm-6">
+            <div class="col-sm-{{ slim ? 4 : 6 }}">
               <img ng-src="{{ property.streetview_url }}" class='property-image img-thumbnail'>
             </div>
 
-            <div class="col-sm-6">
+            <div class="col-sm-{{ slim ? 8 : 6 }}">
 
               <h1><a href='#/{{ organization.id }}/properties/{{ property.fid }}'>{{ property.address }}<a/></h1>
               <h3>{{ property.city }}, {{ property.state }} {{ property.zip }}</h3>
               
-              <div ng-hide='grid'>
+              <div ng-hide='slim'>
                 
               <h4>Property Tags</h4>
               <div class='property-tags'>

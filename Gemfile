@@ -9,6 +9,7 @@ gem 'babosa'
 gem 'sass-rails', '~> 4.0.0'
 
 gem 'angularjs-rails'
+gem "font-awesome-rails"
 
 gem 'high_voltage', '~> 2.1.0'
 
