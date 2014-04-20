@@ -1,0 +1,21 @@
+<div class="panel panel-default property-card">
+  <div class="panel-body">
+
+    <img ng-src="{{ property.streetview_url }}" class='property-image img-thumbnail'>
+
+    <h1><a href='#/{{ organization.id }}/properties/{{ property.fid }}'>{{ property.address }}<a/></h1>
+    <h3>{{ property.city }}, {{ property.state }} {{ property.zip }}</h3>
+      
+    <h4>Property Tags</h4>
+    <div class='property-tags'>
+      <span ng-repeat='tag in property.tags' class='property-tags'><span class="label label-warning">{{ tag }}</span></span>
+    </div>
+
+    <div class='property-inquiry'>
+      <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#propertyInquiryModal">
+        Ask About This Property
+      </button>
+    </div>
+
+  </div> <!-- panel-body -->
+</div> <!-- panel -->

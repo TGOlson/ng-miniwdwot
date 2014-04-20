@@ -1,20 +1,21 @@
 <div class="row">
   
-  <div class='col-sm-12'>
+  <div class='col-md-12'>
     <h1 class='page-header'>Properties</h1>
   </div>
       
-  <div class="col-sm-12">
+  <div class="col-md-12">
     <iframe width='100%' height='300px' frameBorder='0' src='http://a.tiles.mapbox.com/v3/loveland.h2nk5m03/mm/zoompan,zoomwheel,geocoder,share.html' ng-hide='hideMap' class='map-border'></iframe>
 
-    <div class='hide-map pull-right'>
+    <div class='hide-map'>
       <p><a href ng-click="hideMap = !hideMap">{{ hideMap ? "Show" : "Hide"}} map</a></p>
     </div>
+
   </div>
 
 
-  <div class='col-sm-12'>
-    <div class='col-sm-3'>
+  <div class='col-md-12'>
+    <div class='col-md-3'>
       <form  role="form">
         <div class='form-group '>
           <input type="text" class="form-control" placeholder="Search" ng-model='search.text'>
@@ -33,11 +34,11 @@
   </div>
 
 
-  <div class='col-sm-12' ng-hide="!filteredProperties.length">
+  <div class='col-md-12' ng-hide="!filteredProperties.length">
     <div class='display-icons'>
       <p class='pull-right'>
-        <i class="fa fa-pause fa-2x fa-rotate-90 fa-border" ng-click='slim = false' ng-class='{selected: !slim}'></i>
-        <i class="fa fa-bars fa-2x fa-border" ng-click='slim = true' ng-class='{selected: slim}'></i>    
+        <i class="fa fa-th-large fa-border" ng-click='slim = false' ng-class='{selected: !slim}'></i>
+        <i class="fa fa-bars fa-border" ng-click='slim = true' ng-class='{selected: slim}'></i>    
       </p>
     </div>
   </div>
@@ -46,46 +47,40 @@
 
 
   <div class='row'>
+
+  <!-- <div class='col-sm-12'> -->
+    
     
   <div ng-if='properties' ng-hide='emptySet' ng-repeat='property in filteredProperties = ( properties | filter:search.text | featured:search.featured )'>
 
-    <div class="col-sm-12">
 
-      <div class="panel panel-default">
-        <div class="panel-body">
+  <div ng-if='!slim'> 
+
+      <div class="col-md-6" ng-include="'/templates/properties/property_card.html'"></div>
+    <!-- <div ng-if='!slim' class="col-md-6"> -->
+  </div> <!-- col-md-6 -->
+
+  <!-- </div> -->
+
+  <!-- <div class='row' ng-if='slim'> -->
+    
+    <div ng-if='slim' class="col-xs-12">
+      <div class="col-xs-3">
+        <img ng-src="{{ property.streetview_url }}" class='property-image img-thumbnail'>
+      </div>
+      <div class="col-xs-9">
+        <h1><a href='#/{{ organization.id }}/properties/{{ property.fid }}'>{{ property.address }}<a/></h1>
+        <h3>{{ property.city }}, {{ property.state }} {{ property.zip }}</h3>
+      </div>
+    </div>
+  <!-- </div> -->
 
 
-            <div class="col-sm-{{ slim ? 4 : 6 }}">
-              <img ng-src="{{ property.streetview_url }}" class='property-image img-thumbnail'>
-            </div>
-
-            <div class="col-sm-{{ slim ? 8 : 6 }}">
-
-              <h1><a href='#/{{ organization.id }}/properties/{{ property.fid }}'>{{ property.address }}<a/></h1>
-              <h3>{{ property.city }}, {{ property.state }} {{ property.zip }}</h3>
-              
-              <div ng-hide='slim'>
-                
-              <h4>Property Tags</h4>
-              <div class='property-tags'>
-                <span ng-repeat='tag in property.tags' class='property-tags'><span class="label label-warning">{{ tag }}</span></span>
-              </div>
-
-              <div class='property-inquiry'>
-                <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#propertyInquiryModal">
-                  Ask About This Property
-                </button>
-              </div>
-
-              </div>
-            </div>
-
-        </div> <!-- panel-body -->
-      </div> <!-- panel -->
-    </div> <!-- col-sm-12 -->
-  </div>
+  <!-- </div> -->
 
   <h4 ng-hide='filteredProperties.length'>No properties match those search criteria.</h4>
+  </div>
+
 </div> <!-- row -->
 
 
