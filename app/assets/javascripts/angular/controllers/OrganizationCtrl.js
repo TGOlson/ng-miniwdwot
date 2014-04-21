@@ -7,8 +7,9 @@ app.controller('OrganizationCtrl',
     '$routeParams',
     'Organization',
     'Email',
+    'Flash',
 
-    function ($scope, $rootScope, $routeParams, Organization, Email) {
+    function ($scope, $rootScope, $routeParams, Organization, Email, Flash) {
 
     var id = $routeParams.id;
 
@@ -31,9 +32,8 @@ app.controller('OrganizationCtrl',
 
     $scope.sendEmail = function (email) {
 
-      email.to = $scope.organization.contact_email;
-
-      console.log(email);
+      email.to     = $scope.organization.contact_email;
+      email.org_id = $scope.organization.id;
 
       var options = {
         email: email,
@@ -42,7 +42,10 @@ app.controller('OrganizationCtrl',
 
       Email.save(options).$promise
         .then(function (obj) {
-          console.log(obj);
+          if(obj.success){
+            console.log(obj);
+            // Flash.msg.something('emailSuccess')
+          }
         }, function (err) {
           console.log('err', err)
         });
