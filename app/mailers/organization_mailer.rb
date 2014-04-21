@@ -4,6 +4,8 @@ class OrganizationMailer < ActionMailer::Base
   def property_inquiry(email)
     @email = email
 
-    mail(to: @email[:to], from: @email[:from], subject: @email[:subject])    
+    mail to:      @email[:to], 
+         from:    @email[:from], 
+         subject: @email[:subject]
   end
 end
