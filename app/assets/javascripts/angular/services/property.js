@@ -11,11 +11,6 @@ app.service('Property', ['$resource', function($resource) {
       }
     );
   
-
-// query: {method: 'GET', params: {dest:"allProducts"}, isArray: true },
-//         save: {method: 'POST', params: {dest:"modifyProduct"}},
-//         update: { method: 'POST', params: {dest:"modifyProduct"}},
-
   wdwot    = $resource('http://whydontweownthis.com/sc/mi/wayne/detroit/:id.json');
 
   var Property = function () {

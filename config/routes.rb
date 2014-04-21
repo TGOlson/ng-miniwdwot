@@ -15,7 +15,8 @@ Miniwdwot::Application.routes.draw do
 
   resources :properties, only: [:show]
 
-  post   '/verify',  to: 'organizations#verify'
+  post   '/verify',            to: 'organizations#verify'
+  post   '/property_inquiry',  to: 'organizations#property_inquiry'
 
   root to: 'high_voltage/pages#show', id: 'welcome'
 

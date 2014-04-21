@@ -53,6 +53,7 @@ app.service('Organization', ['$resource', 'HandleError', function($resource, Han
     setBodyId(colorScheme);
   }
 
+
   Organization.prototype.setCurrent = function (id) {
     return this.get({id: id}).$promise
       .then(parseOrganization.bind(this))
