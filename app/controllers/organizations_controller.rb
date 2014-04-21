@@ -23,7 +23,7 @@ class OrganizationsController < ApplicationController
   def property_inquiry
     email = params[:email]
     OrganizationMailer.property_inquiry(email).deliver
-    render json: {status: 'success'}
+    render json: {success: true}
   end
 
   def update
