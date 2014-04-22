@@ -10,7 +10,8 @@ app.factory('Messages', [ function () {
     updateAbort:       'Updates aborted.',
     deleteSuccess:     'Organization deleted.',
     notSignedIn:       'You mussed be signed in as this organization to access that page.',
-    propertyUpdateSuccess: 'Property successfully updated.'
+    propertyUpdateSuccess: 'Property successfully updated.',
+    emailSuccess:           'Inquiry successfully sent.'
   };
 
 }]);

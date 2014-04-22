@@ -44,13 +44,11 @@ app.controller('OrganizationCtrl',
         .then(function (obj) {
           if(obj.success){
             console.log(obj);
-            // Flash.msg.something('emailSuccess')
+            Flash.msg.info('emailSuccess')
           }
         }, function (err) {
           console.log('err', err)
         });
-
-
     }
 
 }]);

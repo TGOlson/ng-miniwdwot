@@ -1,6 +1,5 @@
 <ol class="breadcrumb">
   <li><a href="#/{{ organization.id }}">{{ organization.name }}</a></li>
-  <li><a href="#/{{ organization.id }}/properties">Properties</a></li>
   <li class="active">Property {{ property.fid }}</li>
 </ol>
 
@@ -20,17 +19,11 @@
     <img class='property-image img-thumbnail' ng-src='{{ property.streetview_url }}'>
 
     <div class="panel panel-default">
-       <div class="panel-heading">
-         Ask about me!
-       </div>
-       <div class="panel-body">
-         <form role='form'>
-            <div class="form-group">
-             <textarea class='form-control'></textarea>
-            </div>
-            <button type="button" class="btn btn-primary">Submit</button>
-          </form>
-       </div>
+      <div class="panel-body text-center">
+        <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#propertyInquiryModal">
+          Ask About This Property!
+        </button>
+      </div>
      </div>
 
      <div class="panel panel-default">
@@ -76,3 +69,8 @@
   </div> <!-- col-md-6 -->
 
 </div> <!-- row -->
+
+
+
+<div ng-include="'/templates/property/inquiry_modal.html'"></div>
+

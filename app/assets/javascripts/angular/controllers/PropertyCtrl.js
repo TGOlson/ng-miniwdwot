@@ -6,8 +6,10 @@ app.controller('PropertyCtrl',
    'Property',
    'Organization',
    'Nav',
+   'Email',
+   'Flash',
  
-  function($scope, $routeParams, Property, Organization, Nav) {
+  function($scope, $routeParams, Property, Organization, Nav, Email, Flash) {
 
   $scope.organization = Organization.current;
 
@@ -47,6 +49,27 @@ app.controller('PropertyCtrl',
         $scope.property[i] = data[i];
       }
     }
+  }
+
+  $scope.sendEmail = function (email) {
+
+    email.to     = $scope.organization.contact_email;
+    email.org_id = $scope.organization.id;
+
+    var options = {
+      email: email,
+      type: 'property_inquiry'
+    };
+
+    Email.save(options).$promise
+      .then(function (obj) {
+        if(obj.success){
+          console.log(obj);
+          Flash.msg.info('emailSuccess')
+        }
+      }, function (err) {
+        console.log('err', err)
+      });
   }
 
 

@@ -35,7 +35,7 @@ app.factory('Flash', ['$rootScope', 'Messages', function ($rootScope, Messages) 
       message: message
     };
 
-    $('.alert').show().addClass('animated fadeInUp').delay(1000).fadeOut(1000);
+    $('.alert').show().addClass('animated fadeInUp').delay(2000).fadeOut(2000);
   }
 
 

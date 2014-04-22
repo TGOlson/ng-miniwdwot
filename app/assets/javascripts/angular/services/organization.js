@@ -54,6 +54,10 @@ app.service('Organization', ['$resource', 'HandleError', function($resource, Han
   }
 
 
+  function setBodyId(colorScheme) {
+    $('body').attr('id', colorScheme);
+  }
+
   Organization.prototype.setCurrent = function (id) {
     return this.get({id: id}).$promise
       .then(parseOrganization.bind(this))
@@ -67,10 +71,6 @@ app.service('Organization', ['$resource', 'HandleError', function($resource, Han
         this.current[i] = obj[i];
       }
     }
-  }
-
-  function setBodyId(colorScheme) {
-    $('body').attr('id', colorScheme);
   }
 
   return new Organization();
