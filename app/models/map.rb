@@ -29,7 +29,7 @@ class Map < ActiveRecord::Base
 
     response = HTTParty.get(url, options)
 
-    properties = JSON.parse(response.body)['features'].map{ |info| info['properties'] }
+    properties = JSON.parse(response.body)['features']
 
     return [Property.empty_set] if properties.empty?
 
@@ -48,16 +48,3 @@ class Map < ActiveRecord::Base
   end
 
 end
-
-
-    # url = "http://sitecontrol.us/maps/#{self.map_id}/list.json?group_token=#{self.group.token}&only_tagged=1"
-    # feed = HTTParty.get(url)
-    # properties = feed.parsed_response['features']
-    # properties.each do |property|
-    #   p = property['properties']
-    #   Property.create(:address => p['proaddress'],
-    #                   :zip => p['propaddr0'],
-    #                   :city => p['ownercity'],
-    #                   :parcelnumb => p['parcelnumb'],
-    #                   :fid => p['OGR_FID'],
-    #                   :state => p['ownerstate'])

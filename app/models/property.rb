@@ -25,13 +25,16 @@ class Property < ActiveRecord::Base
   end
 
   def self.filtered_attrs(info)
+    p = info['properties']
+
     {
-      fid:     info['fid'],
-      address: info['address'],
-      zip:     info['zip'],
-      city:    info['ownercity'],
-      state:   info['ownerstate'],
-      tags:    info['tags']
+      fid:      p['fid'],
+      address:  p['address'],
+      zip:      p['zip'],
+      city:     p['ownercity'],
+      state:    p['ownerstate'],
+      tags:     p['tags'],
+      geometry: info['geometry']['coordinates'].first
     }
   end
 
