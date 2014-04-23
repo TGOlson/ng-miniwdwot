@@ -6,16 +6,17 @@ app.controller('PropertiesCtrl',
    'Organization',
    'HandleError',
    'Flash',
-   'leafletBoundsHelpers',
    'leafletData',
 
-   function($scope, Property, Organization, HandleError, Flash, leafletBoundsHelpers, leafletData) {
+   function($scope, Property, Organization, HandleError, Flash, leafletData) {
 
   $scope.search = Property.search;
 
   setProperties();
 
   $scope.paths = {};
+
+  var boundsSet = false;
 
   $scope.center = {
     lat: 42.344,  
@@ -34,14 +35,17 @@ app.controller('PropertiesCtrl',
     Property.query(options).$promise
       .then(function (obj) {
         $scope.properties = obj;
+        $scope.filteredProperties = obj;
         if(obj[0].address == 'empty_set') $scope.emptySet = true;
         setMap(obj);
       })
       .catch(HandleError.newErr);
   }
 
+
   function setMap(properties) {
-    console.log('setting map')
+
+    console.log('setting map', $scope.filteredProperties)
 
     var paths = {}
 
@@ -55,13 +59,14 @@ app.controller('PropertiesCtrl',
         // stroke: '#',
         weight: 1,
         latlngs: parsedCoords,
-        type: 'polygon'
+        type: 'polygon',
+        message: buildMessage(property)
       }
 
     }
 
     $scope.paths = paths;
-    $scope.bounds = getBounds(paths);
+    getBounds(paths);
   }
 
   $scope.setMap = setMap;
@@ -75,13 +80,21 @@ app.controller('PropertiesCtrl',
     });
   }
 
-  function getBounds(paths){
-    var ps = _.map(paths, function (path) {
-      return path.latlngs
-    })
+  function buildMessage(property) {
+    return "<a href='#/" + Organization.current.id + "/properties/" + property.fid  + "'><h4>" + property.address + "</h4></a>"
+  }
 
+  function getBounds(paths){
     leafletData.getMap().then(function(map) {
-      map.fitBounds(ps);
+
+      var ps = _.map(paths, function (path) {
+        return path.latlngs
+      })
+
+      if(!boundsSet){
+        map.fitBounds(ps);
+        boundsSet = true;
+      }
     });
   }
 
