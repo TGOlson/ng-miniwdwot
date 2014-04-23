@@ -4,7 +4,8 @@ var app = angular.module('miniwdwot', [
     'ngResource',
     'ngRoute',
     'ngCookies',
-    "xeditable"
+    'xeditable',
+    'leaflet-directive'
   ]);
 
 app.run(function(editableOptions, editableThemes) {

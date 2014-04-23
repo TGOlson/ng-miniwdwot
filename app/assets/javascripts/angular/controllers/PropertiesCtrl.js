@@ -12,6 +12,7 @@ app.controller('PropertiesCtrl',
   $scope.search = Property.search;
 
   setProperties();
+  // setMap();
 
 
   function setProperties() {
@@ -23,12 +24,20 @@ app.controller('PropertiesCtrl',
 
 
     Property.query(options).$promise
-      .then( function (obj) {
+      .then(function (obj) {
         $scope.properties = obj;
         if(obj[0].address == 'empty_set') $scope.emptySet = true;
       })
       .catch(HandleError.newErr);
   }
+
+  // function setMap() {
+  //   // $('#map').clear()
+  //   var map = L.mapbox.map('map', 'loveland.h2nk5m03').setView([40, -74.50], 9);
+  // }
+
+      // <iframe width='100%' height='300px' frameBorder='0' src='http://a.tiles.mapbox.com/v3/loveland.h2nk5m03/mm/zoompan,zoomwheel,geocoder,share.html' ng-hide='hideMap' class='map-border'></iframe>
+
 
   // set hook for view
   $scope.setProperties = setProperties();
