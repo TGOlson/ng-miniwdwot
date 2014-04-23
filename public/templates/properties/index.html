@@ -5,7 +5,7 @@
   </div>
       
   <div class="col-md-12">
-    <leaflet ng-hide='hideMap' class='map-border' bounds='bounds' paths="paths" center="center" height="300px" width="100%"></leaflet>
+    <leaflet ng-hide='hideMap' tiles='tiles' class='map-border' bounds='bounds' paths="paths" center="center" height="300px" width="100%"></leaflet>
 
     <div class='hide-map'>
       <p><a href ng-click="hideMap = !hideMap">{{ hideMap ? "Show" : "Hide"}} map</a></p>
@@ -26,6 +26,7 @@
 
             <div class='form-group'>
               <button class='btn btn-default' ng-show='search.text.length' ng-click='search.text = null'>x</button>
+              <!-- <button class='btn btn-default' ng-show='search.text.length' ng-click='paths[properties[0].fid].weight = 3'>x</button> -->
             </div>
           </form>
 
@@ -58,7 +59,9 @@
 
 
   <div class='row'>
-    <div ng-if='properties' ng-hide='emptySet' ng-repeat='property in filteredProperties = ( properties | filter:search.text | featured:search.featured )'>
+    <div ng-if='properties' ng-init='filteredProperties = properties' ng-hide='emptySet' ng-repeat='property in filteredProperties = ( properties | filter:search.text | featured:search.featured )'>
+
+      <!-- paths[properties[0].fid].weight = 3 -->
 
 
       <div ng-if='!slim'> 

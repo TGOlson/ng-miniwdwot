@@ -6,15 +6,19 @@ app.controller('PropertiesCtrl',
    'Organization',
    'HandleError',
    'Flash',
-   'leafletData',
+   'MapHelper',
 
-   function($scope, Property, Organization, HandleError, Flash, leafletData) {
+   function($scope, Property, Organization, HandleError, Flash, MapHelper) {
 
   $scope.search = Property.search;
 
   setProperties();
 
   $scope.paths = {};
+
+  $scope.tiles = {
+    url: 'http://{s}.tiles.mapbox.com/v3/loveland.h2nk5m03/{z}/{x}/{y}.png'
+  }
 
   var boundsSet = false;
 
@@ -35,7 +39,6 @@ app.controller('PropertiesCtrl',
     Property.query(options).$promise
       .then(function (obj) {
         $scope.properties = obj;
-        $scope.filteredProperties = obj;
         if(obj[0].address == 'empty_set') $scope.emptySet = true;
         setMap(obj);
       })
@@ -44,59 +47,18 @@ app.controller('PropertiesCtrl',
 
 
   function setMap(properties) {
-
-    console.log('setting map', $scope.filteredProperties)
-
-    var paths = {}
-
-    for(var i = 0; i < properties.length; i++) {
-      var property = properties[i]
-
-      var parsedCoords = parseCoords(property.geometry);
-
-      paths['prop' + i] = {
-        // fill: '#',
-        // stroke: '#',
-        weight: 1,
-        latlngs: parsedCoords,
-        type: 'polygon',
-        message: buildMessage(property)
-      }
-
-    }
-
+    var paths = MapHelper.parsePaths(properties)
     $scope.paths = paths;
-    getBounds(paths);
+   
+    if(!boundsSet){
+      setTimeout(function () {
+        MapHelper.setBounds(paths);
+        boundsSet = true;
+      }, 100)
+    }
   }
 
   $scope.setMap = setMap;
-
-  function parseCoords(geometry) {
-    return _.map(geometry, function (coords) {
-      return {
-        lat: parseFloat(coords[1]),
-        lng: parseFloat(coords[0])
-      }
-    });
-  }
-
-  function buildMessage(property) {
-    return "<a href='#/" + Organization.current.id + "/properties/" + property.fid  + "'><h4>" + property.address + "</h4></a>"
-  }
-
-  function getBounds(paths){
-    leafletData.getMap().then(function(map) {
-
-      var ps = _.map(paths, function (path) {
-        return path.latlngs
-      })
-
-      if(!boundsSet){
-        map.fitBounds(ps);
-        boundsSet = true;
-      }
-    });
-  }
 
 
   // set hook for view
@@ -136,7 +98,6 @@ app.controller('PropertiesCtrl',
         Flash.msg.info('propertyUpdateSuccess');
       })
       .catch(HandleError.newErr); 
-
   }
 
 }]);

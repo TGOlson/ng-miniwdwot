@@ -8,8 +8,9 @@ app.controller('PropertyCtrl',
    'Nav',
    'Email',
    'Flash',
+   'MapHelper',
  
-  function($scope, $routeParams, Property, Organization, Nav, Email, Flash) {
+  function($scope, $routeParams, Property, Organization, Nav, Email, Flash, MapHelper) {
 
   $scope.organization = Organization.current;
 
@@ -17,6 +18,18 @@ app.controller('PropertyCtrl',
     var orgId = $routeParams.organization_id;
     Organization.setCurrent(orgId);
   }
+
+  $scope.paths = {};
+
+  $scope.tiles = {
+    url: 'http://{s}.tiles.mapbox.com/v3/loveland.h2nk5m03/{z}/{x}/{y}.png'
+  }
+
+  $scope.center = {
+    lat: 42.344,  
+    lng: -83.0358,
+    zoom: 12,
+  }; 
 
 
   var id = $routeParams.property_id;
@@ -28,6 +41,7 @@ app.controller('PropertyCtrl',
     Property.get({property_id: id}).$promise
       .then(function (obj) {
         addDataToProperty(obj);
+        setMap(obj);
       });
       // .catch(HandleError.newErr); 
   }
@@ -50,6 +64,22 @@ app.controller('PropertyCtrl',
       }
     }
   }
+
+  function setMap(property) {
+    var paths = MapHelper.parsePaths([property])
+    $scope.paths = paths;
+   
+    var latlng = paths[property.fid].latlngs[0]
+
+    $scope.center = {
+      lat: latlng.lat,
+      lng: latlng.lng,
+      zoom: 16
+    }
+  }
+
+  $scope.setMap = setMap;
+
 
   $scope.sendEmail = function (email) {
 
