@@ -5,15 +5,7 @@
   </div>
       
   <div class="col-md-12">
-  <h1>hi</h1>
     <leaflet ng-hide='hideMap' class='map-border' bounds='bounds' paths="paths" center="center" height="300px" width="100%"></leaflet>
-  
-  <!-- 
-    <iframe width='100%' height='300px' frameBorder='0' 
-            src='http://a.tiles.mapbox.com/v3/loveland.h2nk5m03/mm/zoompan,zoomwheel,geocoder,share.html' 
-            ng-hide='hideMap' class='map-border'>
-    </iframe> 
-  -->
 
     <div class='hide-map'>
       <p><a href ng-click="hideMap = !hideMap">{{ hideMap ? "Show" : "Hide"}} map</a></p>
@@ -29,7 +21,7 @@
           <form role="form" class='form-inline'>
 
             <div class='form-group'>
-              <input type="text" class="form-control" placeholder="Search" ng-model='search.text'>
+              <input type="text" class="form-control" placeholder="Search" ng-model='search.text' ng-change='setMap(filteredProperties)'>
             </div>
 
             <div class='form-group'>

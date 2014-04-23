@@ -18,6 +18,7 @@
 //= require angular-route
 //= require angular-mocks
 //= require angular-cookies
+//= require underscore
 //= require main.js
 //= require_tree ./angular
 //= require_tree .
