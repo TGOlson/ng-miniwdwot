@@ -7,26 +7,39 @@ app.controller('PropertiesCtrl',
    'HandleError',
    'Flash',
    'MapHelper',
+   '$filter',
 
-   function($scope, Property, Organization, HandleError, Flash, MapHelper) {
+   function($scope, Property, Organization, HandleError, Flash, MapHelper, $filter) {
 
-  $scope.search = Property.search;
 
-  setProperties();
+  /*
+   * Initializers
+   */
 
+   $scope.search = {};
+
+  // Map defaults
   $scope.paths = {};
-
   $scope.tiles = {
     url: 'http://{s}.tiles.mapbox.com/v3/loveland.h2nk5m03/{z}/{x}/{y}.png'
-  }
-
-  var boundsSet = false;
+  };
 
   $scope.center = {
     lat: 42.344,  
     lng: -83.0358,
     zoom: 12,
   };  
+
+  var boundsSet = false;
+
+  setProperties();
+
+  $scope.$watchCollection('search', filterProperties);
+
+
+  /*
+   * Get and set properties
+   */ 
 
   function setProperties() {
 
@@ -39,12 +52,18 @@ app.controller('PropertiesCtrl',
     Property.query(options).$promise
       .then(function (obj) {
         $scope.properties = obj;
+        $scope.filteredProperties = obj;
+      
         if(obj[0].address == 'empty_set') $scope.emptySet = true;
         setMap(obj);
       })
       .catch(HandleError.newErr);
   }
 
+
+  /*
+   * Set properties on map
+   */ 
 
   function setMap(properties) {
     var paths = MapHelper.parsePaths(properties)
@@ -58,11 +77,36 @@ app.controller('PropertiesCtrl',
     }
   }
 
-  $scope.setMap = setMap;
 
+  /*
+   * Filter properties
+   */
 
-  // set hook for view
-  $scope.setProperties = setProperties();
+  function filterProperties(newVal) {
+    var filtered;
+
+    filtered = $filter('filter')($scope.properties, newVal.text);
+    filtered = $filter('featured')(filtered, newVal.featured);
+
+    $scope.filteredProperties = filtered;
+
+    if(filtered) setMap(filtered);
+  }
+
+  /*
+   * Reset search
+   */
+
+   $scope.clearSearch = function () {
+    $scope.search = {
+      text: null,
+      featured: null
+    }
+   }
+
+  /*
+   * Edit page functions
+   */
 
   $scope.toggleFeatured = function (property) {
     updateProperty(property)
@@ -81,12 +125,16 @@ app.controller('PropertiesCtrl',
     updateProperty(property)
   }
 
+
+  /*
+   * Update property
+   */
+
   function updateProperty(property) {
+
     var options = {
       map_id: Organization.current.display_map_id,
       property_id: property.fid,
-
-      // only need to pass featured and tags for now
       property: {
         featured: property.featured,
         tags: property.tags

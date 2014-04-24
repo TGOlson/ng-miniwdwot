@@ -14,11 +14,6 @@ app.service('Property', ['$resource', function($resource) {
   wdwot    = $resource('http://whydontweownthis.com/sc/mi/wayne/detroit/:id.json');
 
   var Property = function () {
-    this.search  = {
-      text: null,
-      featured: false
-    };
-
     this.service = resource;
     this.wdwot   = wdwot;
   }
