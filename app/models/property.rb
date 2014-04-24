@@ -15,7 +15,9 @@ class Property < ActiveRecord::Base
 
 
   def self.find_or_create(property_info)
-    if property = self.find_by_fid(property_info['fid'])
+    p = property_info['properties']
+
+    if property = self.find_by_fid(p['fid'])
       property
     else
       property = self.create filtered_attrs(property_info)

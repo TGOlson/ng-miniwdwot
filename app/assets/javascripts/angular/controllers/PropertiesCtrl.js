@@ -16,7 +16,8 @@ app.controller('PropertiesCtrl',
    * Initializers
    */
 
-   $scope.search = {};
+  $scope.search = {};
+  $scope.emptySet = false;
 
   // Map defaults
   $scope.paths = {};
@@ -32,9 +33,10 @@ app.controller('PropertiesCtrl',
 
   var boundsSet = false;
 
-  setProperties();
+  // setProperties();
 
   $scope.$watchCollection('search', filterProperties);
+  $scope.$watch('organization.display_map_id', setProperties);
 
 
   /*
@@ -42,6 +44,10 @@ app.controller('PropertiesCtrl',
    */ 
 
   function setProperties() {
+    $scope.properties = null;
+    $scope.emptySet = false;
+
+    // console.log(Organization.current)
 
     var options = {
       token: Organization.current.token,
@@ -54,8 +60,14 @@ app.controller('PropertiesCtrl',
         $scope.properties = obj;
         $scope.filteredProperties = obj;
       
-        if(obj[0].address == 'empty_set') $scope.emptySet = true;
-        setMap(obj);
+        if(obj[0].address == 'empty_set') {
+          $scope.emptySet = true;
+          $scope.properties = []
+          $scope.filteredProperties = []
+        } else {
+          setMap(obj);
+        }
+
       })
       .catch(HandleError.newErr);
   }
