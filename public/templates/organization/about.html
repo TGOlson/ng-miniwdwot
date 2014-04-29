@@ -1,7 +1,42 @@
-<h1>About</h1>
 
-<h3>{{ organization.about }}</h3>
+<div class='row'>
+  <div class='col-md-12'>
+    <h1 class='page-header'>About</h1>
+  </div>
 
-<p>{{ organization.contact_email }}</p>
+  <div class='col-md-6'>
+    <h3>{{ organization.about }}</h3>
+  </div>
 
-<p>Cool</p>
+  <div class='col-md-6'>
+
+  <p class="text-muted text-center">Get in touch with us, we'd love to hear from you.</p><br>
+
+  <form class="form-horizontal" role="form" name='form'>
+
+    <div class="form-group">
+      <label for="inputEmail3" class="col-md-2 control-label">From<small>*</small></label>
+      <div class="col-md-10">
+        <input type="email" name='email' class="form-control" id="inputEmail3" placeholder="coolperson@aol.com" ng-model='email.from' required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="inputEmail3" class="col-md-2 control-label">Subject<small>*</small></label>
+      <div class="col-md-10">
+        <input type="text" class="form-control" id="inputEmail3" placeholder="About your organization..." ng-model='email.subject' required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="inputPassword3" class="col-md-2 control-label">Message<small>*</small></label>
+      <div class="col-md-10">
+        <textarea class='form-control' rows='8' placeholder='Tell me more about your organization...' ng-model='email.message' required></textarea>
+      </div>
+    </div>
+
+  <p class='pull-left'><strong>*</strong> required</p>
+  <button type="button" class="btn btn-primary pull-right" ng-disabled="form.$invalid" ng-click='sendEmail(email);'>Submit</button>
+  </form>
+
+  </div>
+
+</div>
