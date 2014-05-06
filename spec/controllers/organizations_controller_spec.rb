@@ -33,16 +33,17 @@ describe OrganizationsController do
     end
   end
 
-  describe "POST #sign_in" do
-    it "should return an organization if the org is already registered" do
-      post :sign_in, organization: { id: organization.id }
-      expect(response.body).to eq organization.to_json     
+  describe "POST #verify" do
+    it "should return an a false flag if org is already registered" do
+      get :verify, organization: { id: organization.id }
+      new_org = JSON.parse(response.body)['new_org']
+      expect(new_org).to be_false
     end
 
-    it "should return a new organization if the org is not already registered" do
-      expect{
-        post :sign_in, organization: { id: 'a', email: 'b', token: 'c', groups: [] }
-      }.to change{ Organization.count }.by 1
+    it "should return an a true flag if org is not already registered" do
+      get :verify, organization: { id: 'abc', groups: [] }
+      new_org = JSON.parse(response.body)['new_org']
+      expect(new_org).to be_true
     end    
   end
 

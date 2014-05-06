@@ -12,8 +12,6 @@ class PropertiesController < ApplicationController
 
   def update
     property = Property.find_by_fid params[:property_id]
-    p '*' * 80
-    p property_params
     property.update_attributes property_params
     render json: property
   end

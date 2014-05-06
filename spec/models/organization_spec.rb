@@ -25,19 +25,10 @@ describe Organization do
     end
   end
 
-  describe "::find_or_create" do
-    it "should return an organization if one exists" do
-      params = { id: organization.id }
-
+  describe "::create_with_groups" do
+    it "should create a new organization" do
       expect{
-        org = Organization.find_or_create(params)
-        expect(org).to eq organization
-      }.to change{ Organization.count }.by 0
-    end
-
-    it "should create a new organization if one does not exist" do
-      expect{
-        Organization.find_or_create(org_params)
+        Organization.create_with_groups(org_params)
       }.to change{ Organization.count }.by 1
     end    
   end

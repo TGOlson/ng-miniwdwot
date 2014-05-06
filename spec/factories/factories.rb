@@ -9,6 +9,7 @@ end
 
 FactoryGirl.define do
   factory :group do
+    id 1
     # name
   end
 end
@@ -16,6 +17,7 @@ end
 
 FactoryGirl.define do
   factory :map do
+    group_id 1
     name "A map"
   end
 end
