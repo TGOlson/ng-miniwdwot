@@ -10,7 +10,7 @@ end
 FactoryGirl.define do
   factory :group do
     id 1
-    # name
+    name 'Something'
   end
 end
 

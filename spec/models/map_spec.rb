@@ -6,34 +6,49 @@ describe Map do
   it { should have_many :properties }
 
   
+  let(:map)            { create(:map)            }
+  let(:property)       { create(:property)       }
   let(:group)          { create(:group)          }
   let(:organization)   { create(:organization)   }
   let(:map_params)     { { id: 'a', name: 'b' }  }
 
 
-  # describe "::fetch_from_source_by_group" do
-  #   it "should fetch a list of maps for a given group" do
-  #     group.maps = []
+  describe "::fetch_properties" do
+    it "should return a property set for a map" do
+      map.properties << property
+      properties = Map.fetch_properties map.id
+      expect(properties.first).to eq property
+    end
+  end
 
-  #     # need to make http party call here
-  #     allow(HTTParty).to receive(:get).and_return(Map)
-  #     allow(Map).to receive(:body).and_return([map_params].to_json)
+  describe "::fetch_properties_from_source" do
+    it "should fetch a list of properties with an http call" do
+      group.organization = organization
+      map.group = group
 
-  #     expect{
-  #       Map.fetch_from_source_by_group organization.token, group.id
-  #     }.to change{ Map.count }.by 1
-  #   end
+      response = {}
 
-  # end
+      # need to make http party call here
+      allow(HTTParty).to receive(:get).and_return(response)
+      allow(response).to receive(:body).and_return({features: [property]}.to_json)
+      allow(Property).to receive(:find_or_create).and_return(property)
+
+      properties = map.fetch_properties_from_source
+      
+      expect(properties).to eq [property]
+    end
+  end
+
+  describe "::find_or_create" do
+    it "should return a map if ones exists" do
+      found_map = Map.find_or_create 'id' => map.id
+      expect(found_map).to eq map
+    end
+
+    it "should make a new map if one does not exist" do
+      expect{
+        Map.find_or_create 'id' => 'abc'
+      }.to change{Map.count}.by 1
+    end
+  end
 end
-
-# it "should fetch a list of properties for a given map if they do NOT exist" do
-#   map.properties = []
-
-#   allow(HTTParty).to receive(:get).and_return(response)
-#   allow(response).to receive(:body).and_return(property_parmas.to_json )
-
-#   expect{
-#     get :index, { map_id: map.id, token: organization.token }
-#   }.to change{ Property.count }.by 1
-# end
